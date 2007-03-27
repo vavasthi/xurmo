@@ -2,7 +2,7 @@
  * Copyright (c) 2007, Xurmo.com. All rights reserved.
  *
  * File name                : XurmoUserSession.java
- * Created on               : March 26, 2007, 7:40 PM
+ * Created on               : March 27, 2007, 6:21 PM
  * Created by               : xurmo
  *
  */
@@ -28,22 +28,26 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "XurmoUserSession")
 @NamedQueries( {
-        @NamedQuery(name = "XurmoUserSession.findByUsername", query = "SELECT x FROM XurmoUserSession x WHERE x.username_ = :username"),
-        @NamedQuery(name = "XurmoUserSession.findByCookie", query = "SELECT x FROM XurmoUserSession x WHERE x.cookie_ = :cookie"),
-        @NamedQuery(name = "XurmoUserSession.findByLastUpdateTime", query = "SELECT x FROM XurmoUserSession x WHERE x.lastUpdateTime_ = :lastUpdateTime")
+        @NamedQuery(name = "XurmoUserSession.findByUsername", query = "SELECT x FROM XurmoUserSession x WHERE x.username = :username"),
+        @NamedQuery(name = "XurmoUserSession.findByCookie", query = "SELECT x FROM XurmoUserSession x WHERE x.cookie = :cookie"),
+        @NamedQuery(name = "XurmoUserSession.findByLocation", query = "SELECT x FROM XurmoUserSession x WHERE x.location = :location"),
+        @NamedQuery(name = "XurmoUserSession.findByLastUpdateTime", query = "SELECT x FROM XurmoUserSession x WHERE x.lastUpdateTime = :lastUpdateTime")
     })
 public class XurmoUserSession implements Serializable {
 
     @Id
     @Column(name = "username", nullable = false)
-    private String username_;
+    private String username;
 
     @Column(name = "cookie", nullable = false)
-    private String cookie_;
+    private String cookie;
+
+    @Column(name = "location", nullable = false)
+    private String location;
 
     @Column(name = "lastUpdateTime")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdateTime_;
+    private Date lastUpdateTime;
     
     /** Creates a new instance of XurmoUserSession */
     public XurmoUserSession() {
@@ -54,17 +58,20 @@ public class XurmoUserSession implements Serializable {
      * @param username the username of the XurmoUserSession
      */
     public XurmoUserSession(String username) {
-        username_ = username;
+        this.username = username;
     }
 
     /**
      * Creates a new instance of XurmoUserSession with the specified values.
      * @param username the username of the XurmoUserSession
      * @param cookie the cookie of the XurmoUserSession
+     * @param location the location of the XurmoUserSession
      */
-    public XurmoUserSession(String username, String cookie) {
-        username_ = username;
-        cookie_ = cookie;
+    public XurmoUserSession(String username, String cookie, String location) {
+        this.username = username;
+        this.cookie = cookie;
+        this.location = location;
+        this.lastUpdateTime = new Date();
     }
 
     /**
@@ -72,7 +79,7 @@ public class XurmoUserSession implements Serializable {
      * @return the username
      */
     public String getUsername() {
-        return username_;
+        return this.username;
     }
 
     /**
@@ -80,7 +87,7 @@ public class XurmoUserSession implements Serializable {
      * @param username the new username
      */
     public void setUsername(String username) {
-        username_ = username;
+        this.username = username;
     }
 
     /**
@@ -88,7 +95,7 @@ public class XurmoUserSession implements Serializable {
      * @return the cookie
      */
     public String getCookie() {
-        return cookie_;
+        return this.cookie;
     }
 
     /**
@@ -96,7 +103,23 @@ public class XurmoUserSession implements Serializable {
      * @param cookie the new cookie
      */
     public void setCookie(String cookie) {
-        cookie_ = cookie;
+        this.cookie = cookie;
+    }
+
+    /**
+     * Gets the location of this XurmoUserSession.
+     * @return the location
+     */
+    public String getLocation() {
+        return this.location;
+    }
+
+    /**
+     * Sets the location of this XurmoUserSession to the specified value.
+     * @param location the new location
+     */
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     /**
@@ -104,7 +127,7 @@ public class XurmoUserSession implements Serializable {
      * @return the lastUpdateTime
      */
     public Date getLastUpdateTime() {
-        return lastUpdateTime_;
+        return this.lastUpdateTime;
     }
 
     /**
@@ -112,7 +135,7 @@ public class XurmoUserSession implements Serializable {
      * @param lastUpdateTime the new lastUpdateTime
      */
     public void setLastUpdateTime(Date lastUpdateTime) {
-        lastUpdateTime_ = lastUpdateTime;
+        this.lastUpdateTime = lastUpdateTime;
     }
 
     /**
@@ -123,7 +146,7 @@ public class XurmoUserSession implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (username_ != null ? username_.hashCode() : 0);
+        hash += (this.username != null ? this.username.hashCode() : 0);
         return hash;
     }
 
@@ -142,7 +165,7 @@ public class XurmoUserSession implements Serializable {
             return false;
         }
         XurmoUserSession other = (XurmoUserSession)object;
-        if (username_ != other.username_ && (username_ == null || !username_.equals(other.username_))) return false;
+        if (this.username != other.username && (this.username == null || !this.username.equals(other.username))) return false;
         return true;
     }
 
@@ -153,7 +176,7 @@ public class XurmoUserSession implements Serializable {
      */
     @Override
     public String toString() {
-        return "com.xurmo.connect.user.XurmoUserSession[username=" + username_ + "]";
+        return "com.xurmo.connect.user.XurmoUserSession[username=" + username + "]";
     }
     
 }

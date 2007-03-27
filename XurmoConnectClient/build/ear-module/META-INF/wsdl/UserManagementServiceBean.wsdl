@@ -1,0 +1,158 @@
+<definitions name='UserManagementServiceBeanService' targetNamespace='http://user.connect.xurmo.com/jaws' xmlns='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:tns='http://user.connect.xurmo.com/jaws' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+ <types>
+  <schema elementFormDefault='qualified' targetNamespace='http://user.connect.xurmo.com/jaws' xmlns='http://www.w3.org/2001/XMLSchema' xmlns:soap11-enc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://user.connect.xurmo.com/jaws' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
+   <complexType name='createUser'>
+    <sequence>
+     <element name='username' nillable='true' type='string'/>
+     <element name='password' nillable='true' type='string'/>
+     <element name='salutation' nillable='true' type='string'/>
+     <element name='fname' nillable='true' type='string'/>
+     <element name='lname' nillable='true' type='string'/>
+     <element name='mobile' nillable='true' type='string'/>
+     <element name='email' nillable='true' type='string'/>
+     <element name='gender' nillable='true' type='string'/>
+     <element name='dob' nillable='true' type='dateTime'/>
+    </sequence>
+   </complexType>
+   <complexType name='createUserResponse'>
+    <sequence>
+     <element name='result' type='int'/>
+    </sequence>
+   </complexType>
+   <complexType name='doLogin'>
+    <sequence>
+     <element name='username' nillable='true' type='string'/>
+     <element name='password' nillable='true' type='string'/>
+     <element name='imsi' nillable='true' type='string'/>
+     <element name='siteId' nillable='true' type='string'/>
+     <element name='cellId' nillable='true' type='string'/>
+     <element name='locationString' nillable='true' type='string'/>
+    </sequence>
+   </complexType>
+   <complexType name='doLoginResponse'>
+    <sequence>
+     <element name='result' type='int'/>
+    </sequence>
+   </complexType>
+   <complexType name='doLogout'>
+    <sequence>
+     <element name='username' nillable='true' type='string'/>
+    </sequence>
+   </complexType>
+   <complexType name='doLogoutResponse'>
+    <sequence>
+     <element name='result' type='int'/>
+    </sequence>
+   </complexType>
+   <complexType name='updateLocation'>
+    <sequence>
+     <element name='username' nillable='true' type='string'/>
+     <element name='cookie' nillable='true' type='string'/>
+     <element name='imsi' nillable='true' type='string'/>
+     <element name='siteId' nillable='true' type='string'/>
+     <element name='cellId' nillable='true' type='string'/>
+     <element name='locationString' nillable='true' type='string'/>
+    </sequence>
+   </complexType>
+   <complexType name='updateLocationResponse'>
+    <sequence>
+     <element name='result' type='int'/>
+    </sequence>
+   </complexType>
+   <element name='createUser' type='tns:createUser'/>
+   <element name='createUserResponse' type='tns:createUserResponse'/>
+   <element name='doLogin' type='tns:doLogin'/>
+   <element name='doLoginResponse' type='tns:doLoginResponse'/>
+   <element name='doLogout' type='tns:doLogout'/>
+   <element name='doLogoutResponse' type='tns:doLogoutResponse'/>
+   <element name='updateLocation' type='tns:updateLocation'/>
+   <element name='updateLocationResponse' type='tns:updateLocationResponse'/>
+  </schema>
+ </types>
+ <message name='UserManagementServiceBean_updateLocationResponse'>
+  <part element='tns:updateLocationResponse' name='result'/>
+ </message>
+ <message name='UserManagementServiceBean_doLogoutResponse'>
+  <part element='tns:doLogoutResponse' name='result'/>
+ </message>
+ <message name='UserManagementServiceBean_updateLocation'>
+  <part element='tns:updateLocation' name='parameters'/>
+ </message>
+ <message name='UserManagementServiceBean_doLoginResponse'>
+  <part element='tns:doLoginResponse' name='result'/>
+ </message>
+ <message name='UserManagementServiceBean_createUser'>
+  <part element='tns:createUser' name='parameters'/>
+ </message>
+ <message name='UserManagementServiceBean_doLogin'>
+  <part element='tns:doLogin' name='parameters'/>
+ </message>
+ <message name='UserManagementServiceBean_doLogout'>
+  <part element='tns:doLogout' name='parameters'/>
+ </message>
+ <message name='UserManagementServiceBean_createUserResponse'>
+  <part element='tns:createUserResponse' name='result'/>
+ </message>
+ <portType name='UserManagementServiceBean'>
+  <operation name='createUser'>
+   <input message='tns:UserManagementServiceBean_createUser'/>
+   <output message='tns:UserManagementServiceBean_createUserResponse'/>
+  </operation>
+  <operation name='doLogin'>
+   <input message='tns:UserManagementServiceBean_doLogin'/>
+   <output message='tns:UserManagementServiceBean_doLoginResponse'/>
+  </operation>
+  <operation name='doLogout'>
+   <input message='tns:UserManagementServiceBean_doLogout'/>
+   <output message='tns:UserManagementServiceBean_doLogoutResponse'/>
+  </operation>
+  <operation name='updateLocation'>
+   <input message='tns:UserManagementServiceBean_updateLocation'/>
+   <output message='tns:UserManagementServiceBean_updateLocationResponse'/>
+  </operation>
+ </portType>
+ <binding name='UserManagementServiceBeanBinding' type='tns:UserManagementServiceBean'>
+  <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http'/>
+  <operation name='createUser'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='doLogin'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='doLogout'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='updateLocation'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+ </binding>
+ <service name='UserManagementServiceBeanService'>
+  <port binding='tns:UserManagementServiceBeanBinding' name='UserManagementServiceBeanPort'>
+   <soap:address location='http://avasthidesktop:8080/XurmoConnect-ejb/UserManagementServiceBean'/>
+  </port>
+ </service>
+</definitions>

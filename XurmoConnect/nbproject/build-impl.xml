@@ -104,7 +104,7 @@ is divided into following sections:
         <ant target="dist-ear" inheritall="false" antfile="${project.XurmoConnect-ejb}/build.xml">
             <property name="dist.ear.dir" location="${build.dir}"/>
         </ant>
-        <ant target="dist-ear" inheritall="false" antfile="${project.XurmoConnect-war}/build.xml">
+        <ant target="dist-ear" inheritall="false" antfile="${project.XurmoConnectClient}/build.xml">
             <property name="dist.ear.dir" location="${build.dir}"/>
         </ant>
     </target>
@@ -119,8 +119,8 @@ is divided into following sections:
         <copy todir="${build.dir}/META-INF">
             <fileset dir="${meta.inf}"/>
         </copy>
+        <copy file="${reference.XurmoConnectClient.j2ee-module-car}" todir="${build.dir}//"/>
         <copy file="${reference.XurmoConnect-ejb.dist-ear}" todir="${build.dir}//"/>
-        <copy file="${reference.XurmoConnect-war.dist-ear}" todir="${build.dir}//"/>
     </target>
     <target name="post-compile">
         <!-- Empty placeholder for easier customization. -->
@@ -176,7 +176,6 @@ is divided into following sections:
     <target name="-run-deploy-am" unless="no.deps">
         <!-- Task to deploy to the Access Manager runtime. -->
         <ant target="-run-deploy-am" inheritall="false" antfile="${project.XurmoConnect-ejb}/build.xml"/>
-        <ant target="-run-deploy-am" inheritall="false" antfile="${project.XurmoConnect-war}/build.xml"/>
     </target>
     <target name="run-deploy" depends="dist,pre-run-deploy,-pre-nbmodule-run-deploy,-run-deploy-nb,-init-deploy-ant,-deploy-ant,-run-deploy-am,-post-nbmodule-run-deploy,post-run-deploy"/>
     <target name="-run-deploy-nb" if="netbeans.home">
@@ -261,6 +260,39 @@ is divided into following sections:
     <target name="run-ac" depends="init" if="app.client">
         <antcall target="run-${app.client}"/>
     </target>
+    <target name="run-XurmoConnectClient" depends="-tool-XurmoConnectClient,-java-XurmoConnectClient"/>
+    <target name="-tool-XurmoConnectClient" unless="j2ee.clientName" if="j2ee.appclient.mainclass.args" depends="-as-retrieve-option-workaround">
+        <java fork="true" classname="${j2ee.appclient.tool.mainclass}">
+            <jvmarg line="${j2ee.appclient.tool.jvmoptions}"/>
+            <jvmarg line="${j2ee.appclient.jvmoptions.param}"/>
+            <arg line="${j2ee.appclient.tool.args}"/>
+            <arg line="-client ${client.jar}"/>
+            <arg line="${j2ee.appclient.mainclass.tool.param}"/>
+            <arg line="${application.args.param}"/>
+            <classpath>
+                <path path="${j2ee.platform.classpath}:${j2ee.appclient.tool.runtime}"/>
+            </classpath>
+            <syspropertyset>
+                <propertyref prefix="run-sys-prop."/>
+                <mapper type="glob" from="run-sys-prop.*" to="*"/>
+            </syspropertyset>
+        </java>
+    </target>
+    <target name="-java-XurmoConnectClient" if="j2ee.clientName" unless="j2ee.appclient.mainclass.args">
+        <java fork="true" classname="${main.class}">
+            <jvmarg line="${j2ee.appclient.tool.jvmoptions}"/>
+            <jvmarg line="-Dj2ee.clientName=${app.client}"/>
+            <jvmarg line="${j2ee.appclient.jvmoptions.param}"/>
+            <arg line="${application.args.param}"/>
+            <classpath>
+                <path path="${jar.content.additional}:${j2ee.platform.classpath}:${j2ee.appclient.tool.runtime}"/>
+            </classpath>
+            <syspropertyset>
+                <propertyref prefix="run-sys-prop."/>
+                <mapper type="glob" from="run-sys-prop.*" to="*"/>
+            </syspropertyset>
+        </java>
+    </target>
     <target name="-as-retrieve-option-workaround" if="j2ee.appclient.mainclass.args" unless="j2ee.clientName">
         <property name="client.jar" value="${dist.dir}/XurmoConnectClient.jar"/>
         <sleep seconds="3"/>
@@ -325,6 +357,13 @@ is divided into following sections:
         <nbdeploy debugmode="false" clientUrlPart="${client.urlPart}" clientModuleUri="${client.module.uri}"/>
         <antcall target="debug-${app.client}"/>
     </target>
+    <target name="debug-XurmoConnectClient" depends="-debug-tool-XurmoConnectClient,-debug-java-XurmoConnectClient"/>
+    <target name="-debug-tool-XurmoConnectClient" unless="j2ee.clientName" if="j2ee.appclient.mainclass.args" depends="init,-as-retrieve-option-workaround">
+        <ear2:debug-appclient mainclass="${j2ee.appclient.tool.mainclass}" args="-client ${client.jar} ${j2ee.appclient.tool.args} ${j2ee.appclient.mainclass.tool.param} ${application.args.param}"/>
+    </target>
+    <target name="-debug-java-XurmoConnectClient" if="j2ee.clientName" unless="j2ee.appclient.mainclass.args">
+        <ear2:debug-appclient mainclass="${main.class}" args="${application.args.param}" classpath="${jar.content.additional}"/>
+    </target>
     <!--
     CLEANUP SECTION
     -->
@@ -332,7 +371,7 @@ is divided into following sections:
         <ant target="clean-ear" inheritall="false" antfile="${project.XurmoConnect-ejb}/build.xml">
             <property name="dist.ear.dir" location="${build.dir}"/>
         </ant>
-        <ant target="clean-ear" inheritall="false" antfile="${project.XurmoConnect-war}/build.xml">
+        <ant target="clean-ear" inheritall="false" antfile="${project.XurmoConnectClient}/build.xml">
             <property name="dist.ear.dir" location="${build.dir}"/>
         </ant>
     </target>

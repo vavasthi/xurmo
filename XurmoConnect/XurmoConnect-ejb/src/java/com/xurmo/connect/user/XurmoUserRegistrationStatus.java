@@ -29,4 +29,5 @@ public class XurmoUserRegistrationStatus {
     public static final int EMAIL_EXISTS_MASK = 0x10;
     public static final int EMAIL_INVALID_MASK = 0x20;
     public static final int PASSWORD_INVALID_MASK = 0x40;
+    public static final int PASSWORD_COULD_NOT_BE_ENCODED_MASK = 0x80;
 }

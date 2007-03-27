@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://java.sun.com/xml/ns/jax-rpc/ri/config">
+	<wsdl location="file:/home/xurmo/work/svn/XurmoConnectClient/src/conf/wsdl/UserManagementServiceBean.wsdl" packageName="com.xurmo.connect.user.test"/>
+</configuration>

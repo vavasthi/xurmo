@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java-wsdl-mapping xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.1" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee    http://www.ibm.com/webservices/xsd/j2ee_jaxrpc_mapping_1_1.xsd">
+<package-mapping>
+<package-type>com.xurmo.connect.user.test</package-type>
+<namespaceURI>http://user.connect.xurmo.com/jaws</namespaceURI>
+</package-mapping>
+<java-xml-type-mapping>
+<java-type>com.xurmo.connect.user.test.UpdateLocationResponse</java-type>
+<root-type-qname xmlns:typeNS="http://user.connect.xurmo.com/jaws">typeNS:updateLocationResponse</root-type-qname>
+<qname-scope>complexType</qname-scope>
+<variable-mapping>
+<java-variable-name>result</java-variable-name>
+<xml-element-name>result</xml-element-name>
+</variable-mapping>
+</java-xml-type-mapping>
+<java-xml-type-mapping>
+<java-type>com.xurmo.connect.user.test.DoLogout</java-type>
+<root-type-qname xmlns:typeNS="http://user.connect.xurmo.com/jaws">typeNS:doLogout</root-type-qname>
+<qname-scope>complexType</qname-scope>
+<variable-mapping>
+<java-variable-name>username</java-variable-name>
+<xml-element-name>username</xml-element-name>
+</variable-mapping>
+</java-xml-type-mapping>
+<java-xml-type-mapping>
+<java-type>com.xurmo.connect.user.test.DoLogin</java-type>
+<root-type-qname xmlns:typeNS="http://user.connect.xurmo.com/jaws">typeNS:doLogin</root-type-qname>
+<qname-scope>complexType</qname-scope>
+<variable-mapping>
+<java-variable-name>username</java-variable-name>
+<xml-element-name>username</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>password</java-variable-name>
+<xml-element-name>password</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>imsi</java-variable-name>
+<xml-element-name>imsi</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>siteId</java-variable-name>
+<xml-element-name>siteId</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>cellId</java-variable-name>
+<xml-element-name>cellId</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>locationString</java-variable-name>
+<xml-element-name>locationString</xml-element-name>
+</variable-mapping>
+</java-xml-type-mapping>
+<java-xml-type-mapping>
+<java-type>com.xurmo.connect.user.test.DoLogoutResponse</java-type>
+<root-type-qname xmlns:typeNS="http://user.connect.xurmo.com/jaws">typeNS:doLogoutResponse</root-type-qname>
+<qname-scope>complexType</qname-scope>
+<variable-mapping>
+<java-variable-name>result</java-variable-name>
+<xml-element-name>result</xml-element-name>
+</variable-mapping>
+</java-xml-type-mapping>
+<java-xml-type-mapping>
+<java-type>com.xurmo.connect.user.test.CreateUserResponse</java-type>
+<root-type-qname xmlns:typeNS="http://user.connect.xurmo.com/jaws">typeNS:createUserResponse</root-type-qname>
+<qname-scope>complexType</qname-scope>
+<variable-mapping>
+<java-variable-name>result</java-variable-name>
+<xml-element-name>result</xml-element-name>
+</variable-mapping>
+</java-xml-type-mapping>
+<java-xml-type-mapping>
+<java-type>com.xurmo.connect.user.test.CreateUser</java-type>
+<root-type-qname xmlns:typeNS="http://user.connect.xurmo.com/jaws">typeNS:createUser</root-type-qname>
+<qname-scope>complexType</qname-scope>
+<variable-mapping>
+<java-variable-name>username</java-variable-name>
+<xml-element-name>username</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>password</java-variable-name>
+<xml-element-name>password</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>salutation</java-variable-name>
+<xml-element-name>salutation</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>fname</java-variable-name>
+<xml-element-name>fname</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>lname</java-variable-name>
+<xml-element-name>lname</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>mobile</java-variable-name>
+<xml-element-name>mobile</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>email</java-variable-name>
+<xml-element-name>email</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>gender</java-variable-name>
+<xml-element-name>gender</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>dob</java-variable-name>
+<xml-element-name>dob</xml-element-name>
+</variable-mapping>
+</java-xml-type-mapping>
+<java-xml-type-mapping>
+<java-type>com.xurmo.connect.user.test.DoLoginResponse</java-type>
+<root-type-qname xmlns:typeNS="http://user.connect.xurmo.com/jaws">typeNS:doLoginResponse</root-type-qname>
+<qname-scope>complexType</qname-scope>
+<variable-mapping>
+<java-variable-name>result</java-variable-name>
+<xml-element-name>result</xml-element-name>
+</variable-mapping>
+</java-xml-type-mapping>
+<java-xml-type-mapping>
+<java-type>com.xurmo.connect.user.test.UpdateLocation</java-type>
+<root-type-qname xmlns:typeNS="http://user.connect.xurmo.com/jaws">typeNS:updateLocation</root-type-qname>
+<qname-scope>complexType</qname-scope>
+<variable-mapping>
+<java-variable-name>username</java-variable-name>
+<xml-element-name>username</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>cookie</java-variable-name>
+<xml-element-name>cookie</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>imsi</java-variable-name>
+<xml-element-name>imsi</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>siteId</java-variable-name>
+<xml-element-name>siteId</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>cellId</java-variable-name>
+<xml-element-name>cellId</xml-element-name>
+</variable-mapping>
+<variable-mapping>
+<java-variable-name>locationString</java-variable-name>
+<xml-element-name>locationString</xml-element-name>
+</variable-mapping>
+</java-xml-type-mapping>
+<service-interface-mapping>
+<service-interface>com.xurmo.connect.user.test.UserManagementServiceBeanService</service-interface>
+<wsdl-service-name xmlns:serviceNS="http://user.connect.xurmo.com/jaws">serviceNS:UserManagementServiceBeanService</wsdl-service-name>
+<port-mapping>
+<port-name>UserManagementServiceBeanPort</port-name>
+<java-port-name>UserManagementServiceBeanPort</java-port-name>
+</port-mapping>
+</service-interface-mapping>
+<service-endpoint-interface-mapping>
+<service-endpoint-interface>com.xurmo.connect.user.test.UserManagementServiceBean</service-endpoint-interface>
+<wsdl-port-type xmlns:portTypeNS="http://user.connect.xurmo.com/jaws">portTypeNS:UserManagementServiceBean</wsdl-port-type>
+<wsdl-binding xmlns:bindingNS="http://user.connect.xurmo.com/jaws">bindingNS:UserManagementServiceBeanBinding</wsdl-binding>
+<service-endpoint-method-mapping>
+<java-method-name>createUser</java-method-name>
+<wsdl-operation>createUser</wsdl-operation>
+<wrapped-element/>
+<method-param-parts-mapping>
+<param-position>0</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_createUser</wsdl-message>
+<wsdl-message-part-name>username</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>1</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_createUser</wsdl-message>
+<wsdl-message-part-name>password</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>2</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_createUser</wsdl-message>
+<wsdl-message-part-name>salutation</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>3</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_createUser</wsdl-message>
+<wsdl-message-part-name>fname</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>4</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_createUser</wsdl-message>
+<wsdl-message-part-name>lname</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>5</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_createUser</wsdl-message>
+<wsdl-message-part-name>mobile</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>6</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_createUser</wsdl-message>
+<wsdl-message-part-name>email</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>7</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_createUser</wsdl-message>
+<wsdl-message-part-name>gender</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>8</param-position>
+<param-type>java.util.Calendar</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_createUser</wsdl-message>
+<wsdl-message-part-name>dob</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<wsdl-return-value-mapping>
+<method-return-value>int</method-return-value>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_createUserResponse</wsdl-message>
+<wsdl-message-part-name>result</wsdl-message-part-name>
+</wsdl-return-value-mapping>
+</service-endpoint-method-mapping>
+<service-endpoint-method-mapping>
+<java-method-name>doLogin</java-method-name>
+<wsdl-operation>doLogin</wsdl-operation>
+<wrapped-element/>
+<method-param-parts-mapping>
+<param-position>0</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_doLogin</wsdl-message>
+<wsdl-message-part-name>username</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>1</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_doLogin</wsdl-message>
+<wsdl-message-part-name>password</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>2</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_doLogin</wsdl-message>
+<wsdl-message-part-name>imsi</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>3</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_doLogin</wsdl-message>
+<wsdl-message-part-name>siteId</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>4</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_doLogin</wsdl-message>
+<wsdl-message-part-name>cellId</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>5</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_doLogin</wsdl-message>
+<wsdl-message-part-name>locationString</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<wsdl-return-value-mapping>
+<method-return-value>int</method-return-value>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_doLoginResponse</wsdl-message>
+<wsdl-message-part-name>result</wsdl-message-part-name>
+</wsdl-return-value-mapping>
+</service-endpoint-method-mapping>
+<service-endpoint-method-mapping>
+<java-method-name>doLogout</java-method-name>
+<wsdl-operation>doLogout</wsdl-operation>
+<wrapped-element/>
+<method-param-parts-mapping>
+<param-position>0</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_doLogout</wsdl-message>
+<wsdl-message-part-name>username</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<wsdl-return-value-mapping>
+<method-return-value>int</method-return-value>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_doLogoutResponse</wsdl-message>
+<wsdl-message-part-name>result</wsdl-message-part-name>
+</wsdl-return-value-mapping>
+</service-endpoint-method-mapping>
+<service-endpoint-method-mapping>
+<java-method-name>updateLocation</java-method-name>
+<wsdl-operation>updateLocation</wsdl-operation>
+<wrapped-element/>
+<method-param-parts-mapping>
+<param-position>0</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_updateLocation</wsdl-message>
+<wsdl-message-part-name>username</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>1</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_updateLocation</wsdl-message>
+<wsdl-message-part-name>cookie</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>2</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_updateLocation</wsdl-message>
+<wsdl-message-part-name>imsi</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>3</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_updateLocation</wsdl-message>
+<wsdl-message-part-name>siteId</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>4</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_updateLocation</wsdl-message>
+<wsdl-message-part-name>cellId</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<method-param-parts-mapping>
+<param-position>5</param-position>
+<param-type>java.lang.String</param-type>
+<wsdl-message-mapping>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_updateLocation</wsdl-message>
+<wsdl-message-part-name>locationString</wsdl-message-part-name>
+<parameter-mode>IN</parameter-mode>
+</wsdl-message-mapping>
+</method-param-parts-mapping>
+<wsdl-return-value-mapping>
+<method-return-value>int</method-return-value>
+<wsdl-message xmlns:wsdlMsgNS="http://user.connect.xurmo.com/jaws">wsdlMsgNS:UserManagementServiceBean_updateLocationResponse</wsdl-message>
+<wsdl-message-part-name>result</wsdl-message-part-name>
+</wsdl-return-value-mapping>
+</service-endpoint-method-mapping>
+</service-endpoint-interface-mapping>
+</java-wsdl-mapping>
