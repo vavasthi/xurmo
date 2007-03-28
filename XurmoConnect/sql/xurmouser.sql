@@ -34,8 +34,8 @@ create table XurmoPersonalPhoneNumberEntry
 (
   username char(32) not null,
   addressType char(32),
-  addrss char(32),
-  primary key(username, numberType)
+  address char(32),
+  primary key(username, addressType)
 ) default character set utf8;
 
 drop table XurmoPersonalEmailEntry;
