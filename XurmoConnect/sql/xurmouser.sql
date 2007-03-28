@@ -21,6 +21,31 @@ create table XurmoUserSession
   lastUpdateTime datetime
 ) default character set utf8;
 
+drop table XurmoPersonalAddressBook;
+create table XurmoPersonalAddressBook
+(
+  username char(32) not null primary key,
+  fullName varchar(256) not null,
+  unique key(username)
+) default character set utf8;
+
+drop table XurmoPersonalPhoneNumberEntry;
+create table XurmoPersonalPhoneNumberEntry
+(
+  username char(32) not null,
+  addressType char(32),
+  addrss char(32),
+  primary key(username, numberType)
+) default character set utf8;
+
+drop table XurmoPersonalEmailEntry;
+create table XurmoPersonalEmailEntry
+(
+  username char(32) not null primary key,
+  email char(127)
+) default character set utf8;
+
+
 drop table XurmoCellLocationMap;
 create table XurmoCellLocationMap
 (

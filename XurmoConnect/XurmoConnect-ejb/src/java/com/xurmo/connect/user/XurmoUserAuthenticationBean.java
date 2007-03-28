@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
@@ -124,9 +125,10 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         }
     }
     
-    public int doLogin(String username, String password, String imsi, String siteId, String cellId, String locationString) {
+    public UserAuthenticationReturnStatus doLogin(String username, String password, String imsi, String siteId, String cellId, String locationString) {
         
         int error = XurmoUserSignonStatus.SIGNONSTATUS_NO_ERROR;
+        String cookie = new String();
         locationString = updateLocationMap(imsi, siteId, cellId, locationString);
         XurmoUserSessionManager.instance().removeSession(username, em_);
         try {
@@ -134,6 +136,7 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
             XurmoUser xu = (XurmoUser) (em_.createNamedQuery("XurmoUser.findByUsername").setParameter("username", username).getSingleResult());
             if (XurmoUserEncryption.instance().validateEncryptedPassword(password, xu.getPassword())) {
                 XurmoUserSession xus = XurmoUserSessionManager.instance().createSession(xu.getUsername(), XurmoUserEncryption.instance().getRandomCookie(imsi), locationString, em_);
+                cookie = xus.getCookie();
             }
             else {
                 error |= XurmoUserSignonStatus.SIGNONFAILED_INVALID_USERNAME_OR_PASSWORD_MASK;
@@ -141,7 +144,7 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         } catch (Exception ex) {
             error |= XurmoUserSignonStatus.SIGNONFAILED_INVALID_USERNAME_OR_PASSWORD_MASK;
         }
-        return error;
+        return new UserAuthenticationReturnStatus(error, cookie);
     }
     
     private String updateLocationMap(String imsi, String siteId, String cellId, String locationString) {
@@ -149,7 +152,7 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         String mobileCountryCode = imsi.substring(0, 3);
         String mobileNetworkCode = imsi.substring(3, 6);
         if (locationString != null && !locationString.equals("") && !locationString.equals("Unknown")) {
-            javax.persistence.Query q = em_.createNamedQuery("XurmoCellLocationMap.findByCellInfo");
+            Query q = em_.createNamedQuery("XurmoCellLocationMap.findByCellInfo");
             q.setParameter("siteId", siteId);
             q.setParameter("cellId", cellId);
             q.setParameter("mobileCountryCode", mobileCountryCode);
@@ -169,15 +172,16 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         return locationString;
     }
     
-    public int updateLocation(String username, String cookie, String imsi, String siteId, String cellId, String locationString) {
+    public UserAuthenticationReturnStatus updateLocation(String username, String cookie, String imsi, String siteId, String cellId, String locationString) {
         
         int error = XurmoUserSignonStatus.SIGNONSTATUS_NO_ERROR;
         locationString = updateLocationMap(imsi, siteId, cellId, locationString);
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
-        if (xus != null) {
+        if (xus != null && xus.getCookie() == cookie) {
             xus.setLocation(locationString);
+            cookie = xus.getCookie();
         }
-        return error;
+        return new UserAuthenticationReturnStatus(error, cookie);
     }
     public int doLogout(String username) {
         
@@ -185,4 +189,15 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         XurmoUserSessionManager.instance().removeSession(username, em_);
         return error;
     }
+
+    public int uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email) {
+        XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
+        if (xus != null && xus.getCookie() == cookie) {
+            return XurmoUserPersonalAddressBookManager.instance().uploadPersonalAddressBook(username, fullName, addresses, email, em_);
+        } 
+        else {
+            return XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_UPDATE_PROFILE;
+        }
+    }
+
 }

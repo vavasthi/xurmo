@@ -31,7 +31,7 @@
    </complexType>
    <complexType name='doLoginResponse'>
     <sequence>
-     <element name='result' type='int'/>
+     <element name='result' nillable='true' type='tns:UserAuthenticationReturnStatus'/>
     </sequence>
    </complexType>
    <complexType name='doLogout'>
@@ -56,7 +56,33 @@
    </complexType>
    <complexType name='updateLocationResponse'>
     <sequence>
+     <element name='result' nillable='true' type='tns:UserAuthenticationReturnStatus'/>
+    </sequence>
+   </complexType>
+   <complexType name='uploadPersonalAddressBook'>
+    <sequence>
+     <element name='username' nillable='true' type='string'/>
+     <element name='cookie' nillable='true' type='string'/>
+     <element name='fullName' nillable='true' type='string'/>
+     <element maxOccurs='unbounded' minOccurs='0' name='addresses' nillable='true' type='tns:XurmoElectronicAddress'/>
+     <element name='email' nillable='true' type='string'/>
+    </sequence>
+   </complexType>
+   <complexType name='uploadPersonalAddressBookResponse'>
+    <sequence>
      <element name='result' type='int'/>
+    </sequence>
+   </complexType>
+   <complexType name='UserAuthenticationReturnStatus'>
+    <sequence>
+     <element name='cookie' nillable='true' type='string'/>
+     <element name='error' type='int'/>
+    </sequence>
+   </complexType>
+   <complexType name='XurmoElectronicAddress'>
+    <sequence>
+     <element name='address' nillable='true' type='string'/>
+     <element name='addressType' nillable='true' type='string'/>
     </sequence>
    </complexType>
    <element name='createUser' type='tns:createUser'/>
@@ -67,8 +93,13 @@
    <element name='doLogoutResponse' type='tns:doLogoutResponse'/>
    <element name='updateLocation' type='tns:updateLocation'/>
    <element name='updateLocationResponse' type='tns:updateLocationResponse'/>
+   <element name='uploadPersonalAddressBook' type='tns:uploadPersonalAddressBook'/>
+   <element name='uploadPersonalAddressBookResponse' type='tns:uploadPersonalAddressBookResponse'/>
   </schema>
  </types>
+ <message name='UserManagementServiceBean_uploadPersonalAddressBookResponse'>
+  <part element='tns:uploadPersonalAddressBookResponse' name='result'/>
+ </message>
  <message name='UserManagementServiceBean_updateLocationResponse'>
   <part element='tns:updateLocationResponse' name='result'/>
  </message>
@@ -86,6 +117,9 @@
  </message>
  <message name='UserManagementServiceBean_doLogin'>
   <part element='tns:doLogin' name='parameters'/>
+ </message>
+ <message name='UserManagementServiceBean_uploadPersonalAddressBook'>
+  <part element='tns:uploadPersonalAddressBook' name='parameters'/>
  </message>
  <message name='UserManagementServiceBean_doLogout'>
   <part element='tns:doLogout' name='parameters'/>
@@ -109,6 +143,10 @@
   <operation name='updateLocation'>
    <input message='tns:UserManagementServiceBean_updateLocation'/>
    <output message='tns:UserManagementServiceBean_updateLocationResponse'/>
+  </operation>
+  <operation name='uploadPersonalAddressBook'>
+   <input message='tns:UserManagementServiceBean_uploadPersonalAddressBook'/>
+   <output message='tns:UserManagementServiceBean_uploadPersonalAddressBookResponse'/>
   </operation>
  </portType>
  <binding name='UserManagementServiceBeanBinding' type='tns:UserManagementServiceBean'>
@@ -141,6 +179,15 @@
    </output>
   </operation>
   <operation name='updateLocation'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='uploadPersonalAddressBook'>
    <soap:operation soapAction=''/>
    <input>
     <soap:body use='literal'/>

@@ -20,7 +20,9 @@ public interface XurmoUserAuthenticationRemote {
             String gender,
             Date dob);
 
-    int doLogin(String username, String password, String imsi, String siteId, String cellId, String locationString);
+    UserAuthenticationReturnStatus doLogin(String username, String password, String imsi, String siteId, String cellId, String locationString);
     int doLogout(String username);
-    int updateLocation(String username, String cookie, String imsi, String siteId, String cellId, String locationString);    
+    UserAuthenticationReturnStatus updateLocation(String username, String cookie, String imsi, String siteId, String cellId, String locationString);    
+
+    int uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email);
 }
