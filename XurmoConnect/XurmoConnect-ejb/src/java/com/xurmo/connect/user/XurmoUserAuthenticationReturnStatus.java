@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2007, Xurmo.com. All rights reserved.
  *
- * File name                : UserAuthenticationReturnStatus.java
+ * File name                : XurmoUserAuthenticationReturnStatus.java
  * Created on               : March 27, 2007, 11:18 PM
  * Created by               : xurmo
  *
@@ -15,10 +15,12 @@ import java.io.Serializable;
  *
  * @author xurmo
  */
-public class UserAuthenticationReturnStatus implements Serializable {
+public class XurmoUserAuthenticationReturnStatus implements Serializable {
     
-    /** Creates a new instance of UserAuthenticationReturnStatus */
-    public UserAuthenticationReturnStatus(int error, String cookie) {
+    /**
+     * Creates a new instance of XurmoUserAuthenticationReturnStatus
+     */
+    public XurmoUserAuthenticationReturnStatus(int error, String cookie) {
         super();
         error_ = error;
         cookie_ = cookie;
