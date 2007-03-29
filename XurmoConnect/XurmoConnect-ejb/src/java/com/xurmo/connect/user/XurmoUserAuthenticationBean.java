@@ -125,7 +125,7 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         }
     }
     
-    public UserAuthenticationReturnStatus doLogin(String username, String password, String imsi, String siteId, String cellId, String locationString) {
+    public XurmoUserAuthenticationReturnStatus doLogin(String username, String password, String imsi, String siteId, String cellId, String locationString) {
         
         int error = XurmoUserSignonStatus.SIGNONSTATUS_NO_ERROR;
         String cookie = new String();
@@ -144,7 +144,7 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         } catch (Exception ex) {
             error |= XurmoUserSignonStatus.SIGNONFAILED_INVALID_USERNAME_OR_PASSWORD_MASK;
         }
-        return new UserAuthenticationReturnStatus(error, cookie);
+        return new XurmoUserAuthenticationReturnStatus(error, cookie);
     }
     
     private String updateLocationMap(String imsi, String siteId, String cellId, String locationString) {
@@ -172,7 +172,7 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         return locationString;
     }
     
-    public UserAuthenticationReturnStatus updateLocation(String username, String cookie, String imsi, String siteId, String cellId, String locationString) {
+    public XurmoUserAuthenticationReturnStatus updateLocation(String username, String cookie, String imsi, String siteId, String cellId, String locationString) {
         
         int error = XurmoUserSignonStatus.SIGNONSTATUS_NO_ERROR;
         locationString = updateLocationMap(imsi, siteId, cellId, locationString);
@@ -181,7 +181,7 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
             xus.setLocation(locationString);
             cookie = xus.getCookie();
         }
-        return new UserAuthenticationReturnStatus(error, cookie);
+        return new XurmoUserAuthenticationReturnStatus(error, cookie);
     }
     public int doLogout(String username) {
         
@@ -190,13 +190,13 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         return error;
     }
 
-    public int uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email) {
+    public XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email) {
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         if (xus != null && xus.getCookie() == cookie) {
-            return XurmoUserPersonalAddressBookManager.instance().uploadPersonalAddressBook(username, fullName, addresses, email, em_);
+            return new XurmoUploadAddressBookReturnStatus(XurmoUserPersonalAddressBookManager.instance().uploadPersonalAddressBook(username, fullName, addresses, email, em_), cookie);
         } 
         else {
-            return XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_UPDATE_PROFILE;
+            return new XurmoUploadAddressBookReturnStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_UPDATE_PROFILE, cookie);
         }
     }
 
