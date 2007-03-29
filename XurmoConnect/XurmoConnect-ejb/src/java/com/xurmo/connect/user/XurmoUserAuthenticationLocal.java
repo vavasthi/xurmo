@@ -25,5 +25,5 @@ public interface XurmoUserAuthenticationLocal {
     XurmoUserAuthenticationReturnStatus updateLocation(String username, String cookie, String imsi, String siteId, String cellId, String locationString);
 
     XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email);
-    
+    XurmoInvitationSendStatus sendInvitations(String username, String cookie, String[] destinations, String msg);
 }

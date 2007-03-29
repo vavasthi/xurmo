@@ -1,4 +1,4 @@
-<definitions name='UserManagementServiceBeanService' targetNamespace='http://user.connect.xurmo.com/jaws' xmlns='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:tns='http://user.connect.xurmo.com/jaws' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+<definitions name='XurmoUserManagementServiceBeanService' targetNamespace='http://user.connect.xurmo.com/jaws' xmlns='http://schemas.xmlsoap.org/wsdl/' xmlns:soap='http://schemas.xmlsoap.org/wsdl/soap/' xmlns:tns='http://user.connect.xurmo.com/jaws' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
  <types>
   <schema elementFormDefault='qualified' targetNamespace='http://user.connect.xurmo.com/jaws' xmlns='http://www.w3.org/2001/XMLSchema' xmlns:soap11-enc='http://schemas.xmlsoap.org/soap/encoding/' xmlns:tns='http://user.connect.xurmo.com/jaws' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>
    <complexType name='createUser'>
@@ -31,7 +31,7 @@
    </complexType>
    <complexType name='doLoginResponse'>
     <sequence>
-     <element name='result' nillable='true' type='tns:UserAuthenticationReturnStatus'/>
+     <element name='result' nillable='true' type='tns:XurmoUserAuthenticationReturnStatus'/>
     </sequence>
    </complexType>
    <complexType name='doLogout'>
@@ -42,6 +42,43 @@
    <complexType name='doLogoutResponse'>
     <sequence>
      <element name='result' type='int'/>
+    </sequence>
+   </complexType>
+   <complexType name='sendInvitation'>
+    <sequence>
+     <element name='username' nillable='true' type='string'/>
+     <element name='cookie' nillable='true' type='string'/>
+     <element maxOccurs='unbounded' minOccurs='0' name='destinations' nillable='true' type='string'/>
+     <element name='msg' nillable='true' type='string'/>
+    </sequence>
+   </complexType>
+   <complexType name='sendInvitationResponse'>
+    <sequence>
+     <element name='result' nillable='true' type='tns:XurmoInvitationSendStatus'/>
+    </sequence>
+   </complexType>
+   <complexType name='XurmoElectronicAddress'>
+    <sequence>
+     <element name='address' nillable='true' type='string'/>
+     <element name='addressType' nillable='true' type='string'/>
+    </sequence>
+   </complexType>
+   <complexType name='XurmoInvitationSendStatus'>
+    <sequence>
+     <element name='cookie' nillable='true' type='string'/>
+     <element name='error' type='int'/>
+    </sequence>
+   </complexType>
+   <complexType name='XurmoUploadAddressBookReturnStatus'>
+    <sequence>
+     <element name='cookie' nillable='true' type='string'/>
+     <element name='error' type='int'/>
+    </sequence>
+   </complexType>
+   <complexType name='XurmoUserAuthenticationReturnStatus'>
+    <sequence>
+     <element name='cookie' nillable='true' type='string'/>
+     <element name='error' type='int'/>
     </sequence>
    </complexType>
    <complexType name='updateLocation'>
@@ -56,7 +93,7 @@
    </complexType>
    <complexType name='updateLocationResponse'>
     <sequence>
-     <element name='result' nillable='true' type='tns:UserAuthenticationReturnStatus'/>
+     <element name='result' nillable='true' type='tns:XurmoUserAuthenticationReturnStatus'/>
     </sequence>
    </complexType>
    <complexType name='uploadPersonalAddressBook'>
@@ -70,19 +107,7 @@
    </complexType>
    <complexType name='uploadPersonalAddressBookResponse'>
     <sequence>
-     <element name='result' type='int'/>
-    </sequence>
-   </complexType>
-   <complexType name='UserAuthenticationReturnStatus'>
-    <sequence>
-     <element name='cookie' nillable='true' type='string'/>
-     <element name='error' type='int'/>
-    </sequence>
-   </complexType>
-   <complexType name='XurmoElectronicAddress'>
-    <sequence>
-     <element name='address' nillable='true' type='string'/>
-     <element name='addressType' nillable='true' type='string'/>
+     <element name='result' nillable='true' type='tns:XurmoUploadAddressBookReturnStatus'/>
     </sequence>
    </complexType>
    <element name='createUser' type='tns:createUser'/>
@@ -91,65 +116,77 @@
    <element name='doLoginResponse' type='tns:doLoginResponse'/>
    <element name='doLogout' type='tns:doLogout'/>
    <element name='doLogoutResponse' type='tns:doLogoutResponse'/>
+   <element name='sendInvitation' type='tns:sendInvitation'/>
+   <element name='sendInvitationResponse' type='tns:sendInvitationResponse'/>
    <element name='updateLocation' type='tns:updateLocation'/>
    <element name='updateLocationResponse' type='tns:updateLocationResponse'/>
    <element name='uploadPersonalAddressBook' type='tns:uploadPersonalAddressBook'/>
    <element name='uploadPersonalAddressBookResponse' type='tns:uploadPersonalAddressBookResponse'/>
   </schema>
  </types>
- <message name='UserManagementServiceBean_uploadPersonalAddressBookResponse'>
-  <part element='tns:uploadPersonalAddressBookResponse' name='result'/>
- </message>
- <message name='UserManagementServiceBean_updateLocationResponse'>
-  <part element='tns:updateLocationResponse' name='result'/>
- </message>
- <message name='UserManagementServiceBean_doLogoutResponse'>
+ <message name='XurmoUserManagementServiceBean_doLogoutResponse'>
   <part element='tns:doLogoutResponse' name='result'/>
  </message>
- <message name='UserManagementServiceBean_updateLocation'>
-  <part element='tns:updateLocation' name='parameters'/>
+ <message name='XurmoUserManagementServiceBean_sendInvitationResponse'>
+  <part element='tns:sendInvitationResponse' name='result'/>
  </message>
- <message name='UserManagementServiceBean_doLoginResponse'>
-  <part element='tns:doLoginResponse' name='result'/>
- </message>
- <message name='UserManagementServiceBean_createUser'>
-  <part element='tns:createUser' name='parameters'/>
- </message>
- <message name='UserManagementServiceBean_doLogin'>
-  <part element='tns:doLogin' name='parameters'/>
- </message>
- <message name='UserManagementServiceBean_uploadPersonalAddressBook'>
+ <message name='XurmoUserManagementServiceBean_uploadPersonalAddressBook'>
   <part element='tns:uploadPersonalAddressBook' name='parameters'/>
  </message>
- <message name='UserManagementServiceBean_doLogout'>
+ <message name='XurmoUserManagementServiceBean_updateLocationResponse'>
+  <part element='tns:updateLocationResponse' name='result'/>
+ </message>
+ <message name='XurmoUserManagementServiceBean_sendInvitation'>
+  <part element='tns:sendInvitation' name='parameters'/>
+ </message>
+ <message name='XurmoUserManagementServiceBean_doLogout'>
   <part element='tns:doLogout' name='parameters'/>
  </message>
- <message name='UserManagementServiceBean_createUserResponse'>
+ <message name='XurmoUserManagementServiceBean_createUser'>
+  <part element='tns:createUser' name='parameters'/>
+ </message>
+ <message name='XurmoUserManagementServiceBean_uploadPersonalAddressBookResponse'>
+  <part element='tns:uploadPersonalAddressBookResponse' name='result'/>
+ </message>
+ <message name='XurmoUserManagementServiceBean_updateLocation'>
+  <part element='tns:updateLocation' name='parameters'/>
+ </message>
+ <message name='XurmoUserManagementServiceBean_doLogin'>
+  <part element='tns:doLogin' name='parameters'/>
+ </message>
+ <message name='XurmoUserManagementServiceBean_doLoginResponse'>
+  <part element='tns:doLoginResponse' name='result'/>
+ </message>
+ <message name='XurmoUserManagementServiceBean_createUserResponse'>
   <part element='tns:createUserResponse' name='result'/>
  </message>
- <portType name='UserManagementServiceBean'>
+ <portType name='XurmoUserManagementServiceBean'>
   <operation name='createUser'>
-   <input message='tns:UserManagementServiceBean_createUser'/>
-   <output message='tns:UserManagementServiceBean_createUserResponse'/>
+   <input message='tns:XurmoUserManagementServiceBean_createUser'/>
+   <output message='tns:XurmoUserManagementServiceBean_createUserResponse'/>
   </operation>
   <operation name='doLogin'>
-   <input message='tns:UserManagementServiceBean_doLogin'/>
-   <output message='tns:UserManagementServiceBean_doLoginResponse'/>
+   <input message='tns:XurmoUserManagementServiceBean_doLogin'/>
+   <output message='tns:XurmoUserManagementServiceBean_doLoginResponse'/>
   </operation>
   <operation name='doLogout'>
-   <input message='tns:UserManagementServiceBean_doLogout'/>
-   <output message='tns:UserManagementServiceBean_doLogoutResponse'/>
+   <input message='tns:XurmoUserManagementServiceBean_doLogout'/>
+   <output message='tns:XurmoUserManagementServiceBean_doLogoutResponse'/>
+  </operation>
+  <operation name='sendInvitation'>
+   <input message='tns:XurmoUserManagementServiceBean_sendInvitation'/>
+   <output message='tns:XurmoUserManagementServiceBean_sendInvitationResponse'/>
   </operation>
   <operation name='updateLocation'>
-   <input message='tns:UserManagementServiceBean_updateLocation'/>
-   <output message='tns:UserManagementServiceBean_updateLocationResponse'/>
+   <input message='tns:XurmoUserManagementServiceBean_updateLocation'/>
+   <output message='tns:XurmoUserManagementServiceBean_updateLocationResponse'/>
   </operation>
   <operation name='uploadPersonalAddressBook'>
-   <input message='tns:UserManagementServiceBean_uploadPersonalAddressBook'/>
-   <output message='tns:UserManagementServiceBean_uploadPersonalAddressBookResponse'/>
+   <input message='tns:XurmoUserManagementServiceBean_uploadPersonalAddressBook'/>
+   <output message='tns:XurmoUserManagementServiceBean_uploadPersonalAddressBookResponse'/>
   </operation>
  </portType>
- <binding name='UserManagementServiceBeanBinding' type='tns:UserManagementServiceBean'>
+ <binding name='XurmoUserManagementServiceBeanBinding' type='tns:XurmoUserManagementServiceBean'>
   <soap:binding style='document' transport='http://schemas.xmlsoap.org/soap/http'/>
   <operation name='createUser'>
    <soap:operation soapAction=''/>
@@ -178,6 +215,15 @@
     <soap:body use='literal'/>
    </output>
   </operation>
+  <operation name='sendInvitation'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
   <operation name='updateLocation'>
    <soap:operation soapAction=''/>
    <input>
@@ -197,9 +243,9 @@
    </output>
   </operation>
  </binding>
- <service name='UserManagementServiceBeanService'>
-  <port binding='tns:UserManagementServiceBeanBinding' name='UserManagementServiceBeanPort'>
-   <soap:address location='http://avasthidesktop:8080/XurmoConnect-ejb/UserManagementServiceBean'/>
+ <service name='XurmoUserManagementServiceBeanService'>
+  <port binding='tns:XurmoUserManagementServiceBeanBinding' name='XurmoUserManagementServiceBeanPort'>
+   <soap:address location='http://avasthidesktop:8080/XurmoConnect-ejb/XurmoUserManagementServiceBean'/>
   </port>
  </service>
 </definitions>

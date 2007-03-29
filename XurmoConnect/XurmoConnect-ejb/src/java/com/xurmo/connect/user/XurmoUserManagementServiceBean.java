@@ -62,4 +62,13 @@ public class XurmoUserManagementServiceBean {
         // TODO implement operation 
         return xurmoUserAuthenticationBean.uploadPersonalAddressBook(username, cookie, fullName, addresses, email);
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod
+    public XurmoInvitationSendStatus sendInvitation(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "destinations") String[] destinations, @WebParam(name = "msg") String msg) {
+        // TODO implement operation 
+        return xurmoUserAuthenticationBean.sendInvitations(username, cookie, destinations, msg);
+    }
 }

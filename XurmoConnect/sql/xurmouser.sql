@@ -56,3 +56,22 @@ create table XurmoCellLocationMap
   location char(127) not null,
   primary key (mobileCountryCode, mobileNetworkCode, siteId, cellId)
 ) default character set utf8;
+
+drop table XurmoRequestToConnectInbox;
+create table XurmoRequestToConnectInbox
+(
+  
+  username char(32) not null,
+  source char(32) not null,
+  msg varchar(1024) not null,
+  primary key(username, source)
+) default character set utf8;
+
+drop table XurmoResponseToRequestToConnectInbox;
+create table XurmoResponseToRequestToConnectInbox
+(
+  username char(32) not null,
+  source char(32) not null,
+  msg varchar(1024) not null,
+  primary key(username, source)
+) default character set utf8;

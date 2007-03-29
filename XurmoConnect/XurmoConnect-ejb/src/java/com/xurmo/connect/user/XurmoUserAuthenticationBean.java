@@ -200,4 +200,13 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         }
     }
 
+    public XurmoInvitationSendStatus sendInvitations(String username, String cookie, String[] destinations, String msg) {
+        XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
+        if (xus != null && xus.getCookie() == cookie) {
+            return new XurmoInvitationSendStatus(XurmoUserInvitationManager.instance().sendInvitation(username, destinations, msg, em_), cookie);
+        } 
+        else {
+            return new XurmoInvitationSendStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_SEND_INVITATION, cookie);
+        }
+    }
 }

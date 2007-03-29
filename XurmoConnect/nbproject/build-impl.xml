@@ -120,6 +120,7 @@ is divided into following sections:
             <fileset dir="${meta.inf}"/>
         </copy>
         <copy file="${reference.XurmoConnectClient.j2ee-module-car}" todir="${build.dir}//"/>
+        <copy file="${reference.XurmoConnectClient.j2ee-module-car}" todir="${build.dir}//"/>
         <copy file="${reference.XurmoConnect-ejb.dist-ear}" todir="${build.dir}//"/>
     </target>
     <target name="post-compile">

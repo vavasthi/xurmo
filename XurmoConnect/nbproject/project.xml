@@ -12,6 +12,10 @@
                     <path-in-war>/</path-in-war>
                 </library>
                 <library files="1">
+                    <file>${reference.XurmoConnectClient.j2ee-module-car}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library files="1">
                     <file>${reference.XurmoConnect-ejb.dist-ear}</file>
                     <path-in-war>/</path-in-war>
                 </library>
