@@ -14,7 +14,7 @@ import javax.jws.WebService;
 
 @Stateless
 @WebService
-public class UserManagementServiceBean {
+public class XurmoUserManagementServiceBean {
     
     // Add business logic below. (Right-click in editor and choose
     // "EJB Methods > Add Business Method" or "Web Service > Add Operation")
@@ -34,7 +34,7 @@ public class UserManagementServiceBean {
      * Web service operation
      */
     @WebMethod
-    public UserAuthenticationReturnStatus doLogin(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "imsi") String imsi, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "locationString") String locationString) {
+    public XurmoUserAuthenticationReturnStatus doLogin(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "imsi") String imsi, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "locationString") String locationString) {
         return xurmoUserAuthenticationBean.doLogin(username, password, imsi, siteId, cellId, locationString);
     }
 
@@ -50,7 +50,7 @@ public class UserManagementServiceBean {
      * Web service operation
      */
     @WebMethod
-    public UserAuthenticationReturnStatus updateLocation(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "imsi") String imsi, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "locationString") String locationString) {
+    public XurmoUserAuthenticationReturnStatus updateLocation(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "imsi") String imsi, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "locationString") String locationString) {
         return xurmoUserAuthenticationBean.updateLocation(username, cookie, imsi, siteId, cellId, locationString);
     }
 
@@ -58,7 +58,7 @@ public class UserManagementServiceBean {
      * Web service operation
      */
     @WebMethod
-    public int uploadPersonalAddressBook(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "fullName") String fullName, @WebParam(name = "addresses") XurmoElectronicAddress[] addresses, @WebParam(name = "email") String email) {
+    public XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "fullName") String fullName, @WebParam(name = "addresses") XurmoElectronicAddress[] addresses, @WebParam(name = "email") String email) {
         // TODO implement operation 
         return xurmoUserAuthenticationBean.uploadPersonalAddressBook(username, cookie, fullName, addresses, email);
     }
