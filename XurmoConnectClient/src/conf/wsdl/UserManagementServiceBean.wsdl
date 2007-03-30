@@ -19,6 +19,19 @@
      <element name='result' type='int'/>
     </sequence>
    </complexType>
+   <complexType name='disposeInvitations'>
+    <sequence>
+     <element name='username' nillable='true' type='string'/>
+     <element name='cookie' nillable='true' type='string'/>
+     <element maxOccurs='unbounded' minOccurs='0' name='invitationDisposition' nillable='true' type='tns:XurmoInvitationDisposition'/>
+     <element name='msg' nillable='true' type='string'/>
+    </sequence>
+   </complexType>
+   <complexType name='disposeInvitationsResponse'>
+    <sequence>
+     <element name='result' nillable='true' type='tns:XurmoInvitationDispositionStatus'/>
+    </sequence>
+   </complexType>
    <complexType name='doLogin'>
     <sequence>
      <element name='username' nillable='true' type='string'/>
@@ -44,17 +57,20 @@
      <element name='result' type='int'/>
     </sequence>
    </complexType>
-   <complexType name='sendInvitation'>
+   <complexType name='getNetworkLinkTypesResponse'>
+    <sequence>
+     <element maxOccurs='unbounded' minOccurs='0' name='result' nillable='true' type='tns:XurmoNetworkLinkType'/>
+    </sequence>
+   </complexType>
+   <complexType name='getRequestToConnectResponseTypes'>
     <sequence>
      <element name='username' nillable='true' type='string'/>
      <element name='cookie' nillable='true' type='string'/>
-     <element maxOccurs='unbounded' minOccurs='0' name='destinations' nillable='true' type='string'/>
-     <element name='msg' nillable='true' type='string'/>
     </sequence>
    </complexType>
-   <complexType name='sendInvitationResponse'>
+   <complexType name='getRequestToConnectResponseTypesResponse'>
     <sequence>
-     <element name='result' nillable='true' type='tns:XurmoInvitationSendStatus'/>
+     <element maxOccurs='unbounded' minOccurs='0' name='result' nillable='true' type='tns:XurmoRequestToConnectResponseType'/>
     </sequence>
    </complexType>
    <complexType name='XurmoElectronicAddress'>
@@ -63,10 +79,41 @@
      <element name='addressType' nillable='true' type='string'/>
     </sequence>
    </complexType>
+   <complexType name='XurmoInvitationDisposition'>
+    <sequence>
+     <element name='destination' nillable='true' type='string'/>
+     <element name='linkId' type='int'/>
+     <element name='responseId' type='int'/>
+    </sequence>
+   </complexType>
+   <complexType name='XurmoInvitationDispositionStatus'>
+    <sequence>
+     <element name='cookie' nillable='true' type='string'/>
+     <element name='error' type='int'/>
+    </sequence>
+   </complexType>
+   <complexType name='XurmoInvitationForLink'>
+    <sequence>
+     <element name='destination' nillable='true' type='string'/>
+     <element name='linkId' type='int'/>
+    </sequence>
+   </complexType>
    <complexType name='XurmoInvitationSendStatus'>
     <sequence>
      <element name='cookie' nillable='true' type='string'/>
      <element name='error' type='int'/>
+    </sequence>
+   </complexType>
+   <complexType name='XurmoNetworkLinkType'>
+    <sequence>
+     <element name='linkId' nillable='true' type='int'/>
+     <element name='linkName' nillable='true' type='string'/>
+    </sequence>
+   </complexType>
+   <complexType name='XurmoRequestToConnectResponseType'>
+    <sequence>
+     <element name='responseId' nillable='true' type='int'/>
+     <element name='responseLabel' nillable='true' type='string'/>
     </sequence>
    </complexType>
    <complexType name='XurmoUploadAddressBookReturnStatus'>
@@ -79,6 +126,25 @@
     <sequence>
      <element name='cookie' nillable='true' type='string'/>
      <element name='error' type='int'/>
+    </sequence>
+   </complexType>
+   <complexType name='getNetworkLinkTypes'>
+    <sequence>
+     <element name='username' nillable='true' type='string'/>
+     <element name='cookie' nillable='true' type='string'/>
+    </sequence>
+   </complexType>
+   <complexType name='sendInvitation'>
+    <sequence>
+     <element name='username' nillable='true' type='string'/>
+     <element name='cookie' nillable='true' type='string'/>
+     <element maxOccurs='unbounded' minOccurs='0' name='invitationsForLink' nillable='true' type='tns:XurmoInvitationForLink'/>
+     <element name='msg' nillable='true' type='string'/>
+    </sequence>
+   </complexType>
+   <complexType name='sendInvitationResponse'>
+    <sequence>
+     <element name='result' nillable='true' type='tns:XurmoInvitationSendStatus'/>
     </sequence>
    </complexType>
    <complexType name='updateLocation'>
@@ -112,10 +178,16 @@
    </complexType>
    <element name='createUser' type='tns:createUser'/>
    <element name='createUserResponse' type='tns:createUserResponse'/>
+   <element name='disposeInvitations' type='tns:disposeInvitations'/>
+   <element name='disposeInvitationsResponse' type='tns:disposeInvitationsResponse'/>
    <element name='doLogin' type='tns:doLogin'/>
    <element name='doLoginResponse' type='tns:doLoginResponse'/>
    <element name='doLogout' type='tns:doLogout'/>
    <element name='doLogoutResponse' type='tns:doLogoutResponse'/>
+   <element name='getNetworkLinkTypes' type='tns:getNetworkLinkTypes'/>
+   <element name='getNetworkLinkTypesResponse' type='tns:getNetworkLinkTypesResponse'/>
+   <element name='getRequestToConnectResponseTypes' type='tns:getRequestToConnectResponseTypes'/>
+   <element name='getRequestToConnectResponseTypesResponse' type='tns:getRequestToConnectResponseTypesResponse'/>
    <element name='sendInvitation' type='tns:sendInvitation'/>
    <element name='sendInvitationResponse' type='tns:sendInvitationResponse'/>
    <element name='updateLocation' type='tns:updateLocation'/>
@@ -124,9 +196,6 @@
    <element name='uploadPersonalAddressBookResponse' type='tns:uploadPersonalAddressBookResponse'/>
   </schema>
  </types>
- <message name='XurmoUserManagementServiceBean_doLogoutResponse'>
-  <part element='tns:doLogoutResponse' name='result'/>
- </message>
  <message name='XurmoUserManagementServiceBean_sendInvitationResponse'>
   <part element='tns:sendInvitationResponse' name='result'/>
  </message>
@@ -136,14 +205,35 @@
  <message name='XurmoUserManagementServiceBean_updateLocationResponse'>
   <part element='tns:updateLocationResponse' name='result'/>
  </message>
+ <message name='XurmoUserManagementServiceBean_getRequestToConnectResponseTypes'>
+  <part element='tns:getRequestToConnectResponseTypes' name='parameters'/>
+ </message>
  <message name='XurmoUserManagementServiceBean_sendInvitation'>
   <part element='tns:sendInvitation' name='parameters'/>
  </message>
  <message name='XurmoUserManagementServiceBean_doLogout'>
   <part element='tns:doLogout' name='parameters'/>
  </message>
+ <message name='XurmoUserManagementServiceBean_getNetworkLinkTypes'>
+  <part element='tns:getNetworkLinkTypes' name='parameters'/>
+ </message>
+ <message name='XurmoUserManagementServiceBean_doLogin'>
+  <part element='tns:doLogin' name='parameters'/>
+ </message>
+ <message name='XurmoUserManagementServiceBean_disposeInvitationsResponse'>
+  <part element='tns:disposeInvitationsResponse' name='result'/>
+ </message>
+ <message name='XurmoUserManagementServiceBean_doLogoutResponse'>
+  <part element='tns:doLogoutResponse' name='result'/>
+ </message>
+ <message name='XurmoUserManagementServiceBean_getNetworkLinkTypesResponse'>
+  <part element='tns:getNetworkLinkTypesResponse' name='result'/>
+ </message>
  <message name='XurmoUserManagementServiceBean_createUser'>
   <part element='tns:createUser' name='parameters'/>
+ </message>
+ <message name='XurmoUserManagementServiceBean_disposeInvitations'>
+  <part element='tns:disposeInvitations' name='parameters'/>
  </message>
  <message name='XurmoUserManagementServiceBean_uploadPersonalAddressBookResponse'>
   <part element='tns:uploadPersonalAddressBookResponse' name='result'/>
@@ -151,8 +241,8 @@
  <message name='XurmoUserManagementServiceBean_updateLocation'>
   <part element='tns:updateLocation' name='parameters'/>
  </message>
- <message name='XurmoUserManagementServiceBean_doLogin'>
-  <part element='tns:doLogin' name='parameters'/>
+ <message name='XurmoUserManagementServiceBean_getRequestToConnectResponseTypesResponse'>
+  <part element='tns:getRequestToConnectResponseTypesResponse' name='result'/>
  </message>
  <message name='XurmoUserManagementServiceBean_doLoginResponse'>
   <part element='tns:doLoginResponse' name='result'/>
@@ -165,6 +255,10 @@
    <input message='tns:XurmoUserManagementServiceBean_createUser'/>
    <output message='tns:XurmoUserManagementServiceBean_createUserResponse'/>
   </operation>
+  <operation name='disposeInvitations'>
+   <input message='tns:XurmoUserManagementServiceBean_disposeInvitations'/>
+   <output message='tns:XurmoUserManagementServiceBean_disposeInvitationsResponse'/>
+  </operation>
   <operation name='doLogin'>
    <input message='tns:XurmoUserManagementServiceBean_doLogin'/>
    <output message='tns:XurmoUserManagementServiceBean_doLoginResponse'/>
@@ -172,6 +266,14 @@
   <operation name='doLogout'>
    <input message='tns:XurmoUserManagementServiceBean_doLogout'/>
    <output message='tns:XurmoUserManagementServiceBean_doLogoutResponse'/>
+  </operation>
+  <operation name='getNetworkLinkTypes'>
+   <input message='tns:XurmoUserManagementServiceBean_getNetworkLinkTypes'/>
+   <output message='tns:XurmoUserManagementServiceBean_getNetworkLinkTypesResponse'/>
+  </operation>
+  <operation name='getRequestToConnectResponseTypes'>
+   <input message='tns:XurmoUserManagementServiceBean_getRequestToConnectResponseTypes'/>
+   <output message='tns:XurmoUserManagementServiceBean_getRequestToConnectResponseTypesResponse'/>
   </operation>
   <operation name='sendInvitation'>
    <input message='tns:XurmoUserManagementServiceBean_sendInvitation'/>
@@ -197,6 +299,15 @@
     <soap:body use='literal'/>
    </output>
   </operation>
+  <operation name='disposeInvitations'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
   <operation name='doLogin'>
    <soap:operation soapAction=''/>
    <input>
@@ -207,6 +318,24 @@
    </output>
   </operation>
   <operation name='doLogout'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='getNetworkLinkTypes'>
+   <soap:operation soapAction=''/>
+   <input>
+    <soap:body use='literal'/>
+   </input>
+   <output>
+    <soap:body use='literal'/>
+   </output>
+  </operation>
+  <operation name='getRequestToConnectResponseTypes'>
    <soap:operation soapAction=''/>
    <input>
     <soap:body use='literal'/>
