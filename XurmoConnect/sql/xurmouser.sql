@@ -63,8 +63,9 @@ create table XurmoRequestToConnectInbox
   
   username char(32) not null,
   source char(32) not null,
+  linkId int not null,
   msg varchar(1024) not null,
-  primary key(username, source)
+  primary key(username, source, linkId)
 ) default character set utf8;
 
 drop table XurmoResponseToRequestToConnectInbox;
@@ -107,5 +108,6 @@ create table XurmoNetworkLink
   username1 char(32),
   username2 char(32),
   linkId      int,
+  creationDate datetime not null,
   primary key (username1, username2, linkId)
 ) default character set utf8;

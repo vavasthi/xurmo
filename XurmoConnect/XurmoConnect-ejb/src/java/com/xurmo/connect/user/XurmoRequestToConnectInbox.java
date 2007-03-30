@@ -2,7 +2,7 @@
  * Copyright (c) 2007, Xurmo.com. All rights reserved.
  *
  * File name                : XurmoRequestToConnectInbox.java
- * Created on               : March 29, 2007, 9:48 PM
+ * Created on               : March 30, 2007, 11:17 PM
  * Created by               : xurmo
  *
  */
@@ -27,6 +27,8 @@ import javax.persistence.Table;
 @NamedQueries( {
         @NamedQuery(name = "XurmoRequestToConnectInbox.findByUsername", query = "SELECT x FROM XurmoRequestToConnectInbox x WHERE x.xurmoRequestToConnectInboxPK.username = :username"),
         @NamedQuery(name = "XurmoRequestToConnectInbox.findBySource", query = "SELECT x FROM XurmoRequestToConnectInbox x WHERE x.xurmoRequestToConnectInboxPK.source = :source"),
+        @NamedQuery(name = "XurmoRequestToConnectInbox.findByLinkId", query = "SELECT x FROM XurmoRequestToConnectInbox x WHERE x.xurmoRequestToConnectInboxPK.linkId = :linkId"),
+        @NamedQuery(name = "XurmoRequestToConnectInbox.findByUsernameSourceAndLinkId", query = "SELECT x FROM XurmoRequestToConnectInbox x WHERE x.xurmoRequestToConnectInboxPK.linkId = :linkId and x.xurmoRequestToConnectInboxPK.source = :source and x.xurmoRequestToConnectInboxPK.username = :username"),
         @NamedQuery(name = "XurmoRequestToConnectInbox.findByMsg", query = "SELECT x FROM XurmoRequestToConnectInbox x WHERE x.msg = :msg")
     })
 public class XurmoRequestToConnectInbox implements Serializable {
@@ -64,21 +66,23 @@ public class XurmoRequestToConnectInbox implements Serializable {
 
     /**
      * Creates a new instance of XurmoRequestToConnectInboxPK with the specified values.
+     * @param linkId the linkId of the XurmoRequestToConnectInboxPK
      * @param source the source of the XurmoRequestToConnectInboxPK
      * @param username the username of the XurmoRequestToConnectInboxPK
      */
-    public XurmoRequestToConnectInbox(String source, String username) {
-        this.xurmoRequestToConnectInboxPK = new XurmoRequestToConnectInboxPK(source, username);
+    public XurmoRequestToConnectInbox(int linkId, String source, String username, String msg) {
+        this.xurmoRequestToConnectInboxPK = new XurmoRequestToConnectInboxPK(linkId, source, username);
+        this.msg = msg;
     }
 
     /**
      * Creates a new instance of XurmoRequestToConnectInboxPK with the specified values.
+     * @param linkId the linkId of the XurmoRequestToConnectInboxPK
      * @param source the source of the XurmoRequestToConnectInboxPK
      * @param username the username of the XurmoRequestToConnectInboxPK
      */
-    public XurmoRequestToConnectInbox(String source, String username, String msg) {
-        this.xurmoRequestToConnectInboxPK = new XurmoRequestToConnectInboxPK(source, username);
-        this.msg = msg;
+    public XurmoRequestToConnectInbox(int linkId, String source, String username) {
+        this.xurmoRequestToConnectInboxPK = new XurmoRequestToConnectInboxPK(linkId, source, username);
     }
 
     /**

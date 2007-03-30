@@ -67,26 +67,35 @@ public class XurmoUserManagementServiceBean {
      * Web service operation
      */
     @WebMethod
-    public XurmoInvitationSendStatus sendInvitation(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "destinations") String[] destinations, @WebParam(name = "msg") String msg) {
+    public XurmoInvitationSendStatus sendInvitation(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "invitationsForLink") XurmoInvitationForLink[] invitationsForLink, @WebParam(name = "msg") String msg) {
         // TODO implement operation 
-        return xurmoUserAuthenticationBean.sendInvitations(username, cookie, destinations, msg);
+        return xurmoUserAuthenticationBean.sendInvitations(username, cookie, invitationsForLink, msg);
     }
 
     /**
      * Web service operation
      */
     @WebMethod
-    public XurmoNetworkLinkType[] getNetworkLinkTypes(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie) throws com.xurmo.connect.user.XurmoCouldNotRetrieveNetworkLinkTypeException {
+    public XurmoNetworkLinkType[] getNetworkLinkTypes(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie) throws XurmoCouldNotRetrieveNetworkLinkTypeException {
         // TODO implement operation 
         return xurmoUserAuthenticationBean.getNetworkTypes(username, cookie);
     }
 
-        /**
+     /**
      * Web service operation
      */
     @WebMethod
     public XurmoRequestToConnectResponseType[] getRequestToConnectResponseTypes(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie) throws XurmoCouldNotRetrieveRequestToConnectResponseTypesException {
         
         return xurmoUserAuthenticationBean.getRequestToConnectResponseTypes(username, cookie);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod
+    public XurmoInvitationDispositionStatus disposeInvitations(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "invitationDisposition") XurmoInvitationDisposition[] invitationDisposition, @WebParam(name = "msg") String msg) {
+        // TODO implement operation 
+        return xurmoUserAuthenticationBean.disposeInvitations(username, cookie, invitationDisposition, msg);
     }
 }

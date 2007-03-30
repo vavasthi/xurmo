@@ -2,7 +2,7 @@
  * Copyright (c) 2007, Xurmo.com. All rights reserved.
  *
  * File name                : XurmoNetworkLink.java
- * Created on               : March 30, 2007, 8:53 PM
+ * Created on               : March 30, 2007, 11:32 PM
  * Created by               : xurmo
  *
  */
@@ -10,11 +10,15 @@
 package com.xurmo.connect.user;
 
 import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Entity class XurmoNetworkLink
@@ -26,7 +30,8 @@ import javax.persistence.Table;
 @NamedQueries( {
         @NamedQuery(name = "XurmoNetworkLink.findByUsername1", query = "SELECT x FROM XurmoNetworkLink x WHERE x.xurmoNetworkLinkPK.username1 = :username1"),
         @NamedQuery(name = "XurmoNetworkLink.findByUsername2", query = "SELECT x FROM XurmoNetworkLink x WHERE x.xurmoNetworkLinkPK.username2 = :username2"),
-        @NamedQuery(name = "XurmoNetworkLink.findByLinkId", query = "SELECT x FROM XurmoNetworkLink x WHERE x.xurmoNetworkLinkPK.linkId = :linkId")
+        @NamedQuery(name = "XurmoNetworkLink.findByLinkId", query = "SELECT x FROM XurmoNetworkLink x WHERE x.xurmoNetworkLinkPK.linkId = :linkId"),
+        @NamedQuery(name = "XurmoNetworkLink.findByCreationDate", query = "SELECT x FROM XurmoNetworkLink x WHERE x.creationDate = :creationDate")
     })
 public class XurmoNetworkLink implements Serializable {
 
@@ -35,6 +40,10 @@ public class XurmoNetworkLink implements Serializable {
      */
     @EmbeddedId
     protected XurmoNetworkLinkPK xurmoNetworkLinkPK;
+
+    @Column(name = "creationDate", nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date creationDate;
     
     /** Creates a new instance of XurmoNetworkLink */
     public XurmoNetworkLink() {
@@ -49,6 +58,16 @@ public class XurmoNetworkLink implements Serializable {
     }
 
     /**
+     * Creates a new instance of XurmoNetworkLink with the specified values.
+     * @param xurmoNetworkLinkPK the xurmoNetworkLinkPK of the XurmoNetworkLink
+     * @param creationDate the creationDate of the XurmoNetworkLink
+     */
+    public XurmoNetworkLink(XurmoNetworkLinkPK xurmoNetworkLinkPK, Date creationDate) {
+        this.xurmoNetworkLinkPK = xurmoNetworkLinkPK;
+        this.creationDate = creationDate;
+    }
+
+    /**
      * Creates a new instance of XurmoNetworkLinkPK with the specified values.
      * @param linkId the linkId of the XurmoNetworkLinkPK
      * @param username2 the username2 of the XurmoNetworkLinkPK
@@ -56,6 +75,7 @@ public class XurmoNetworkLink implements Serializable {
      */
     public XurmoNetworkLink(int linkId, String username2, String username1) {
         this.xurmoNetworkLinkPK = new XurmoNetworkLinkPK(linkId, username2, username1);
+        this.creationDate = new java.util.Date();
     }
 
     /**
@@ -72,6 +92,22 @@ public class XurmoNetworkLink implements Serializable {
      */
     public void setXurmoNetworkLinkPK(XurmoNetworkLinkPK xurmoNetworkLinkPK) {
         this.xurmoNetworkLinkPK = xurmoNetworkLinkPK;
+    }
+
+    /**
+     * Gets the creationDate of this XurmoNetworkLink.
+     * @return the creationDate
+     */
+    public Date getCreationDate() {
+        return this.creationDate;
+    }
+
+    /**
+     * Sets the creationDate of this XurmoNetworkLink to the specified value.
+     * @param creationDate the new creationDate
+     */
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     /**

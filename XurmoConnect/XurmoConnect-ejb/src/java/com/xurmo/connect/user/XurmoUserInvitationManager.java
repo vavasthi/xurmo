@@ -22,12 +22,12 @@ public class XurmoUserInvitationManager {
         }
         return self_;
     }
-    public int sendInvitation(String user, String[] destinations, String msg, EntityManager em) {
+    public int sendInvitation(String user, XurmoInvitationForLink[] invitations, String msg, EntityManager em) {
         
         try {
             
-            for (int i = 0; i < destinations.length; ++i) {
-                XurmoRequestToConnectInbox rtc = new XurmoRequestToConnectInbox(destinations[i], user, msg);
+            for (int i = 0; i < invitations.length; ++i) {
+                XurmoRequestToConnectInbox rtc = new XurmoRequestToConnectInbox(invitations[i].getLinkId(), invitations[i].getDestination(), user, msg);
                 em.persist(rtc);
             }
             return XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR;

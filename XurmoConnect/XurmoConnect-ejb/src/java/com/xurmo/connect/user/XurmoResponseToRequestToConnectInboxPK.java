@@ -2,7 +2,7 @@
  * Copyright (c) 2007, Xurmo.com. All rights reserved.
  *
  * File name                : XurmoResponseToRequestToConnectInboxPK.java
- * Created on               : March 29, 2007, 9:48 PM
+ * Created on               : March 30, 2007, 11:41 PM
  * Created by               : xurmo
  *
  */
@@ -26,6 +26,9 @@ public class XurmoResponseToRequestToConnectInboxPK implements Serializable {
 
     @Column(name = "source", nullable = false)
     private String source;
+
+    @Column(name = "linkId", nullable = false)
+    private int linkId;
     
     /** Creates a new instance of XurmoResponseToRequestToConnectInboxPK */
     public XurmoResponseToRequestToConnectInboxPK() {
@@ -33,10 +36,12 @@ public class XurmoResponseToRequestToConnectInboxPK implements Serializable {
 
     /**
      * Creates a new instance of XurmoResponseToRequestToConnectInboxPK with the specified values.
+     * @param linkId the linkId of the XurmoResponseToRequestToConnectInboxPK
      * @param source the source of the XurmoResponseToRequestToConnectInboxPK
      * @param username the username of the XurmoResponseToRequestToConnectInboxPK
      */
-    public XurmoResponseToRequestToConnectInboxPK(String source, String username) {
+    public XurmoResponseToRequestToConnectInboxPK(int linkId, String source, String username) {
+        this.linkId = linkId;
         this.source = source;
         this.username = username;
     }
@@ -74,6 +79,22 @@ public class XurmoResponseToRequestToConnectInboxPK implements Serializable {
     }
 
     /**
+     * Gets the linkId of this XurmoResponseToRequestToConnectInboxPK.
+     * @return the linkId
+     */
+    public int getLinkId() {
+        return this.linkId;
+    }
+
+    /**
+     * Sets the linkId of this XurmoResponseToRequestToConnectInboxPK to the specified value.
+     * @param linkId the new linkId
+     */
+    public void setLinkId(int linkId) {
+        this.linkId = linkId;
+    }
+
+    /**
      * Returns a hash code value for the object.  This implementation computes 
      * a hash code value based on the id fields in this object.
      * @return a hash code value for this object.
@@ -81,6 +102,7 @@ public class XurmoResponseToRequestToConnectInboxPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
+        hash += (int)linkId;
         hash += (this.source != null ? this.source.hashCode() : 0);
         hash += (this.username != null ? this.username.hashCode() : 0);
         return hash;
@@ -101,6 +123,7 @@ public class XurmoResponseToRequestToConnectInboxPK implements Serializable {
             return false;
         }
         XurmoResponseToRequestToConnectInboxPK other = (XurmoResponseToRequestToConnectInboxPK)object;
+        if (this.linkId != other.linkId) return false;
         if (this.source != other.source && (this.source == null || !this.source.equals(other.source))) return false;
         if (this.username != other.username && (this.username == null || !this.username.equals(other.username))) return false;
         return true;
@@ -113,7 +136,7 @@ public class XurmoResponseToRequestToConnectInboxPK implements Serializable {
      */
     @Override
     public String toString() {
-        return "com.xurmo.connect.user.XurmoResponseToRequestToConnectInboxPK[source=" + source + ", username=" + username + "]";
+        return "com.xurmo.connect.user.XurmoResponseToRequestToConnectInboxPK[linkId=" + linkId + ", source=" + source + ", username=" + username + "]";
     }
     
 }

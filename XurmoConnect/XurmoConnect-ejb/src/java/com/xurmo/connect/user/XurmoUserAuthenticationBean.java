@@ -198,10 +198,10 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         }
     }
     
-    public XurmoInvitationSendStatus sendInvitations(String username, String cookie, String[] destinations, String msg) {
+    public XurmoInvitationSendStatus sendInvitations(String username, String cookie, XurmoInvitationForLink[] invitations, String msg) {
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         if (xus != null && cookie.equals(xus.getCookie())) {
-            return new XurmoInvitationSendStatus(XurmoUserInvitationManager.instance().sendInvitation(username, destinations, msg, em_), cookie);
+            return new XurmoInvitationSendStatus(XurmoUserInvitationManager.instance().sendInvitation(username, invitations, msg, em_), cookie);
         } else {
             return new XurmoInvitationSendStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_SEND_INVITATION, cookie);
         }
@@ -237,5 +237,54 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
             return out;
         }
         throw new XurmoCouldNotRetrieveRequestToConnectResponseTypesException();
+    }
+    public XurmoInvitationDispositionStatus disposeInvitations(String username, String cookie, XurmoInvitationDisposition[] invitationDisposition, String msg) {
+        XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
+        if (xus != null && cookie.equals(xus.getCookie())) {
+            
+            for (int i = 0; i < invitationDisposition.length; ++i) {
+                switch(invitationDisposition[i].getResponseId()) {
+                    case XurmoInvitationDisposition.ACCEPT:
+                    {
+                        XurmoNetworkLink xnl = new XurmoNetworkLink(invitationDisposition[i].getLinkId(), username, invitationDisposition[i].getDestination());
+                        Query qry = em_.createNamedQuery("XurmoRequestToConnectInbox.findByUsernameSourceAndLinkId");
+                        qry.setParameter("username", username);
+                        qry.setParameter("source", invitationDisposition[i].getDestination());
+                        qry.setParameter("linkId", invitationDisposition[i].getLinkId());
+                        XurmoRequestToConnectInbox inv = (XurmoRequestToConnectInbox)qry.getSingleResult();
+                        em_.remove(inv);
+                        em_.persist(xnl);
+                    }
+                        break;
+                    case XurmoInvitationDisposition.DECLINE:
+                    {
+                        XurmoResponseToRequestToConnectInbox xnl = new XurmoResponseToRequestToConnectInbox(invitationDisposition[i].getLinkId(), username, invitationDisposition[i].getDestination(), msg);
+                        Query qry = em_.createNamedQuery("XurmoRequestToConnectInbox.findByUsernameSourceAndLinkId");
+                        qry.setParameter("username", username);
+                        qry.setParameter("source", invitationDisposition[i].getDestination());
+                        qry.setParameter("linkId", invitationDisposition[i].getLinkId());
+                        XurmoRequestToConnectInbox inv = (XurmoRequestToConnectInbox)qry.getSingleResult();
+                        em_.remove(inv);
+                        em_.persist(xnl);
+                    }
+                        break;
+                    case XurmoInvitationDisposition.DECLINE_SILENTLY:
+                    {
+                        Query qry = em_.createNamedQuery("XurmoRequestToConnectInbox.findByUsernameSourceAndLinkId");
+                        qry.setParameter("username", username);
+                        qry.setParameter("source", invitationDisposition[i].getDestination());
+                        qry.setParameter("linkId", invitationDisposition[i].getLinkId());
+                        XurmoRequestToConnectInbox inv = (XurmoRequestToConnectInbox)qry.getSingleResult();
+                        em_.remove(inv);
+                    }
+                        break;
+                    case XurmoInvitationDisposition.POSTPONE:
+                        break;
+                }
+            }
+            return new XurmoInvitationDispositionStatus(XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, cookie);
+        } else {
+            return new XurmoInvitationDispositionStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_SEND_INVITATION, cookie);
+        }
     }
 }

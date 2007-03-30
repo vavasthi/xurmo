@@ -25,7 +25,8 @@ public interface XurmoUserAuthenticationLocal {
     XurmoUserAuthenticationReturnStatus updateLocation(String username, String cookie, String imsi, String siteId, String cellId, String locationString);
 
     XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email);
-    XurmoInvitationSendStatus sendInvitations(String username, String cookie, String[] destinations, String msg);
+    XurmoInvitationSendStatus sendInvitations(String username, String cookie, XurmoInvitationForLink[] invitations, String msg);
     XurmoNetworkLinkType[] getNetworkTypes(String username, String cookie) throws XurmoCouldNotRetrieveNetworkLinkTypeException;
     XurmoRequestToConnectResponseType[] getRequestToConnectResponseTypes(String username, String cookie) throws XurmoCouldNotRetrieveRequestToConnectResponseTypesException;
+    XurmoInvitationDispositionStatus disposeInvitations(String username, String cookie, XurmoInvitationDisposition[] invitationDisposition, String msg); 
 }
