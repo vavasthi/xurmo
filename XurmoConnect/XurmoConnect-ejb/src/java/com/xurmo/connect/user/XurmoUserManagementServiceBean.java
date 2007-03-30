@@ -71,4 +71,22 @@ public class XurmoUserManagementServiceBean {
         // TODO implement operation 
         return xurmoUserAuthenticationBean.sendInvitations(username, cookie, destinations, msg);
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod
+    public XurmoNetworkLinkType[] getNetworkLinkTypes(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie) throws com.xurmo.connect.user.XurmoCouldNotRetrieveNetworkLinkTypeException {
+        // TODO implement operation 
+        return xurmoUserAuthenticationBean.getNetworkTypes(username, cookie);
+    }
+
+        /**
+     * Web service operation
+     */
+    @WebMethod
+    public XurmoRequestToConnectResponseType[] getRequestToConnectResponseTypes(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie) throws XurmoCouldNotRetrieveRequestToConnectResponseTypesException {
+        
+        return xurmoUserAuthenticationBean.getRequestToConnectResponseTypes(username, cookie);
+    }
 }

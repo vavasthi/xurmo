@@ -11,7 +11,6 @@ package com.xurmo.connect.user;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 /**
  *
  * @author xurmo
@@ -47,7 +46,7 @@ public class XurmoUserSessionManager {
             xus = (XurmoUserSession) (em.createNamedQuery("XurmoUserSession.findByUsername").setParameter("username", username).getSingleResult());
             xus.setLastUpdateTime(new java.util.Date());
         } catch(Exception ex){
-            
+            System.out.println(ex.toString());
         }
         return xus;
     }

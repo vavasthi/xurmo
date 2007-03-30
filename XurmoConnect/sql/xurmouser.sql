@@ -75,3 +75,37 @@ create table XurmoResponseToRequestToConnectInbox
   msg varchar(1024) not null,
   primary key(username, source)
 ) default character set utf8;
+
+drop table XurmoNetworkLinkType;
+create table XurmoNetworkLinkType 
+(
+  linkId int primary key,
+  linkName char(64) not null
+) default character set utf8;
+
+insert into XurmoNetworkLinkType values(1, "Family");
+insert into XurmoNetworkLinkType values(2, "Friends");
+insert into XurmoNetworkLinkType values(3, "Professional");
+insert into XurmoNetworkLinkType values(4, "Alumni");
+insert into XurmoNetworkLinkType values(5, "Casual");
+
+drop table XurmoRequestToConnectResponseType;
+create table XurmoRequestToConnectResponseType
+(
+  responseId int primary key,
+  responseLabel char(64) not null
+) default character set utf8;
+
+insert into XurmoRequestToConnectResponseType values(1, "Accept");
+insert into XurmoRequestToConnectResponseType values(2, "Decline");
+insert into XurmoRequestToConnectResponseType values(3, "Decline Silently");
+insert into XurmoRequestToConnectResponseType values(4, "Postpone");
+
+drop table XurmoNetworkLink;
+create table XurmoNetworkLink
+(
+  username1 char(32),
+  username2 char(32),
+  linkId      int,
+  primary key (username1, username2, linkId)
+) default character set utf8;

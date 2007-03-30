@@ -26,4 +26,6 @@ public interface XurmoUserAuthenticationRemote {
 
     XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email);
     XurmoInvitationSendStatus sendInvitations(String username, String cookie, String[] destinations, String msg);
+    XurmoNetworkLinkType[] getNetworkTypes(String username, String cookie) throws XurmoCouldNotRetrieveNetworkLinkTypeException;
+    XurmoRequestToConnectResponseType[] getRequestToConnectResponseTypes(String username, String cookie) throws XurmoCouldNotRetrieveRequestToConnectResponseTypesException;
 }

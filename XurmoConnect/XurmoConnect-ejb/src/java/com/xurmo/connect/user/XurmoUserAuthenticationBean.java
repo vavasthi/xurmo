@@ -137,8 +137,7 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
             if (XurmoUserEncryption.instance().validateEncryptedPassword(password, xu.getPassword())) {
                 XurmoUserSession xus = XurmoUserSessionManager.instance().createSession(xu.getUsername(), XurmoUserEncryption.instance().getRandomCookie(imsi), locationString, em_);
                 cookie = xus.getCookie();
-            }
-            else {
+            } else {
                 error |= XurmoUserSignonStatus.SIGNONFAILED_INVALID_USERNAME_OR_PASSWORD_MASK;
             }
         } catch (Exception ex) {
@@ -177,7 +176,7 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         int error = XurmoUserSignonStatus.SIGNONSTATUS_NO_ERROR;
         locationString = updateLocationMap(imsi, siteId, cellId, locationString);
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
-        if (xus != null && xus.getCookie() == cookie) {
+        if (xus != null && cookie.equals(xus.getCookie())) {
             xus.setLocation(locationString);
             cookie = xus.getCookie();
         }
@@ -189,24 +188,54 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         XurmoUserSessionManager.instance().removeSession(username, em_);
         return error;
     }
-
+    
     public XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email) {
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
-        if (xus != null && xus.getCookie() == cookie) {
+        if (xus != null && cookie.equals(xus.getCookie())) {
             return new XurmoUploadAddressBookReturnStatus(XurmoUserPersonalAddressBookManager.instance().uploadPersonalAddressBook(username, fullName, addresses, email, em_), cookie);
-        } 
-        else {
+        } else {
             return new XurmoUploadAddressBookReturnStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_UPDATE_PROFILE, cookie);
         }
     }
-
+    
     public XurmoInvitationSendStatus sendInvitations(String username, String cookie, String[] destinations, String msg) {
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
-        if (xus != null && xus.getCookie() == cookie) {
+        if (xus != null && cookie.equals(xus.getCookie())) {
             return new XurmoInvitationSendStatus(XurmoUserInvitationManager.instance().sendInvitation(username, destinations, msg, em_), cookie);
-        } 
-        else {
+        } else {
             return new XurmoInvitationSendStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_SEND_INVITATION, cookie);
         }
+    }
+    public XurmoNetworkLinkType[] getNetworkTypes(String username, String cookie) throws XurmoCouldNotRetrieveNetworkLinkTypeException {
+        XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
+        System.out.println("New Cookie :" + cookie + " old cookie :" + xus.getCookie());
+        if (xus != null && cookie.equals(xus.getCookie())) {
+            
+            List res = em_.createNamedQuery("XurmoNetworkLinkType.findAll").getResultList();
+            XurmoNetworkLinkType[] out = new XurmoNetworkLinkType[res.size()];
+            int i = 0;
+            for(java.util.Iterator itr = res.iterator(); itr.hasNext(); ) {
+                out[i] = (XurmoNetworkLinkType)(itr.next());
+                ++i;
+            }
+            return out;
+        }
+        throw new XurmoCouldNotRetrieveNetworkLinkTypeException();
+    }
+    public XurmoRequestToConnectResponseType[] getRequestToConnectResponseTypes(String username, String cookie) throws XurmoCouldNotRetrieveRequestToConnectResponseTypesException {
+        XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
+        System.out.println("New Cookie :" + cookie + " old cookie :" + xus.getCookie());
+        if (xus != null && cookie.equals(xus.getCookie())) {
+            
+            List res = em_.createNamedQuery("XurmoRequestToConnectResponseType.findAll").getResultList();
+            XurmoRequestToConnectResponseType[] out = new XurmoRequestToConnectResponseType[res.size()];
+            int i = 0;
+            for(java.util.Iterator itr = res.iterator(); itr.hasNext(); ) {
+                out[i] = (XurmoRequestToConnectResponseType)(itr.next());
+                ++i;
+            }
+            return out;
+        }
+        throw new XurmoCouldNotRetrieveRequestToConnectResponseTypesException();
     }
 }
