@@ -30,6 +30,7 @@ import javax.persistence.Table;
         @NamedQuery(name = "XurmoMessagesForALocationSourceDestinationPair.findByLocationId", query = "SELECT x FROM XurmoMessagesForALocationSourceDestinationPair x WHERE x.locationId = :locationId"),
         @NamedQuery(name = "XurmoMessagesForALocationSourceDestinationPair.findBySourceId", query = "SELECT x FROM XurmoMessagesForALocationSourceDestinationPair x WHERE x.sourceId = :sourceId"),
         @NamedQuery(name = "XurmoMessagesForALocationSourceDestinationPair.findByDestinationId", query = "SELECT x FROM XurmoMessagesForALocationSourceDestinationPair x WHERE x.destinationId = :destinationId"),
+        @NamedQuery(name = "XurmoMessagesForALocationSourceDestinationPair.findByLocationIdAndDestinationId", query = "SELECT x FROM XurmoMessagesForALocationSourceDestinationPair x WHERE x.locationId = :locationId and x.destinationId = :destinationId"),
         @NamedQuery(name = "XurmoMessagesForALocationSourceDestinationPair.findByAllIds", query = "SELECT x FROM XurmoMessagesForALocationSourceDestinationPair x WHERE x.locationId = :locationId and x.sourceId = :sourceId and x.destinationId = :destinationId"),
         @NamedQuery(name = "XurmoMessagesForALocationSourceDestinationPair.findBySourceDestinationId", query = "SELECT x FROM XurmoMessagesForALocationSourceDestinationPair x WHERE x.sourceDestinationId = :sourceDestinationId")
     })

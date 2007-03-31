@@ -129,7 +129,9 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         
         int error = XurmoUserSignonStatus.SIGNONSTATUS_NO_ERROR;
         String cookie = new String();
-        locationString = updateLocationMap(imsi, siteId, cellId, locationString);
+        String mobileCountryCode = imsi.substring(0, 3);
+        String mobileNetworkCode = imsi.substring(3, 6);
+        locationString = updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString);
         XurmoUserSessionManager.instance().removeSession(username, em_);
         try {
             
@@ -146,10 +148,8 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         return new XurmoUserAuthenticationReturnStatus(error, cookie);
     }
     
-    private String updateLocationMap(String imsi, String siteId, String cellId, String locationString) {
+    private String updateLocationMap(String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString) {
         
-        String mobileCountryCode = imsi.substring(0, 3);
-        String mobileNetworkCode = imsi.substring(3, 6);
         if (locationString != null && !locationString.equals("") && !locationString.equals("Unknown")) {
             Query q = em_.createNamedQuery("XurmoCellLocationMap.findByCellInfo");
             q.setParameter("siteId", siteId);
@@ -174,7 +174,10 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
     public XurmoUserAuthenticationReturnStatus updateLocation(String username, String cookie, String imsi, String siteId, String cellId, String locationString) {
         
         int error = XurmoUserSignonStatus.SIGNONSTATUS_NO_ERROR;
-        locationString = updateLocationMap(imsi, siteId, cellId, locationString);
+        String mobileCountryCode = imsi.substring(0, 3);
+        String mobileNetworkCode = imsi.substring(3, 6);
+        XurmoMessageForALocationManager.instance().processMessagesInALocation(mobileCountryCode, mobileNetworkCode, siteId, cellId, username, em_);
+        locationString = updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString);
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         if (xus != null && cookie.equals(xus.getCookie())) {
             xus.setLocation(locationString);

@@ -9,6 +9,8 @@
 
 package com.xurmo.connect.user;
 import javax.persistence.EntityManager;
+import java.util.List;
+import java.util.Iterator;
 
 /**
  *
@@ -57,6 +59,61 @@ public class XurmoMessageForALocationManager {
             return new XurmoMessageForALocationReturnStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_SEND_MESSAGE_FOR_A_LOCATION, cookie);
         }
         return new XurmoMessageForALocationReturnStatus(XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, cookie);
+    }
+    private XurmoCellLocationMap[] findCellsInLocation(String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, EntityManager em) {
+     
+        javax.persistence.Query q = em.createNamedQuery("XurmoCellLocationMap.findByAllIds");
+        q.setParameter("mobileCountryCode", mobileCountryCode);
+        q.setParameter("mobileNetworkCode", mobileNetworkCode);
+        q.setParameter("siteId", siteId);
+        q.setParameter("cellId", cellId);
+        List res = q.getResultList();
+        XurmoCellLocationMap[] out = new XurmoCellLocationMap[res.size()];
+        Iterator itr = res.iterator();
+        int i = 0;
+        while (itr.hasNext()) {
+            out[i] = (XurmoCellLocationMap)itr.next();
+            ++i;
+        }
+        return out;
+    }
+    public void processMessagesInALocation(String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String destinationId, EntityManager em) {
+
+        XurmoCellLocationMap[] locations = findCellsInLocation(mobileCountryCode, mobileNetworkCode, siteId, cellId, em);
+        XurmoMessagesForALocationSourceDestinationPair[] sdp = null;
+        for (int i = 0; i < locations.length; ++i) {
+            
+            javax.persistence.Query q = em.createNamedQuery("XurmoMessagesForALocationSourceDestinationPair.findByLocationIdAndDestinationId");
+            q.setParameter("locationId", locations[i].getLocationId());
+            q.setParameter("destinationId", destinationId);
+            List sdpList = q.getResultList();
+            sdp = new XurmoMessagesForALocationSourceDestinationPair[sdpList.size()];
+            Iterator sdpi = sdpList.iterator();
+            int j =0;
+            while (sdpi.hasNext()) {
+                
+                sdp[j] = (XurmoMessagesForALocationSourceDestinationPair) sdpi.next();
+                javax.persistence.Query mq = em.createNamedQuery("XurmoMessageForALocation.findBySourceDestinationId");
+                mq.setParameter("sourceDestinationId",sdp[j].getSourceDestinationId());
+                List msgList = mq.getResultList();
+                Iterator msgItr = msgList.iterator();
+                int k = 0;
+                XurmoMessageForALocation[] messages = new XurmoMessageForALocation[msgList.size()];
+                while(msgItr.hasNext()) {
+                    messages[k] = (XurmoMessageForALocation)msgItr.next();
+                    XurmoMessageInbox mi = new XurmoMessageInbox(locations[i].getLocationId(), sdp[j].getSourceId(), locations[i].getLocationId(), sdp[j].getDestinationId(), messages[k].getMsg());
+                    em.persist(mi);
+                    ++k;
+                }
+                for(k = 0; k < messages.length; ++k) {
+                    em.remove(messages[k]);
+                }
+                ++j;
+            }
+            for(j = 0; j < sdp.length; ++j) {
+                em.remove(sdp[j]);
+            }
+        }
     }
     /** Creates a new instance of XurmoMessageForALocationManager */
     private XurmoMessageForALocationManager() {
