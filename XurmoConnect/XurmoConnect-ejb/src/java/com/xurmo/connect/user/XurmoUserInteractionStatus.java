@@ -21,5 +21,7 @@ public class XurmoUserInteractionStatus {
     public static final int INTERACTIONSTATUS_NO_ERROR = 0;
     public static final int INTERACTIONFAILED_COULD_NOT_UPDATE_PROFILE = 0x01;
     public static final int INTERACTIONFAILED_COULD_NOT_SEND_INVITATION = 0x02;
+    public static final int INTERACTIONFAILED_COULD_NOT_SEND_MESSAGE_FOR_A_LOCATION = 0x03;
+    public static final int INTERACTIONFAILED_USER_NOT_LOGGED_IN = 0x04;
 
 }

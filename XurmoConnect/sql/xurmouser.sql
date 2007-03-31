@@ -53,8 +53,9 @@ create table XurmoCellLocationMap
   mobileNetworkCode char(3) not null,
   siteId char(10) not null,
   cellId char(10) not null,
+  locationId int not null primary key,
   location char(127) not null,
-  primary key (mobileCountryCode, mobileNetworkCode, siteId, cellId)
+  unique key (mobileCountryCode, mobileNetworkCode, siteId, cellId)
 ) default character set utf8;
 
 drop table XurmoRequestToConnectInbox;
@@ -111,4 +112,21 @@ create table XurmoNetworkLink
   linkId      int,
   creationDate datetime not null,
   primary key (username1, username2, linkId)
+) default character set utf8;
+
+drop table XurmoMessagesForALocationSourceDestinationPair;
+create table XurmoMessagesForALocationSourceDestinationPair
+(
+  locationId int not null,
+  source char(32) not null,
+  destination char(32) not null,
+  sourceDestinationId int not null primary key,
+  unique key (locationId, source, destination)
+) default character set utf8;
+
+drop table XurmoMessagesForALocation;
+create table XurmoMessagesForALocation
+(
+  sourceDestinationId int primary key,
+  msg varchar(1024)
 ) default character set utf8;

@@ -2,7 +2,7 @@
  * Copyright (c) 2007, Xurmo.com. All rights reserved.
  *
  * File name                : XurmoCellLocationMap.java
- * Created on               : March 27, 2007, 8:47 PM
+ * Created on               : March 31, 2007, 8:23 PM
  * Created by               : xurmo
  *
  */
@@ -11,8 +11,10 @@ package com.xurmo.connect.user;
 
 import java.io.Serializable;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,20 +27,32 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "XurmoCellLocationMap")
 @NamedQueries( {
-        @NamedQuery(name = "XurmoCellLocationMap.findByMobileCountryCode", query = "SELECT x FROM XurmoCellLocationMap x WHERE x.xurmoCellLocationMapPK.mobileCountryCode = :mobileCountryCode"),
-        @NamedQuery(name = "XurmoCellLocationMap.findByMobileNetworkCode", query = "SELECT x FROM XurmoCellLocationMap x WHERE x.xurmoCellLocationMapPK.mobileNetworkCode = :mobileNetworkCode"),
-        @NamedQuery(name = "XurmoCellLocationMap.findBySiteId", query = "SELECT x FROM XurmoCellLocationMap x WHERE x.xurmoCellLocationMapPK.siteId = :siteId"),
-        @NamedQuery(name = "XurmoCellLocationMap.findByCellId", query = "SELECT x FROM XurmoCellLocationMap x WHERE x.xurmoCellLocationMapPK.cellId = :cellId"),
-        @NamedQuery(name = "XurmoCellLocationMap.findByLocation", query = "SELECT x FROM XurmoCellLocationMap x WHERE x.location = :location"),
-        @NamedQuery(name = "XurmoCellLocationMap.findByCellInfo", query = "SELECT x FROM XurmoCellLocationMap x WHERE x.xurmoCellLocationMapPK.mobileCountryCode = :mobileCountryCode and x.xurmoCellLocationMapPK.mobileNetworkCode = :mobileNetworkCode and x.xurmoCellLocationMapPK.siteId = :siteId and x.xurmoCellLocationMapPK.cellId = :cellId")
+        @NamedQuery(name = "XurmoCellLocationMap.findByMobileCountryCode", query = "SELECT x FROM XurmoCellLocationMap x WHERE x.mobileCountryCode = :mobileCountryCode"),
+        @NamedQuery(name = "XurmoCellLocationMap.findByMobileNetworkCode", query = "SELECT x FROM XurmoCellLocationMap x WHERE x.mobileNetworkCode = :mobileNetworkCode"),
+        @NamedQuery(name = "XurmoCellLocationMap.findBySiteId", query = "SELECT x FROM XurmoCellLocationMap x WHERE x.siteId = :siteId"),
+        @NamedQuery(name = "XurmoCellLocationMap.findByCellId", query = "SELECT x FROM XurmoCellLocationMap x WHERE x.cellId = :cellId"),
+        @NamedQuery(name = "XurmoCellLocationMap.findByAllIds", query = "SELECT x FROM XurmoCellLocationMap x WHERE x.mobileCountryCode = :mobileCountryCode and x.mobileNetworkCode = :mobileNetworkCode and x.siteId = :siteId and x.cellId = :cellId"),
+        @NamedQuery(name = "XurmoCellLocationMap.findByLocationId", query = "SELECT x FROM XurmoCellLocationMap x WHERE x.locationId = :locationId"),
+        @NamedQuery(name = "XurmoCellLocationMap.findByLocation", query = "SELECT x FROM XurmoCellLocationMap x WHERE x.location = :location")
     })
 public class XurmoCellLocationMap implements Serializable {
 
-    /**
-     * EmbeddedId primary key field
-     */
-    @EmbeddedId
-    protected XurmoCellLocationMapPK xurmoCellLocationMapPK;
+    @Column(name = "mobileCountryCode", nullable = false)
+    private String mobileCountryCode;
+
+    @Column(name = "mobileNetworkCode", nullable = false)
+    private String mobileNetworkCode;
+
+    @Column(name = "siteId", nullable = false)
+    private String siteId;
+
+    @Column(name = "cellId", nullable = false)
+    private String cellId;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "locationId", nullable = false)
+    private Integer locationId;
 
     @Column(name = "location", nullable = false)
     private String location;
@@ -49,59 +63,100 @@ public class XurmoCellLocationMap implements Serializable {
 
     /**
      * Creates a new instance of XurmoCellLocationMap with the specified values.
-     * @param xurmoCellLocationMapPK the xurmoCellLocationMapPK of the XurmoCellLocationMap
-     */
-    public XurmoCellLocationMap(XurmoCellLocationMapPK xurmoCellLocationMapPK) {
-        this.xurmoCellLocationMapPK = xurmoCellLocationMapPK;
-    }
-
-    /**
-     * Creates a new instance of XurmoCellLocationMap with the specified values.
-     * @param xurmoCellLocationMapPK the xurmoCellLocationMapPK of the XurmoCellLocationMap
+     * @param locationId the locationId of the XurmoCellLocationMap
+     * @param mobileCountryCode the mobileCountryCode of the XurmoCellLocationMap
+     * @param mobileNetworkCode the mobileNetworkCode of the XurmoCellLocationMap
+     * @param siteId the siteId of the XurmoCellLocationMap
+     * @param cellId the cellId of the XurmoCellLocationMap
      * @param location the location of the XurmoCellLocationMap
      */
-    public XurmoCellLocationMap(XurmoCellLocationMapPK xurmoCellLocationMapPK, String location) {
-        this.xurmoCellLocationMapPK = xurmoCellLocationMapPK;
+    public XurmoCellLocationMap(String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String location) {
+        this.locationId = locationId;
+        this.mobileCountryCode = mobileCountryCode;
+        this.mobileNetworkCode = mobileNetworkCode;
+        this.siteId = siteId;
+        this.cellId = cellId;
         this.location = location;
     }
 
     /**
-     * Creates a new instance of XurmoCellLocationMapPK with the specified values.
-     * @param cellId the cellId of the XurmoCellLocationMapPK
-     * @param siteId the siteId of the XurmoCellLocationMapPK
-     * @param mobileNetworkCode the mobileNetworkCode of the XurmoCellLocationMapPK
-     * @param mobileCountryCode the mobileCountryCode of the XurmoCellLocationMapPK
+     * Gets the mobileCountryCode of this XurmoCellLocationMap.
+     * @return the mobileCountryCode
      */
-    public XurmoCellLocationMap(String cellId, String siteId, String mobileNetworkCode, String mobileCountryCode) {
-        this.xurmoCellLocationMapPK = new XurmoCellLocationMapPK(cellId, siteId, mobileNetworkCode, mobileCountryCode);
-    }
-    /**
-     * Creates a new instance of XurmoCellLocationMapPK with the specified values.
-     * @param cellId the cellId of the XurmoCellLocationMapPK
-     * @param siteId the siteId of the XurmoCellLocationMapPK
-     * @param mobileNetworkCode the mobileNetworkCode of the XurmoCellLocationMapPK
-     * @param mobileCountryCode the mobileCountryCode of the XurmoCellLocationMapPK
-     * @param location the location of this particular cell
-     */
-    public XurmoCellLocationMap(String cellId, String siteId, String mobileNetworkCode, String mobileCountryCode, String location) {
-        this.xurmoCellLocationMapPK = new XurmoCellLocationMapPK(cellId, siteId, mobileNetworkCode, mobileCountryCode);
-        this.location = location;
+    public String getMobileCountryCode() {
+        return this.mobileCountryCode;
     }
 
     /**
-     * Gets the xurmoCellLocationMapPK of this XurmoCellLocationMap.
-     * @return the xurmoCellLocationMapPK
+     * Sets the mobileCountryCode of this XurmoCellLocationMap to the specified value.
+     * @param mobileCountryCode the new mobileCountryCode
      */
-    public XurmoCellLocationMapPK getXurmoCellLocationMapPK() {
-        return this.xurmoCellLocationMapPK;
+    public void setMobileCountryCode(String mobileCountryCode) {
+        this.mobileCountryCode = mobileCountryCode;
     }
 
     /**
-     * Sets the xurmoCellLocationMapPK of this XurmoCellLocationMap to the specified value.
-     * @param xurmoCellLocationMapPK the new xurmoCellLocationMapPK
+     * Gets the mobileNetworkCode of this XurmoCellLocationMap.
+     * @return the mobileNetworkCode
      */
-    public void setXurmoCellLocationMapPK(XurmoCellLocationMapPK xurmoCellLocationMapPK) {
-        this.xurmoCellLocationMapPK = xurmoCellLocationMapPK;
+    public String getMobileNetworkCode() {
+        return this.mobileNetworkCode;
+    }
+
+    /**
+     * Sets the mobileNetworkCode of this XurmoCellLocationMap to the specified value.
+     * @param mobileNetworkCode the new mobileNetworkCode
+     */
+    public void setMobileNetworkCode(String mobileNetworkCode) {
+        this.mobileNetworkCode = mobileNetworkCode;
+    }
+
+    /**
+     * Gets the siteId of this XurmoCellLocationMap.
+     * @return the siteId
+     */
+    public String getSiteId() {
+        return this.siteId;
+    }
+
+    /**
+     * Sets the siteId of this XurmoCellLocationMap to the specified value.
+     * @param siteId the new siteId
+     */
+    public void setSiteId(String siteId) {
+        this.siteId = siteId;
+    }
+
+    /**
+     * Gets the cellId of this XurmoCellLocationMap.
+     * @return the cellId
+     */
+    public String getCellId() {
+        return this.cellId;
+    }
+
+    /**
+     * Sets the cellId of this XurmoCellLocationMap to the specified value.
+     * @param cellId the new cellId
+     */
+    public void setCellId(String cellId) {
+        this.cellId = cellId;
+    }
+
+    /**
+     * Gets the locationId of this XurmoCellLocationMap.
+     * @return the locationId
+     */
+    public Integer getLocationId() {
+        return this.locationId;
+    }
+
+    /**
+     * Sets the locationId of this XurmoCellLocationMap to the specified value.
+     * @param locationId the new locationId
+     */
+    public void setLocationId(Integer locationId) {
+        this.locationId = locationId;
     }
 
     /**
@@ -128,7 +183,7 @@ public class XurmoCellLocationMap implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (this.xurmoCellLocationMapPK != null ? this.xurmoCellLocationMapPK.hashCode() : 0);
+        hash += (this.locationId != null ? this.locationId.hashCode() : 0);
         return hash;
     }
 
@@ -147,7 +202,7 @@ public class XurmoCellLocationMap implements Serializable {
             return false;
         }
         XurmoCellLocationMap other = (XurmoCellLocationMap)object;
-        if (this.xurmoCellLocationMapPK != other.xurmoCellLocationMapPK && (this.xurmoCellLocationMapPK == null || !this.xurmoCellLocationMapPK.equals(other.xurmoCellLocationMapPK))) return false;
+        if (this.locationId != other.locationId && (this.locationId == null || !this.locationId.equals(other.locationId))) return false;
         return true;
     }
 
@@ -158,7 +213,7 @@ public class XurmoCellLocationMap implements Serializable {
      */
     @Override
     public String toString() {
-        return "com.xurmo.connect.user.XurmoCellLocationMap[xurmoCellLocationMapPK=" + xurmoCellLocationMapPK + "]";
+        return "com.xurmo.connect.user.XurmoCellLocationMap[locationId=" + locationId + "]";
     }
     
 }

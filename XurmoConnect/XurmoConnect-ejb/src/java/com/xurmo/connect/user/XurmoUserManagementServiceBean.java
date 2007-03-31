@@ -98,4 +98,12 @@ public class XurmoUserManagementServiceBean {
         // TODO implement operation 
         return xurmoUserAuthenticationBean.disposeInvitations(username, cookie, invitationDisposition, msg);
     }
+    /**
+     * Web service operation
+     */
+    @WebMethod
+    public XurmoMessageForALocationReturnStatus enqueueMessage(@WebParam(name = "sourceId") String sourceId, @WebParam(name = "destinationId") String destinationId, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "msg") String msg, @WebParam(name = "cookie") String cookie) {
+      return xurmoUserAuthenticationBean.enqueueMessage(sourceId, destinationId, mobileCountryCode, mobileNetworkCode, siteId, cellId, msg, cookie);
+    }
+
 }

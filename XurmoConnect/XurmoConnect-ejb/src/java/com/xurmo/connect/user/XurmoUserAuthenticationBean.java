@@ -162,7 +162,7 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
                 locationString = xclm.getLocation();
             } catch (Exception ex) {
                 
-                XurmoCellLocationMap xclm = new XurmoCellLocationMap(cellId, siteId, mobileNetworkCode, mobileCountryCode, locationString);
+                XurmoCellLocationMap xclm = new XurmoCellLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString);
                 em_.persist(xclm);
             }
         } else {
@@ -238,6 +238,16 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         }
         throw new XurmoCouldNotRetrieveRequestToConnectResponseTypesException();
     }
+    
+    public XurmoMessageForALocationReturnStatus enqueueMessage(String sourceId, String destinationId, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String msg, String cookie) {
+        
+        XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(sourceId, em_);
+        if (xus != null && cookie.equals(xus.getCookie())) {
+            return XurmoMessageForALocationManager.instance().enqueueMessage(sourceId, destinationId, mobileCountryCode, mobileNetworkCode, siteId, cellId, msg, cookie, em_);
+        }
+        return new XurmoMessageForALocationReturnStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_USER_NOT_LOGGED_IN, cookie);
+    }
+    
     public XurmoInvitationDispositionStatus disposeInvitations(String username, String cookie, XurmoInvitationDisposition[] invitationDisposition, String msg) {
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         if (xus != null && cookie.equals(xus.getCookie())) {
@@ -255,7 +265,7 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
                         em_.remove(inv);
                         em_.persist(xnl);
                     }
-                        break;
+                    break;
                     case XurmoInvitationDisposition.DECLINE:
                     {
                         XurmoResponseToRequestToConnectInbox xnl = new XurmoResponseToRequestToConnectInbox(invitationDisposition[i].getLinkId(), username, invitationDisposition[i].getDestination(), msg);
@@ -267,7 +277,7 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
                         em_.remove(inv);
                         em_.persist(xnl);
                     }
-                        break;
+                    break;
                     case XurmoInvitationDisposition.DECLINE_SILENTLY:
                     {
                         Query qry = em_.createNamedQuery("XurmoRequestToConnectInbox.findByUsernameSourceAndLinkId");
@@ -277,14 +287,14 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
                         XurmoRequestToConnectInbox inv = (XurmoRequestToConnectInbox)qry.getSingleResult();
                         em_.remove(inv);
                     }
-                        break;
+                    break;
                     case XurmoInvitationDisposition.POSTPONE:
                         break;
                 }
             }
             return new XurmoInvitationDispositionStatus(XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, cookie);
         } else {
-            return new XurmoInvitationDispositionStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_SEND_INVITATION, cookie);
+            return new XurmoInvitationDispositionStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_USER_NOT_LOGGED_IN, cookie);
         }
     }
 }
