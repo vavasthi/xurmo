@@ -50,7 +50,7 @@ public class XurmoMessagesForALocationSourceDestinationPair implements Serializa
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "sourceDestinationId", nullable = false)
-    private Integer sourceDestinationId;
+    private int sourceDestinationId;
     
     /** Creates a new instance of XurmoMessagesForALocationSourceDestinationPair */
     public XurmoMessagesForALocationSourceDestinationPair() {
@@ -141,7 +141,7 @@ public class XurmoMessagesForALocationSourceDestinationPair implements Serializa
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (this.sourceDestinationId != null ? this.sourceDestinationId.hashCode() : 0);
+        hash += this.sourceDestinationId;
         return hash;
     }
 
@@ -160,7 +160,7 @@ public class XurmoMessagesForALocationSourceDestinationPair implements Serializa
             return false;
         }
         XurmoMessagesForALocationSourceDestinationPair other = (XurmoMessagesForALocationSourceDestinationPair)object;
-        if (this.sourceDestinationId != other.sourceDestinationId && (this.sourceDestinationId == null || !this.sourceDestinationId.equals(other.sourceDestinationId))) return false;
+        if (this.sourceDestinationId != other.sourceDestinationId) return false;
         return true;
     }
 

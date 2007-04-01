@@ -21,13 +21,13 @@ public interface XurmoUserAuthenticationRemote {
             Date dob);
 
     XurmoUserAuthenticationReturnStatus doLogin(String username, String password, String imsi, String siteId, String cellId, String locationString);
-    int doLogout(String username);
+    int doLogout(String username, String cookie, String imsi, String siteId, String cellId, String locationString);
     XurmoUserAuthenticationReturnStatus updateLocation(String username, String cookie, String imsi, String siteId, String cellId, String locationString);    
 
-    XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email);
-    XurmoInvitationSendStatus sendInvitations(String username, String cookie, XurmoInvitationForLink[] invitations, String msg);
-    XurmoNetworkLinkType[] getNetworkTypes(String username, String cookie) throws XurmoCouldNotRetrieveNetworkLinkTypeException;
-    XurmoRequestToConnectResponseType[] getRequestToConnectResponseTypes(String username, String cookie) throws XurmoCouldNotRetrieveRequestToConnectResponseTypesException;
+    XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email, String imsi, String siteId, String cellId, String locationString);
+    XurmoInvitationSendStatus sendInvitations(String username, String cookie, XurmoInvitationForLink[] invitations, String msg, String imsi, String siteId, String cellId, String locationString);
+    XurmoNetworkLinkType[] getNetworkTypes(String username, String cookie, String imsi, String siteId, String cellId, String locationString) throws XurmoCouldNotRetrieveNetworkLinkTypeException;
+    XurmoRequestToConnectResponseType[] getRequestToConnectResponseTypes(String username, String cookie, String imsi, String siteId, String cellId, String locationString) throws XurmoCouldNotRetrieveRequestToConnectResponseTypesException;
     XurmoInvitationDispositionStatus disposeInvitations(String username, String cookie, XurmoInvitationDisposition[] invitationDisposition, String msg); 
-    XurmoMessageForALocationReturnStatus enqueueMessage(String sourceId, String destinationId, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String msg, String cookie);
+    XurmoMessageForALocationReturnStatus enqueueMessage(String sourceId, String destinationId, String imsi, String siteId, String cellId, String locationString, String msg, String cookie);
 }

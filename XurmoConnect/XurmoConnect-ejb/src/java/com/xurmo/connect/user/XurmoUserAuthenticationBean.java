@@ -185,35 +185,39 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         }
         return new XurmoUserAuthenticationReturnStatus(error, cookie);
     }
-    public int doLogout(String username) {
+    public int doLogout(String username, String cookie, String imsi, String siteId, String cellId, String locationString) {
         
         int error = XurmoUserSignonStatus.SIGNONSTATUS_NO_ERROR;
+        updateLocation(username, cookie, imsi, siteId, cellId, locationString);
         XurmoUserSessionManager.instance().removeSession(username, em_);
         return error;
     }
     
-    public XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email) {
+    public XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email, String imsi, String siteId, String cellId, String locationString) {
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         if (xus != null && cookie.equals(xus.getCookie())) {
+            updateLocation(username, cookie, imsi, siteId, cellId, locationString);
             return new XurmoUploadAddressBookReturnStatus(XurmoUserPersonalAddressBookManager.instance().uploadPersonalAddressBook(username, fullName, addresses, email, em_), cookie);
         } else {
             return new XurmoUploadAddressBookReturnStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_UPDATE_PROFILE, cookie);
         }
     }
     
-    public XurmoInvitationSendStatus sendInvitations(String username, String cookie, XurmoInvitationForLink[] invitations, String msg) {
+    public XurmoInvitationSendStatus sendInvitations(String username, String cookie, XurmoInvitationForLink[] invitations, String msg, String imsi, String siteId, String cellId, String locationString) {
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         if (xus != null && cookie.equals(xus.getCookie())) {
+            updateLocation(username, cookie, imsi, siteId, cellId, locationString);
             return new XurmoInvitationSendStatus(XurmoUserInvitationManager.instance().sendInvitation(username, invitations, msg, em_), cookie);
         } else {
             return new XurmoInvitationSendStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_SEND_INVITATION, cookie);
         }
     }
-    public XurmoNetworkLinkType[] getNetworkTypes(String username, String cookie) throws XurmoCouldNotRetrieveNetworkLinkTypeException {
+    public XurmoNetworkLinkType[] getNetworkTypes(String username, String cookie, String imsi, String siteId, String cellId, String locationString) throws XurmoCouldNotRetrieveNetworkLinkTypeException {
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         System.out.println("New Cookie :" + cookie + " old cookie :" + xus.getCookie());
         if (xus != null && cookie.equals(xus.getCookie())) {
             
+            updateLocation(username, cookie, imsi, siteId, cellId, locationString);
             List res = em_.createNamedQuery("XurmoNetworkLinkType.findAll").getResultList();
             XurmoNetworkLinkType[] out = new XurmoNetworkLinkType[res.size()];
             int i = 0;
@@ -225,11 +229,12 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         }
         throw new XurmoCouldNotRetrieveNetworkLinkTypeException();
     }
-    public XurmoRequestToConnectResponseType[] getRequestToConnectResponseTypes(String username, String cookie) throws XurmoCouldNotRetrieveRequestToConnectResponseTypesException {
+    public XurmoRequestToConnectResponseType[] getRequestToConnectResponseTypes(String username, String cookie, String imsi, String siteId, String cellId, String locationString) throws XurmoCouldNotRetrieveRequestToConnectResponseTypesException {
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         System.out.println("New Cookie :" + cookie + " old cookie :" + xus.getCookie());
         if (xus != null && cookie.equals(xus.getCookie())) {
             
+            updateLocation(username, cookie, imsi, siteId, cellId, locationString);
             List res = em_.createNamedQuery("XurmoRequestToConnectResponseType.findAll").getResultList();
             XurmoRequestToConnectResponseType[] out = new XurmoRequestToConnectResponseType[res.size()];
             int i = 0;
@@ -242,10 +247,13 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
         throw new XurmoCouldNotRetrieveRequestToConnectResponseTypesException();
     }
     
-    public XurmoMessageForALocationReturnStatus enqueueMessage(String sourceId, String destinationId, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String msg, String cookie) {
+    public XurmoMessageForALocationReturnStatus enqueueMessage(String sourceId, String destinationId, String imsi, String siteId, String cellId, String locationString, String msg, String cookie) {
         
+        String mobileCountryCode = imsi.substring(0, 3);
+        String mobileNetworkCode = imsi.substring(3, 6);
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(sourceId, em_);
         if (xus != null && cookie.equals(xus.getCookie())) {
+            updateLocation(sourceId, cookie, imsi, siteId, cellId, locationString);
             return XurmoMessageForALocationManager.instance().enqueueMessage(sourceId, destinationId, mobileCountryCode, mobileNetworkCode, siteId, cellId, msg, cookie, em_);
         }
         return new XurmoMessageForALocationReturnStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_USER_NOT_LOGGED_IN, cookie);

@@ -66,6 +66,7 @@ create table XurmoMessageInbox
   sourceId char(32) not null,
   toLocationId int not null,
   destinationId char(32) not null,
+  msgStatus char(1) not null default "N",
   msg varchar(1024) not null
 ) default character set utf8;
 
