@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<jboss-client>
-  <service-ref>
-    <service-ref-name>service/UserManagementServiceBeanService</service-ref-name>
-  </service-ref>
-</jboss-client>

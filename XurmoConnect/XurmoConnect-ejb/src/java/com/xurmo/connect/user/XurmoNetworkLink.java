@@ -29,6 +29,7 @@ import javax.persistence.TemporalType;
 @Table(name = "XurmoNetworkLink")
 @NamedQueries( {
         @NamedQuery(name = "XurmoNetworkLink.findByUsername1", query = "SELECT x FROM XurmoNetworkLink x WHERE x.xurmoNetworkLinkPK.username1 = :username1"),
+        @NamedQuery(name = "XurmoNetworkLink.findByUsername", query = "SELECT x FROM XurmoNetworkLink x WHERE x.xurmoNetworkLinkPK.username1 = :username or x.xurmoNetworkLinkPK.username2 = :username"),
         @NamedQuery(name = "XurmoNetworkLink.findByUsername2", query = "SELECT x FROM XurmoNetworkLink x WHERE x.xurmoNetworkLinkPK.username2 = :username2"),
         @NamedQuery(name = "XurmoNetworkLink.findByLinkId", query = "SELECT x FROM XurmoNetworkLink x WHERE x.xurmoNetworkLinkPK.linkId = :linkId"),
         @NamedQuery(name = "XurmoNetworkLink.findByCreationDate", query = "SELECT x FROM XurmoNetworkLink x WHERE x.creationDate = :creationDate")
