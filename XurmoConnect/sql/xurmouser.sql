@@ -53,7 +53,7 @@ create table XurmoCellLocationMap
   mobileNetworkCode char(3) not null,
   siteId char(10) not null,
   cellId char(10) not null,
-  locationId int not null primary key,
+  locationId int not null primary key auto_increment,
   location char(127) not null,
   unique key (mobileCountryCode, mobileNetworkCode, siteId, cellId)
 ) default character set utf8;

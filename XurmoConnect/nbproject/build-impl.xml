@@ -104,9 +104,6 @@ is divided into following sections:
         <ant target="dist-ear" inheritall="false" antfile="${project.XurmoConnect-ejb}/build.xml">
             <property name="dist.ear.dir" location="${build.dir}"/>
         </ant>
-        <ant target="dist-ear" inheritall="false" antfile="${project.XurmoConnectClient}/build.xml">
-            <property name="dist.ear.dir" location="${build.dir}"/>
-        </ant>
     </target>
     <target name="pre-pre-compile" depends="init,deps-jar,deps-j2ee-archive">
         <mkdir dir="${build.classes.dir}"/>
@@ -119,8 +116,6 @@ is divided into following sections:
         <copy todir="${build.dir}/META-INF">
             <fileset dir="${meta.inf}"/>
         </copy>
-        <copy file="${reference.XurmoConnectClient.j2ee-module-car}" todir="${build.dir}//"/>
-        <copy file="${reference.XurmoConnectClient.j2ee-module-car}" todir="${build.dir}//"/>
         <copy file="${reference.XurmoConnect-ejb.dist-ear}" todir="${build.dir}//"/>
     </target>
     <target name="post-compile">
@@ -370,9 +365,6 @@ is divided into following sections:
     -->
     <target name="deps-clean" depends="init" unless="no.deps">
         <ant target="clean-ear" inheritall="false" antfile="${project.XurmoConnect-ejb}/build.xml">
-            <property name="dist.ear.dir" location="${build.dir}"/>
-        </ant>
-        <ant target="clean-ear" inheritall="false" antfile="${project.XurmoConnectClient}/build.xml">
             <property name="dist.ear.dir" location="${build.dir}"/>
         </ant>
     </target>

@@ -151,7 +151,7 @@ public class XurmoUserAuthenticationBean implements XurmoUserAuthenticationRemot
     private String updateLocationMap(String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString) {
         
         if (locationString != null && !locationString.equals("") && !locationString.equals("Unknown")) {
-            Query q = em_.createNamedQuery("XurmoCellLocationMap.findByCellInfo");
+            Query q = em_.createNamedQuery("XurmoCellLocationMap.findByAllIds");
             q.setParameter("siteId", siteId);
             q.setParameter("cellId", cellId);
             q.setParameter("mobileCountryCode", mobileCountryCode);
