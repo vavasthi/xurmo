@@ -24,7 +24,7 @@ public class XurmoMessageForALocationManager {
         }
         return self_;
     }
-    public XurmoMessageForALocationReturnStatus enqueueMessage(String sourceId, String destinationId, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String msg, String cookie, EntityManager em) {
+    public XurmoMessageStatus enqueueMessage(String sourceId, String destinationId, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String msg, String cookie, EntityManager em) {
         
         javax.persistence.Query q = em.createNamedQuery("XurmoCellLocationMap.findByAllIds");
         q.setParameter("mobileCountryCode",mobileCountryCode);
@@ -56,9 +56,9 @@ public class XurmoMessageForALocationManager {
             em.persist(xmfal);
         }
         catch (Exception ex) {
-            return new XurmoMessageForALocationReturnStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_SEND_MESSAGE_FOR_A_LOCATION, cookie);
+            return new XurmoMessageStatus(XurmoMessageStatus.MessageStatus.COULD_NOT_SEND_MESSAGE_FOR_A_LOCATION, cookie);
         }
-        return new XurmoMessageForALocationReturnStatus(XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, cookie);
+        return new XurmoMessageStatus(XurmoMessageStatus.MessageStatus.SUCCESS, cookie);
     }
     private XurmoCellLocationMap[] findCellsInLocation(String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, EntityManager em) {
      
