@@ -259,7 +259,22 @@ is divided into following sections:
             <classpath path="${classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
         </wsgen>
     </target>
-    <target name="wsgen-generate" depends="wsgen-XurmoUserManagementServiceBean"/>
+    <target name="wsgen-XurmoMessageManagementServiceBean" depends="wsgen-init, compile">
+        <wsgen sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service" keep="false" genwsdl="true" sei="com.xurmo.connect.user.XurmoMessageManagementServiceBean">
+            <classpath path="${classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
+        </wsgen>
+    </target>
+    <target name="wsgen-XurmoNetworkManagementServiceBean" depends="wsgen-init, compile">
+        <wsgen sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service" keep="false" genwsdl="true" sei="com.xurmo.connect.user.XurmoNetworkManagementServiceBean">
+            <classpath path="${classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
+        </wsgen>
+    </target>
+    <target name="wsgen-XurmoErrorServiceBean" depends="wsgen-init, compile">
+        <wsgen sourcedestdir="${build.generated.dir}/wsgen/service" resourcedestdir="${build.generated.dir}/wsgen/service" keep="false" genwsdl="true" sei="com.xurmo.connect.user.XurmoErrorServiceBean">
+            <classpath path="${classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
+        </wsgen>
+    </target>
+    <target name="wsgen-generate" depends="wsgen-XurmoUserManagementServiceBean, wsgen-XurmoMessageManagementServiceBean, wsgen-XurmoNetworkManagementServiceBean, wsgen-XurmoErrorServiceBean"/>
     <target name="-pre-pre-compile" depends="init,deps-jar">
         <mkdir dir="${build.classes.dir}"/>
         <mkdir dir="${build.ear.classes.dir}"/>

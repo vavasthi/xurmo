@@ -4,6 +4,15 @@
     <service name="XurmoUserManagementServiceBean">
       <implementation-class>com.xurmo.connect.user.XurmoUserManagementServiceBean</implementation-class>
     </service>
+    <service name="XurmoMessageManagementServiceBean">
+      <implementation-class>com.xurmo.connect.user.XurmoMessageManagementServiceBean</implementation-class>
+    </service>
+    <service name="XurmoNetworkManagementServiceBean">
+      <implementation-class>com.xurmo.connect.user.XurmoNetworkManagementServiceBean</implementation-class>
+    </service>
+    <service name="XurmoErrorServiceBean">
+      <implementation-class>com.xurmo.connect.user.XurmoErrorServiceBean</implementation-class>
+    </service>
   </services>
   <clients>
   </clients>

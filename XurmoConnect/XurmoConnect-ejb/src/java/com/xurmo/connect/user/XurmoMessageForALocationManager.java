@@ -56,9 +56,9 @@ public class XurmoMessageForALocationManager {
             em.persist(xmfal);
         }
         catch (Exception ex) {
-            return new XurmoMessageStatus(XurmoMessageStatus.MessageStatus.COULD_NOT_SEND_MESSAGE_FOR_A_LOCATION, cookie);
+            return new XurmoMessageStatus(XurmoError.CouldNotSendMessageForALocation, cookie);
         }
-        return new XurmoMessageStatus(XurmoMessageStatus.MessageStatus.SUCCESS, cookie);
+        return new XurmoMessageStatus(XurmoError.Success, cookie);
     }
     private XurmoCellLocationMap[] findCellsInLocation(String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, EntityManager em) {
      

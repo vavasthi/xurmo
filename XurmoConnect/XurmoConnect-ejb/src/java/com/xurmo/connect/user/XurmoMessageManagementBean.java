@@ -38,7 +38,7 @@ public class XurmoMessageManagementBean implements com.xurmo.connect.user.XurmoM
             XurmoLocationManager.updateLocation(sourceId, cookie, imsi, siteId, cellId, locationString, em_);
             return XurmoMessageForALocationManager.instance().enqueueMessage(sourceId, destinationId, mobileCountryCode, mobileNetworkCode, siteId, cellId, msg, cookie, em_);
         }
-        return new XurmoMessageStatus(XurmoMessageStatus.MessageStatus.USER_NOT_LOGGED_IN, cookie);
+        return new XurmoMessageStatus(XurmoError.UserNotLoggedIn, cookie);
     }
     
     

@@ -30,7 +30,7 @@ public class XurmoLocationManager {
             xus.setLocation(locationString);
             cookie = xus.getCookie();
         }
-        return new XurmoUserManagementStatus(XurmoUserManagementStatus.UserAuthenticationStatus.SUCCESS, cookie);
+        return new XurmoUserManagementStatus(XurmoError.Success, cookie);
     }
     public static String updateLocationMap(String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString, javax.persistence.EntityManager em) {
         

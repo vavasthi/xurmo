@@ -141,12 +141,12 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
                 XurmoUserSession xus = XurmoUserSessionManager.instance().createSession(xu.getUsername(), XurmoUserEncryption.instance().getRandomCookie(imsi), locationString, em_);
                 cookie = xus.getCookie();
             } else {
-                return new XurmoUserManagementStatus(XurmoUserManagementStatus.UserAuthenticationStatus.INVALID_USERNAME_OR_PASSWORD, cookie);
+                return new XurmoUserManagementStatus(XurmoError.InvalidUsernameOrPassword, cookie);
             }
         } catch (Exception ex) {
-            return new XurmoUserManagementStatus(XurmoUserManagementStatus.UserAuthenticationStatus.INVALID_USERNAME_OR_PASSWORD, cookie);
+            return new XurmoUserManagementStatus(XurmoError.InvalidUsernameOrPassword, cookie);
         }
-        return new XurmoUserManagementStatus(XurmoUserManagementStatus.UserAuthenticationStatus.SUCCESS, cookie);
+        return new XurmoUserManagementStatus(XurmoError.Success, cookie);
     }
     
     
@@ -154,7 +154,7 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
         
         XurmoLocationManager.updateLocation(username, cookie, imsi, siteId, cellId, locationString, em_);
         XurmoUserSessionManager.instance().removeSession(username, em_);
-        return new XurmoUserManagementStatus(XurmoUserManagementStatus.UserAuthenticationStatus.SUCCESS, "");
+        return new XurmoUserManagementStatus(XurmoError.Success, "");
     }
     
     public XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email, String imsi, String siteId, String cellId, String locationString) {

@@ -61,7 +61,7 @@ create table XurmoCellLocationMap
 drop table XurmoMessageInbox;
 create table XurmoMessageInbox
 (
-  messageId int primary key,
+  messageId int primary key auto_increment,
   fromLocationId int not null,
   sourceId char(32) not null,
   toLocationId int not null,
@@ -132,7 +132,7 @@ create table XurmoMessagesForALocationSourceDestinationPair
   locationId int not null,
   sourceId char(32) not null,
   destinationId char(32) not null,
-  sourceDestinationId int not null primary key,
+  sourceDestinationId int not null primary key auto_increment,
   unique key (locationId, sourceId, destinationId)
 ) default character set utf8;
 
@@ -142,3 +142,12 @@ create table XurmoMessageForALocation
   sourceDestinationId int primary key,
   msg varchar(1024)
 ) default character set utf8;
+
+drop table XurmoErrors;
+create table XurmoErrors
+(
+  error int primary key auto_increment,
+  errorStr varchar(255),
+  errorMsg varchar(1024)
+) default character set utf8;
+
