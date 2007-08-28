@@ -1,0 +1,11 @@
+MIDlet-1: MoX, ,com.xurmo.experiences.mobile.Xurmo
+MIDlet-Certificate-1-1: MIIBlTCB/wIERrCuDjANBgkqhkiG9w0BAQQFADASMRAwDgYDVQQDEwd0cnVzdGVkMB4XDTA3MDgwMTE2MDAxNFoXDTA4MDEyODE2MDAxNFowEjEQMA4GA1UEAxMHdHJ1c3RlZDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA2E1qVJcK6DtpcroPF3aB0Qp/oW/EZ/0VBapAa5cmN9FZDy6zEGc9QaslmTrPcUWXU41UCZWrTEJa9xgbZfD9x2LRCcRv7NVo9TZZH1OcTSfxic21/Fh9v0ILeIERrYGYsBsjbq3ImbUgHTl+mppbucaIdq9CiKvJclDunOtEAlkCAwEAATANBgkqhkiG9w0BAQQFAAOBgQAS94YnsMlazScW/YGhk8AeaUVRm7nHfenEbyFDPeEmh+dUHePv6gDVumlM9kP4xXLe/N1CeH798nWjx0d4laVIrY123tsZEV8PwCVn2EFrfy/jlpWVQfsZHL0EfENNR4cCreAKl/nJA70Mx0bdhAHV577hnccrTRy6n/BI6xtGlw==
+MIDlet-Jar-RSA-SHA1: Q9RY77LjROHj/fn1tMjgCO+3bTpRMbbI5Up4LvuleG2A0ADI2iMXBuO31B0GBQ0umKEa5h58lejAXDvAOjbfOQDQwes4/RE3XCOiNK/ovrH21k+AtsoZ+DBEGjlAPeSZn/U3KctO7rvzG7JoKY/JoUJRryKiBv7SIkB/PxyNMKM=
+MIDlet-Jar-Size: 149355
+MIDlet-Jar-URL: MoX.jar
+MIDlet-Name: MoX
+MIDlet-Permissions: javax.wireless.messaging.cbs.receive, javax.wireless.messaging.sms.receive, javax.wireless.messaging.sms.send, javax.microedition.io.Connector.file.read, javax.microedition.io.Connector.file.write, javax.microedition.io.Connector.http, javax.microedition.io.Connector.https, javax.microedition.pim.ContactList.read, javax.microedition.pim.ContactList.write, javax.microedition.pim.EventList.read, javax.microedition.pim.EventList.write, javax.microedition.pim.ToDoList.read, javax.microedition.pim.ToDoList.write, javax.microedition.io.Connector.cbs, javax.microedition.io.PushRegistry
+MIDlet-Vendor: Vendor
+MIDlet-Version: 1.0
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.0
