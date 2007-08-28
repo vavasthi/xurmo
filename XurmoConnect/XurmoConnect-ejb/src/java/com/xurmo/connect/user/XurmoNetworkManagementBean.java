@@ -29,21 +29,21 @@ public class XurmoNetworkManagementBean implements com.xurmo.connect.user.XurmoN
     /** Creates a new instance of XurmoNetworkManagementBean */
     public XurmoNetworkManagementBean() {
     }
-    public XurmoInvitationSendStatus sendInvitations(String username, String cookie, XurmoInvitationForLink[] invitations, String msg, String imsi, String siteId, String cellId, String locationString) {
+    public XurmoInvitationSendStatus sendInvitations(String username, String cookie, XurmoInvitationForLink[] invitations, String msg, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString) {
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         if (xus != null && cookie.equals(xus.getCookie())) {
-            XurmoLocationManager.updateLocation(username, cookie, imsi, siteId, cellId, locationString, em_);
+            XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString, em_);
             return new XurmoInvitationSendStatus(XurmoUserInvitationManager.instance().sendInvitation(username, invitations, msg, em_), cookie);
         } else {
             return new XurmoInvitationSendStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_SEND_INVITATION, cookie);
         }
     }
-    public XurmoNetworkLinkType[] getNetworkTypes(String username, String cookie, String imsi, String siteId, String cellId, String locationString) throws XurmoCouldNotRetrieveNetworkLinkTypeException {
+    public XurmoNetworkLinkType[] getNetworkTypes(String username, String cookie, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString) throws XurmoCouldNotRetrieveNetworkLinkTypeException {
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         System.out.println("New Cookie :" + cookie + " old cookie :" + xus.getCookie());
         if (xus != null && cookie.equals(xus.getCookie())) {
             
-            XurmoLocationManager.updateLocation(username, cookie, imsi, siteId, cellId, locationString, em_);
+            XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString, em_);
             List res = em_.createNamedQuery("XurmoNetworkLinkType.findAll").getResultList();
             XurmoNetworkLinkType[] out = new XurmoNetworkLinkType[res.size()];
             int i = 0;
@@ -55,12 +55,12 @@ public class XurmoNetworkManagementBean implements com.xurmo.connect.user.XurmoN
         }
         throw new XurmoCouldNotRetrieveNetworkLinkTypeException();
     }
-    public XurmoRequestToConnectResponseType[] getRequestToConnectResponseTypes(String username, String cookie, String imsi, String siteId, String cellId, String locationString) throws XurmoCouldNotRetrieveRequestToConnectResponseTypesException {
+    public XurmoRequestToConnectResponseType[] getRequestToConnectResponseTypes(String username, String cookie, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString) throws XurmoCouldNotRetrieveRequestToConnectResponseTypesException {
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         System.out.println("New Cookie :" + cookie + " old cookie :" + xus.getCookie());
         if (xus != null && cookie.equals(xus.getCookie())) {
             
-            XurmoLocationManager.updateLocation(username, cookie, imsi, siteId, cellId, locationString, em_);
+            XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString, em_);
             List res = em_.createNamedQuery("XurmoRequestToConnectResponseType.findAll").getResultList();
             XurmoRequestToConnectResponseType[] out = new XurmoRequestToConnectResponseType[res.size()];
             int i = 0;

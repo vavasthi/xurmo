@@ -50,9 +50,9 @@ public class XurmoUserSessionManager {
         }
         return xus;
     }
-    public XurmoUserSession createSession(String username, String cookie, String locationString, EntityManager em) {
+    public XurmoUserSession createSession(String username, String cookie, int locationId, EntityManager em) {
         
-        XurmoUserSession xus = new XurmoUserSession(username, cookie, locationString);
+        XurmoUserSession xus = new XurmoUserSession(username, cookie, locationId);
         em.persist(xus);
         return xus;
     }

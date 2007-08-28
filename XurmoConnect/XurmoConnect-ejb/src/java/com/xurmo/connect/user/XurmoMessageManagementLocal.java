@@ -10,5 +10,5 @@ import javax.ejb.Local;
 @Local
 public interface XurmoMessageManagementLocal {
     
-    XurmoMessageStatus enqueueMessage(String sourceId, String destinationId, String imsi, String siteId, String cellId, String locationString, String msg, String cookie);
+    XurmoMessageStatus enqueueMessage(String sourceId, String destinationId, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString, String msg, String cookie);
 }

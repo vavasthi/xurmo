@@ -1,15 +1,20 @@
 drop table XurmoUser;
 create table XurmoUser 
 (
+  userid  integer not null unique key auto_increment,
   username char(32) primary key,
   password blob not null, 
   salutation char(5) not null default "Mr.",
   fname char(127) not null,
   lname char(127) not null,
   primaryMobile char(32) not null unique key,
+  primaryMobileValidated boolean not null,
   primaryEmail char(127) not null unique key,
+  primaryEmailValidated boolean not null,
   gender char(1),
-  dob datetime not null
+  dob datetime not null,
+  imei char(16) not null unique key,
+  btAddress char(24) not null unique key
 ) default character set utf8;
 
 drop table XurmoUserSession;
@@ -17,7 +22,7 @@ create table XurmoUserSession
 (
   username char(32) primary key,
   cookie char(127) not null,
-  location char(127) not null,
+  locationId int not null,
   lastUpdateTime datetime
 ) default character set utf8;
 

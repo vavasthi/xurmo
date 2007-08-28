@@ -29,13 +29,11 @@ public class XurmoMessageManagementBean implements com.xurmo.connect.user.XurmoM
     /** Creates a new instance of XurmoMessageManagementBean */
     public XurmoMessageManagementBean() {
     }
-    public XurmoMessageStatus enqueueMessage(String sourceId, String destinationId, String imsi, String siteId, String cellId, String locationString, String msg, String cookie) {
+    public XurmoMessageStatus enqueueMessage(String sourceId, String destinationId, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString, String msg, String cookie) {
         
-        String mobileCountryCode = imsi.substring(0, 3);
-        String mobileNetworkCode = imsi.substring(3, 6);
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(sourceId, em_);
         if (xus != null && cookie.equals(xus.getCookie())) {
-            XurmoLocationManager.updateLocation(sourceId, cookie, imsi, siteId, cellId, locationString, em_);
+            XurmoLocationManager.updateLocation(sourceId, cookie, mobileCountryCode, mobileCountryCode, siteId, cellId, locationString, em_);
             return XurmoMessageForALocationManager.instance().enqueueMessage(sourceId, destinationId, mobileCountryCode, mobileNetworkCode, siteId, cellId, msg, cookie, em_);
         }
         return new XurmoMessageStatus(XurmoError.UserNotLoggedIn, cookie);

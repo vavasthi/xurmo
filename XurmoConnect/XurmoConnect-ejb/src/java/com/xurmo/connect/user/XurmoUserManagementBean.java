@@ -37,11 +37,21 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
             String fname,
             String lname,
             String mobile,
+            boolean mobileValidated,
             String email,
+            boolean emailValidated,
             String gender,
-            Date dob) {
+            Date dob,
+            String imei,
+            String btAddress,
+            String mobileCountryCode,
+            String mobileNetworkCode,
+            String siteId,
+            String cellId,
+            String cellName) {
         //TODO implement registerUser
         int error = 0;
+        XurmoCellLocationMap xclm = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
         if (!validUsername(username)) {
             error |= XurmoUserRegistrationStatus.USERNAME_INVALID_MASK;
         }
@@ -81,9 +91,13 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
                 fname,
                 lname,
                 mobile,
+                mobileValidated,
                 email,
+                emailValidated,
                 gender,
-                dob);
+                dob,
+                imei,
+                btAddress);
         em_.persist(xu);
         return XurmoUserRegistrationStatus.USER_REGISTRATION_NO_ERROR;
     }
@@ -127,18 +141,16 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
         }
     }
     
-    public XurmoUserManagementStatus doLogin(String username, String password, String imsi, String siteId, String cellId, String locationString) {
+    public XurmoUserManagementStatus doLogin(String username, String password, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String cellName) {
         
         String cookie = new String();
-        String mobileCountryCode = imsi.substring(0, 3);
-        String mobileNetworkCode = imsi.substring(3, 6);
-        locationString = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString, em_);
+        XurmoCellLocationMap xclm = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);        
         XurmoUserSessionManager.instance().removeSession(username, em_);
         try {
             
             XurmoUser xu = (XurmoUser) (em_.createNamedQuery("XurmoUser.findByUsername").setParameter("username", username).getSingleResult());
             if (XurmoUserEncryption.instance().validateEncryptedPassword(password, xu.getPassword())) {
-                XurmoUserSession xus = XurmoUserSessionManager.instance().createSession(xu.getUsername(), XurmoUserEncryption.instance().getRandomCookie(imsi), locationString, em_);
+                XurmoUserSession xus = XurmoUserSessionManager.instance().createSession(xu.getUsername(), XurmoUserEncryption.instance().getRandomCookie(mobileCountryCode + "-" + mobileNetworkCode + "-" + username), xclm.getLocationId(), em_);
                 cookie = xus.getCookie();
             } else {
                 return new XurmoUserManagementStatus(XurmoError.InvalidUsernameOrPassword, cookie);
@@ -150,24 +162,24 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
     }
     
     
-    public XurmoUserManagementStatus doLogout(String username, String cookie, String imsi, String siteId, String cellId, String locationString) {
+    public XurmoUserManagementStatus doLogout(String username, String cookie, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String cellName) {
         
-        XurmoLocationManager.updateLocation(username, cookie, imsi, siteId, cellId, locationString, em_);
+        XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
         XurmoUserSessionManager.instance().removeSession(username, em_);
         return new XurmoUserManagementStatus(XurmoError.Success, "");
     }
     
-    public XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email, String imsi, String siteId, String cellId, String locationString) {
+    public XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String cellName) {
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         if (xus != null && cookie.equals(xus.getCookie())) {
-            XurmoLocationManager.updateLocation(username, cookie, imsi, siteId, cellId, locationString, em_);
+            XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
             return new XurmoUploadAddressBookReturnStatus(XurmoUserPersonalAddressBookManager.instance().uploadPersonalAddressBook(username, fullName, addresses, email, em_), cookie);
         } else {
             return new XurmoUploadAddressBookReturnStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_UPDATE_PROFILE, cookie);
         }
     }
-    public XurmoUserManagementStatus updateLocation(String username, String cookie, String imsi, String siteId, String cellId, String locationString) {
-        return XurmoLocationManager.updateLocation(username, cookie, imsi, siteId, cellId, locationString, em_);
+    public XurmoUserManagementStatus updateLocation(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
+        return XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
     }
 
 }

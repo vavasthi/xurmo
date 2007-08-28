@@ -23,8 +23,8 @@ public class XurmoMessageManagementServiceBean {
      * Web service operation
      */
     @WebMethod
-    public XurmoMessageStatus enqueueMessage(@WebParam(name = "sourceId") String sourceId, @WebParam(name = "destinationId") String destinationId, @WebParam(name = "imsi") String imsi, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "locationString") String locationString, @WebParam(name = "msg") String msg, @WebParam(name = "cookie") String cookie) {
-      return xurmoMessageManagementBean.enqueueMessage(sourceId, destinationId, imsi, siteId, cellId, locationString, msg, cookie);
+    public XurmoMessageStatus enqueueMessage(@WebParam(name = "sourceId") String sourceId, @WebParam(name = "destinationId") String destinationId, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "locationString") String locationString, @WebParam(name = "msg") String msg, @WebParam(name = "cookie") String cookie) {
+      return xurmoMessageManagementBean.enqueueMessage(sourceId, destinationId, mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString, msg, cookie);
     }
 
 }
