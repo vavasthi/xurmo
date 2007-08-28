@@ -31,6 +31,10 @@ public class XurmoUserManagementStatus implements Serializable {
     public String getCookie() {
         return cookie_;
     }
+    public String getCellName() {
+        return cellName_;
+    }
     private int error_;
     private String cookie_;
+    private String cellName_;
 }

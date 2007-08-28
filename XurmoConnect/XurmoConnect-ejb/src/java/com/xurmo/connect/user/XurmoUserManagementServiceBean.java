@@ -62,6 +62,14 @@ public class XurmoUserManagementServiceBean {
         // TODO implement operation 
         return xurmoUserAuthenticationBean.uploadPersonalAddressBook(username, cookie, fullName, addresses, email, mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString);
     }
-
+        
+    /**
+     * Web service operation
+     */
+    @WebMethod
+    public XurmoUserHomeScreenData getHomeScreenData(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode,  @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
+        
+        return xurmoUserAuthenticationBean.getHomeScreenData(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
+    }
 
 }

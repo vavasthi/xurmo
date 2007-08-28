@@ -181,5 +181,18 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
     public XurmoUserManagementStatus updateLocation(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
         return XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
     }
+    public XurmoUserHomeScreenData getHomeScreenData(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
+        
+        XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
+        if (xus != null && cookie.equals(xus.getCookie())) {
+     
+            XurmoCellLocationMap xclm 
+                    = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
+            XurmoUser xu = (XurmoUser) (em_.createNamedQuery("XurmoUser.findByUsername").setParameter("username", username).getSingleResult());
+            return new XurmoUserHomeScreenData(xus.getCookie(), XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, xclm.getLocation(), xu.getFname(), xu.getLname(), xu.getSalutation());
+        } else {
+            return new XurmoUserHomeScreenData(xus.getCookie(), XurmoUserInteractionStatus.INTERACTIONFAILED_USER_NOT_LOGGED_IN, "Unknown", "", "", "");
+        }
+    }
 
 }
