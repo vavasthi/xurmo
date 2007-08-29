@@ -16,6 +16,7 @@ import java.io.*;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Display;
+import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Font;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
@@ -48,6 +49,7 @@ public class Xurmo extends MIDlet {
    */
   private void initialize() {
     currentUser_ = new XurmoCurrentUser();
+    XurmoThemeManager.init(this);
     homeData_ = null;
     try {
       
@@ -248,7 +250,7 @@ public class Xurmo extends MIDlet {
   }
   public void doRegister() {
     
-    XurmoRegisterUserPanel registerForm = new XurmoRegisterUserPanel();
+    XurmoRegisterUserPanel registerForm = new XurmoRegisterUserPanel(this);
     XurmoRegisterUserListener ca = new XurmoRegisterUserListener(this, registerForm);
     registerForm.setCommandListener(ca);
     this.getDisplay().setCurrent(registerForm);

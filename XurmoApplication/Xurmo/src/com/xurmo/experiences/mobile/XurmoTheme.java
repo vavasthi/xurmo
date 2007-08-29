@@ -141,11 +141,11 @@ public class XurmoTheme {
   Image writeNewInteractionImage_;
   
   int titleForegroundColor_;
-  int collapsablePanelSelectedTitleBackgroundValue_;
-  int collapsablePanelSelectedContentBackgroundColorValue_;
-  int collapsablePanelSelectedForegroundColorValue_;
-  int collapsablePanelUnselectedForegroundColorValue_;
-  int collapsablePanelUnselectedBackgroundColorValue_;
+  public int collapsablePanelSelectedTitleBackgroundValue_;
+  public int collapsablePanelSelectedContentBackgroundColorValue_;
+  public int collapsablePanelSelectedForegroundColorValue_;
+  public int collapsablePanelUnselectedForegroundColorValue_;
+  public int collapsablePanelUnselectedBackgroundColorValue_;
   
   private int screenWidth_;
   private int screenHeight_;

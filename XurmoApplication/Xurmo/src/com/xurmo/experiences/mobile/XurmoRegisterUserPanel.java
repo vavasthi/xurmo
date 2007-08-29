@@ -27,8 +27,8 @@ package com.xurmo.experiences.mobile;
 // *********************************************************************
 // Imports
 // *********************************************************************
-
 import javax.microedition.lcdui.TextField;
+import com.xurmo.experiences.mobile.uicomponents.XurmoTextField;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.lcdui.Form;
 
@@ -37,45 +37,47 @@ import javax.microedition.lcdui.Font;
 
 public class XurmoRegisterUserPanel extends Form {
     
-    private TextField username_;
-    private TextField password_;
-    private TextField reenterPassword_;
-    private TextField salutation_;
-    private TextField firstName_;
-    private TextField lastName_;
-    private TextField mobileNumber_;
-    private TextField email_;
-    private TextField gender_;
-    private TextField dob_;
+    private XurmoTextField username_;
+    private XurmoTextField password_;
+    private XurmoTextField reenterPassword_;
+    private XurmoTextField salutation_;
+    private XurmoTextField firstName_;
+    private XurmoTextField lastName_;
+    private XurmoTextField mobileNumber_;
+    private XurmoTextField email_;
+    private XurmoTextField gender_;
+    private XurmoTextField dob_;
     
     Command login_;
     Command exit_;
     Command register_;
     
+    Xurmo midlet_;
     /**
    * Creates a new instance of XurmoRegisterUserPanel
    */
-    public XurmoRegisterUserPanel() {
+    public XurmoRegisterUserPanel(Xurmo midlet) {
         super("Sign Up");
-        username_ = new TextField("Username",null, 32, TextField.ANY);
+        midlet_ = midlet;
+        username_ = new XurmoTextField("Username",null, 32, TextField.ANY, midlet_);
         append(username_);
-        password_ = new TextField("Password",null, 32, TextField.PASSWORD);
+        password_ = new XurmoTextField("Password",null, 32, TextField.PASSWORD, midlet_);
         append(password_);
-        reenterPassword_ = new TextField("Reenter Password",null, 32, TextField.PASSWORD);
+        reenterPassword_ = new XurmoTextField("Reenter Password",null, 32, TextField.PASSWORD, midlet_);
         append(reenterPassword_);
-        salutation_ = new TextField("Salutation",null, 64, TextField.ANY);
+        salutation_ = new XurmoTextField("Salutation",null, 64, TextField.ANY, midlet_);
         append(salutation_);
-        firstName_ = new TextField("First Name",null, 64, TextField.ANY);
+        firstName_ = new XurmoTextField("First Name",null, 64, TextField.ANY, midlet_);
         append(firstName_);
-        lastName_ = new TextField("Last Name",null, 64, TextField.ANY);
+        lastName_ = new XurmoTextField("Last Name",null, 64, TextField.ANY, midlet_);
         append(lastName_);
-        mobileNumber_ = new TextField("Mobile Number",null, 64, TextField.PHONENUMBER);
+        mobileNumber_ = new XurmoTextField("Mobile Number",null, 64, TextField.PHONENUMBER, midlet_);
         append(mobileNumber_);
-        email_ = new TextField("Email",null, 64, TextField.EMAILADDR);
+        email_ = new XurmoTextField("Email",null, 64, TextField.EMAILADDR, midlet_);
         append(email_);
-        gender_ = new TextField("Gender",null, 64, TextField.ANY);
+        gender_ = new XurmoTextField("Gender",null, 64, TextField.ANY, midlet_);
         append(gender_);
-        dob_ = new TextField("DoB",null, 64, TextField.ANY);
+        dob_ = new XurmoTextField("DoB",null, 64, TextField.ANY, midlet_);
         append(dob_);
         register_ = new Command("Sign Up", Command.ITEM, 1);
         addCommand(register_);

@@ -46,7 +46,6 @@ public class XurmoCanvas extends GameCanvas {
     titleHeight += f.getHeight();
     f = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_PLAIN, Font.SIZE_SMALL);
     titleHeight += f.getHeight();
-    XurmoThemeManager.init(this.getWidth(), this.getHeight(), titleHeight, this.getHeight() - titleHeight);
     tbHeight_ = XurmoThemeManager.instance().getCurrentTheme().backgroundTopImage_.getHeight();
     screens_ = new XurmoTransitionableScreeWithPosition[2];
     currentScreen_ = 0;

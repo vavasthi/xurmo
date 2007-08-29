@@ -30,6 +30,9 @@ package com.xurmo.experiences.mobile;
 import java.io.*;
 import org.kxml2.io.*;
 import org.xmlpull.v1.*;
+import javax.microedition.midlet.MIDlet;
+import javax.microedition.lcdui.game.GameCanvas;
+import javax.microedition.lcdui.Font;
 
 public class XurmoThemeManager {
   
@@ -41,9 +44,14 @@ public class XurmoThemeManager {
     middleHeight_ = middleHeight;
     initialize();
   }
-  public static void init(int screenWidth, int screenHeight, int titleHeight, int middleHeight) {
+  public static void init(Xurmo midlet) {
     if (self_ == null) {
-      self_ = new XurmoThemeManager(screenWidth, screenHeight, titleHeight, middleHeight);
+      XurmoSplashScreen ss = new XurmoSplashScreen();
+      midlet.getDisplay().setCurrent(ss);
+      int titleHeight = 0;
+      Font f = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_BOLD, Font.SIZE_MEDIUM);
+      titleHeight += f.getHeight();
+      self_ = new XurmoThemeManager(ss.getWidth(), ss.getHeight(), titleHeight, ss.getHeight() - titleHeight);
     }
   }
   
