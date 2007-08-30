@@ -40,17 +40,21 @@ public class XurmoUserEncryption {
             
             byte[] b = encrypt(password);
             if (b.length != encryptedPassword.length) {
+                System.out.println("Password lengths are not same");
                 return false;
             } else {
                 for (int i = 0; i < b.length; ++i) {
                     if (b[i] != encryptedPassword[i]) {
+                        System.out.println("Passwords don't match");
                         return false;
                     }
                 }
             }
         } catch(Exception ex) {
+            System.out.println("Password excryption exception");
             return false;
         }
+        System.out.println("Passwords matched");
         return true;
         
     }

@@ -29,7 +29,7 @@ public interface XurmoUserManagementLocal {
             String cellId,
             String cellName);
 
-    XurmoUserManagementStatus doLogin(String username, String password, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString);
+    XurmoUserHomeScreenData doLogin(String username, String password, String imei, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString);
     XurmoUserManagementStatus doLogout(String username, String cookie, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString);
     XurmoUserManagementStatus updateLocation(String username, String cookie, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString);
 
