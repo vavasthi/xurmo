@@ -10,6 +10,7 @@
 package com.xurmo.experiences.mobile.uicomponents;
 
 import javax.microedition.lcdui.Display;
+import javax.microedition.lcdui.TextField;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
@@ -28,9 +29,11 @@ import com.xurmo.experiences.mobile.*;
 public class XurmoTextField extends javax.microedition.lcdui.CustomItem implements XurmoEditableCustomItem, ItemCommandListener  {
   /** Creates a new instance of XurmoTextField */
   String text_;
-  String label_;
+  String[] label_;
   int maxSize_;
+  int minHeight_;
   int constraints_;
+  float percLabelWidth_;
   boolean traverseIn_;
   MIDlet midlet_;
   int sfgColor_;
@@ -39,13 +42,31 @@ public class XurmoTextField extends javax.microedition.lcdui.CustomItem implemen
   int usbgColor_;
   private final static Command defaultEditCommand = new Command("Edit", Command.ITEM, 1);
   
-  public XurmoTextField(String label, String text, int maxSize, int constraints, MIDlet midlet) {
+  public XurmoTextField(String label, String text, int maxSize, int constraints, float percLabelWidth, MIDlet midlet) {
+    super(null);
+    label_ = new String[1];
+    label_[0] = label;
+    minHeight_ = Font.getDefaultFont().getHeight() + 2;
+    text_ = text;
+    maxSize_ = maxSize;
+    constraints_ = constraints;
+    percLabelWidth_ = percLabelWidth;
+    midlet_ = midlet;
+    initialize();
+  }
+  public XurmoTextField(String label[], String text, int maxSize, int constraints, float percLabelWidth, MIDlet midlet) {
     super(null);
     label_ = label;
     text_ = text;
     maxSize_ = maxSize;
+    minHeight_ = (label_.length * Font.getDefaultFont().getHeight()) + 2;
     constraints_ = constraints;
+    percLabelWidth_ = percLabelWidth;
     midlet_ = midlet;
+    initialize();
+  }
+  private void initialize() {
+    
     traverseIn_ = false;
     setItemCommandListener(this);
     setDefaultCommand(defaultEditCommand);
@@ -57,7 +78,7 @@ public class XurmoTextField extends javax.microedition.lcdui.CustomItem implemen
   }
   public int getMinContentHeight() {
     
-    return Font.getDefaultFont().getHeight() + 2;
+    return minHeight_;
   }
   public int getMinContentWidth() {
     
@@ -65,7 +86,7 @@ public class XurmoTextField extends javax.microedition.lcdui.CustomItem implemen
   }
   public int getPrefContentHeight(int width) {
     
-    return Font.getDefaultFont().getHeight();
+    return minHeight_;
   }
   public int getPrefContentWidth(int height) {
     
@@ -73,25 +94,38 @@ public class XurmoTextField extends javax.microedition.lcdui.CustomItem implemen
   }
   public void paint(Graphics g, int w, int h) {
     int x = 0;
-    g.drawString(label_, x, 0, Graphics.LEFT | Graphics.TOP);
-    x += g.getFont().stringWidth(label_);
+    int y = 0;
+    String ps = text_;
+    if (constraints_ == TextField.PASSWORD && ps != null) {
+      ps = "";
+      for (int k = 0; k < text_.length(); ++k) {
+        ps += "*";
+      }
+    }
+    for (int i = 0; i < label_.length; ++i) {
+      
+      g.drawString(label_[i], x, y, Graphics.LEFT | Graphics.TOP);
+      y += g.getFont().getHeight();
+    }
+    x += Display.getDisplay(midlet_).getCurrent().getWidth() * percLabelWidth_;
+    y = g.getFont().getHeight() * (label_.length - 1) / 2;
     int oc = g.getColor();
     if (traverseIn_) {
       g.setColor(sbgColor_);
-      g.fillRoundRect(x + 2, 0, w - x - 4, h - 2, 10, 10);
+      g.fillRoundRect(x + 2, y, w - x - 4, (h / label_.length)- 2, 10, 10);
       g.setColor(sfgColor_);
-      if (text_ != null) {
+      if (ps != null) {
         
-        g.drawString(text_, x + 5, 0, Graphics.LEFT | Graphics.TOP);
+        g.drawString(ps, x + 5, y, Graphics.LEFT | Graphics.TOP);
       }
     } else {
       
       g.setColor(sbgColor_);
-      g.drawRoundRect(x + 2, 0, w - x - 4, h - 2, 10, 10);
+      g.drawRoundRect(x + 2, y, w - x - 4, (h / label_.length) - 2, 10, 10);
       g.setColor(sfgColor_);
-      if (text_ != null) {
+      if (ps != null) {
         
-        g.drawString(text_, x + 5, 0, Graphics.LEFT | Graphics.TOP);
+        g.drawString(ps , x + 5, y, Graphics.LEFT | Graphics.TOP);
       }
     }
     g.setColor(oc);
@@ -118,9 +152,14 @@ public class XurmoTextField extends javax.microedition.lcdui.CustomItem implemen
     traverseIn_ = false;
     repaint();
   }
-  public void commandAction(Command c, Item i) {
+  public void commandAction(Command c, Item itm) {
     if (c == defaultEditCommand) {
-      XurmoTextEdit te  = new XurmoTextEdit("Editing " + label_, text_, maxSize_, constraints_, Display.getDisplay(midlet_), this);
+      String l = new String("");
+      for (int i = 0; i < label_.length; ++i) {
+        l = l + " ";
+        l = l + label_[i];
+      }
+      XurmoTextEdit te  = new XurmoTextEdit("Editing" + l, text_, maxSize_, constraints_, Display.getDisplay(midlet_), this);      
       te.edit();
     }
   }

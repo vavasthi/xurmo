@@ -184,8 +184,9 @@ public class Xurmo extends MIDlet {
     }
   }
   public XurmoUserAuthenticationReturnStatus performLogin() {
-    XurmoUserAuthenticationReturnStatus status
+    homeData_
         = XurmoUserAuthenticationAndSessionWSInterface.loginUser(currentUser_.username_, currentUser_.password_);
+    XurmoUserAuthenticationReturnStatus status = homeData_.status;
     if (status != null &&
         XurmoUserAuthenticationAndSessionWSInterface.isAuthenticationStatusSuccessful(status.errorCode_)) {
       currentUser_.loggedIn(currentUser_.username_, currentUser_.password_, status.cookie_, status.cellName_);
@@ -226,6 +227,9 @@ public class Xurmo extends MIDlet {
     return status;
   }
   public void transitionToHomeScreen() {
+      home_  = new XurmoCanvas(this);
+      this.getDisplay().setCurrent(home_);
+      home_.setFullScreenMode(true);
   }
   public void transitionToRegisterScreen() {
     doRegister();

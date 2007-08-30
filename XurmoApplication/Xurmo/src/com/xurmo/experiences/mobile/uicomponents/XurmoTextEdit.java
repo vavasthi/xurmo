@@ -34,6 +34,7 @@ public class XurmoTextEdit extends TextBox implements CommandListener {
     caller_ = caller;
     this.addCommand(doneCommand);
     this.addCommand(cancelCommand);
+    setCommandListener(this);
   }
   public void edit() {
     display_.setCurrent(this);
