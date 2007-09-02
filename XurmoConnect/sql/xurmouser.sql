@@ -29,27 +29,43 @@ create table XurmoUserSession
 drop table XurmoPersonalAddressBook;
 create table XurmoPersonalAddressBook
 (
-  username char(32) not null primary key,
-  fullName varchar(256) not null,
-  unique key(username)
+  userid integer not null,
+  uniqueId integer not null,
+  contactName varchar(128) not null,
+  nickname varchar(128),
+  birthday datetime,
+  primary key(userid, uniqueId)
 ) default character set utf8;
 
-drop table XurmoPersonalPhoneNumberEntry;
-create table XurmoPersonalPhoneNumberEntry
+drop table XurmoPersonalAddressBookPhoneNumbers;
+create table XurmoPersonalAddressBookPhoneNumbers
 (
-  username char(32) not null,
-  addressType char(32),
-  address char(32),
-  primary key(username, addressType)
+  userid integer,
+  uniqueId integer,
+  attributeId integer,
+  phoneNumber char(128),
+  primary key(userid, uniqueId, attributeId)
 ) default character set utf8;
 
-drop table XurmoPersonalEmailEntry;
-create table XurmoPersonalEmailEntry
+drop table XurmoPersonalAddressBookEmailAddress;
+create table XurmoPersonalAddressBookEmailAddress
 (
-  username char(32) not null primary key,
-  email char(127)
+  userid integer,
+  uniqueId integer,
+  attributeId integer,
+  emailAddress char(128),
+  primary key(userid, uniqueId, attributeId)
 ) default character set utf8;
 
+drop table XurmoPersonalAddressBookAddress;
+create table XurmoPersonalAddressBookAddress
+(
+  userid integer,
+  uniqueId integer,
+  attributeId integer,
+  address char(255),
+  primary key(userid, uniqueId, attributeId)
+) default character set utf8;
 
 drop table XurmoCellLocationMap;
 create table XurmoCellLocationMap
