@@ -167,18 +167,9 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
         
         XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
         XurmoUserSessionManager.instance().removeSession(username, em_);
-        return new XurmoUserManagementStatus(XurmoError.Success, "");
+        return new XurmoUserManagementStatus(XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, "", cellName);
     }
     
-    public XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String cellName) {
-        XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
-        if (xus != null && cookie.equals(xus.getCookie())) {
-            XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
-            return new XurmoUploadAddressBookReturnStatus(XurmoUserPersonalAddressBookManager.instance().uploadPersonalAddressBook(username, fullName, addresses, email, em_), cookie);
-        } else {
-            return new XurmoUploadAddressBookReturnStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_UPDATE_PROFILE, cookie);
-        }
-    }
     public XurmoUserManagementStatus updateLocation(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
         return XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
     }
@@ -194,6 +185,25 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
         } else {
             return new XurmoUserHomeScreenData("", xus.getCookie(), XurmoUserInteractionStatus.INTERACTIONFAILED_USER_NOT_LOGGED_IN, "Unknown", "", "", "");
         }
+    }
+
+    public XurmoUserManagementStatus uploadPhoneBook(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName, XurmoPhoneAddressBookSync addressBook) {
+        XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
+        if (xus != null && cookie.equals(xus.getCookie())) {
+     
+            XurmoCellLocationMap xclm 
+                    = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
+            XurmoUser xu = (XurmoUser) (em_.createNamedQuery("XurmoUser.findByUsername").setParameter("username", username).getSingleResult());
+            
+            return XurmoPersonalAddressBookManager.uploadPhoneBook(xu, cookie, addressBook, cellName, em_);
+        } else {
+            return new XurmoUserManagementStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_UPLOAD_ADDRESSBOOK_FAILED, "", cellName);
+        }
+    }
+
+    public XurmoPhoneAddressBookSync downloadPhoneBook() {
+        //TODO implement downloadPhoneBook
+        return null;
     }
 
 }

@@ -20,10 +20,11 @@ public class XurmoUserManagementStatus implements Serializable {
     /**
      * Creates a new instance of XurmoUserManagementStatus
      */
-    public XurmoUserManagementStatus(int error, String cookie) {
+    public XurmoUserManagementStatus(int error, String cookie, String cellName) {
         super();
         error_ = error;
         cookie_ = cookie;
+        cellName_ = cellName;
     }
     public int getError() {
         return error_;

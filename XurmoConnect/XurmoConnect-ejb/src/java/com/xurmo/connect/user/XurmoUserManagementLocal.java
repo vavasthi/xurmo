@@ -33,6 +33,9 @@ public interface XurmoUserManagementLocal {
     XurmoUserManagementStatus doLogout(String username, String cookie, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString);
     XurmoUserManagementStatus updateLocation(String username, String cookie, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString);
 
-    XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(String username, String cookie, String fullName, XurmoElectronicAddress[] addresses, String email, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString);
     XurmoUserHomeScreenData getHomeScreenData(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName);
+
+    XurmoUserManagementStatus uploadPhoneBook(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName,XurmoPhoneAddressBookSync addressBook);
+
+    XurmoPhoneAddressBookSync downloadPhoneBook();
 }

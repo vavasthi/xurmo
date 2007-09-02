@@ -58,18 +58,17 @@ public class XurmoUserManagementServiceBean {
      * Web service operation
      */
     @WebMethod
-    public XurmoUploadAddressBookReturnStatus uploadPersonalAddressBook(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "fullName") String fullName, @WebParam(name = "addresses") XurmoElectronicAddress[] addresses, @WebParam(name = "email") String email, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "locationString") String locationString) {
-        // TODO implement operation 
-        return xurmoUserAuthenticationBean.uploadPersonalAddressBook(username, cookie, fullName, addresses, email, mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString);
-    }
-        
-    /**
-     * Web service operation
-     */
-    @WebMethod
     public XurmoUserHomeScreenData getHomeScreenData(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode,  @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
         
         return xurmoUserAuthenticationBean.getHomeScreenData(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
     }
 
+    /**
+     * Web service operation
+     */
+    @WebMethod
+    public XurmoUserManagementStatus uploadPhoneBook(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode,  @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName, @WebParam(name = "addressBook") XurmoPhoneAddressBookSync addressBook) {
+        
+        return xurmoUserAuthenticationBean.uploadPhoneBook(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, addressBook);
+    }
 }

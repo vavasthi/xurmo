@@ -27,7 +27,7 @@ public class XurmoLocationManager {
             xus.setLocationId(xclm.getLocationId());
             cookie = xus.getCookie();
         }
-        return new XurmoUserManagementStatus(XurmoError.Success, cookie);
+        return new XurmoUserManagementStatus(XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, cookie, xclm.getLocation());
     }
     public static XurmoCellLocationMap updateLocationMap(String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String cellName, javax.persistence.EntityManager em) {
         
