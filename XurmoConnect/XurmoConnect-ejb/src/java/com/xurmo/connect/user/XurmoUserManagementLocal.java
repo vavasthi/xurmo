@@ -37,5 +37,5 @@ public interface XurmoUserManagementLocal {
 
     XurmoUserManagementStatus uploadPhoneBook(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName,XurmoPhoneAddressBookSync addressBook);
 
-    XurmoPhoneAddressBookSync downloadPhoneBook();
+    XurmoPhoneAddressBookSync downloadPhoneBook(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName);
 }

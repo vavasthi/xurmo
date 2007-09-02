@@ -18,6 +18,7 @@ import java.util.Vector;
  */
 public class XurmoPhoneAddressBookSync implements java.io.Serializable {
 
+    public int errorCode;
     public int uniqueId;
     public String contactName;
     public String nickName;
@@ -27,23 +28,35 @@ public class XurmoPhoneAddressBookSync implements java.io.Serializable {
     private Vector<XurmoPhoneAddressBookAttributeValuePair> emailAddresses;
     private Vector<XurmoPhoneAddressBookAttributeValuePair> addresses;
     
-    public XurmoPhoneAddressBookAttributeValuePair[] get_phoneNumbers() {
+    public XurmoPhoneAddressBookAttributeValuePair[] getphoneNumbers() {
         XurmoPhoneAddressBookAttributeValuePair[] t = new XurmoPhoneAddressBookAttributeValuePair[phoneNumbers.size()];
         return phoneNumbers.toArray(t);
     }
-    public XurmoPhoneAddressBookAttributeValuePair[] get_emailAddresses() {
+    public XurmoPhoneAddressBookAttributeValuePair[] getemailAddresses() {
         
         XurmoPhoneAddressBookAttributeValuePair[] t = new XurmoPhoneAddressBookAttributeValuePair[emailAddresses.size()];
         return emailAddresses.toArray(t);
     }
-    public XurmoPhoneAddressBookAttributeValuePair[] get_addresses() {
+    public XurmoPhoneAddressBookAttributeValuePair[] getaddresses() {
         
         XurmoPhoneAddressBookAttributeValuePair[] t = new XurmoPhoneAddressBookAttributeValuePair[addresses.size()];
         return addresses.toArray(t);
     }
     
     /** Creates a new instance of XurmoPhoneAddressBookSync */
+    public XurmoPhoneAddressBookSync(int errorCode) {
+        this.errorCode = errorCode;
+        this.uniqueId = 0;
+        this.contactName = new String("");
+        this.nickName = new String("");
+        this.birthday = null;
+        phoneNumbers = new Vector<XurmoPhoneAddressBookAttributeValuePair>();
+        emailAddresses = new Vector<XurmoPhoneAddressBookAttributeValuePair>();
+        addresses = new Vector<XurmoPhoneAddressBookAttributeValuePair>();
+    }
+    /** Creates a new instance of XurmoPhoneAddressBookSync */
     public XurmoPhoneAddressBookSync(int uniqueId, String contactName, String nickName, Date birthday) {
+        errorCode = XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR;
         this.uniqueId = uniqueId;
         this.contactName = contactName;
         this.nickName = nickName;

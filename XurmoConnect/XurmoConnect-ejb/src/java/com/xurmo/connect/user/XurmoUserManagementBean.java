@@ -201,9 +201,26 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
         }
     }
 
-    public XurmoPhoneAddressBookSync downloadPhoneBook() {
+    public XurmoPhoneAddressBookSync downloadPhoneBook(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
         //TODO implement downloadPhoneBook
-        return null;
+        XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
+        if (xus != null && cookie.equals(xus.getCookie())) {
+     
+            XurmoCellLocationMap xclm 
+                    = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
+            XurmoUser xu = (XurmoUser) (em_.createNamedQuery("XurmoUser.findByUsername").setParameter("username", username).getSingleResult());
+            
+
+            XurmoPhoneAddressBookSync pabs = new XurmoPhoneAddressBookSync(1, "Vinay Avsthi", "Vinay", new Date());
+        
+            pabs.addAddress(1, "3243243");
+        
+            pabs.addAddress(2, "sdfsdf");
+        
+            return pabs;
+        } else {
+            return new XurmoPhoneAddressBookSync(XurmoUserInteractionStatus.INTERACTIONFAILED_DOWNLOAD_ADDRESSBOOK_FAILED);
+        }
     }
 
 }

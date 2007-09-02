@@ -15,8 +15,8 @@ package com.xurmo.connect.user;
  */
 public class XurmoPhoneAddressBookAttributeValuePair implements java.io.Serializable {
     
-    int attributeId;
-    String value;
+    public int attributeId;
+    public String value;
     /** Creates a new instance of XurmoPhoneAddressBookAttributeValuePair */
     public XurmoPhoneAddressBookAttributeValuePair(int attributeId, String value) {
         
