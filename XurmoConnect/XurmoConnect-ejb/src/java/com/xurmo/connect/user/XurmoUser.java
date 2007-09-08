@@ -43,6 +43,7 @@ import javax.persistence.TemporalType;
         @NamedQuery(name = "XurmoUser.findByGender", query = "SELECT x FROM XurmoUser x WHERE x.gender = :gender"),
         @NamedQuery(name = "XurmoUser.findByDob", query = "SELECT x FROM XurmoUser x WHERE x.dob = :dob"),
         @NamedQuery(name = "XurmoUser.findByImei", query = "SELECT x FROM XurmoUser x WHERE x.imei = :imei"),
+        @NamedQuery(name = "XurmoUser.findByPersonalAddressBookMatch", query = "SELECT distinct x FROM XurmoUser x, XurmoUser xu, XurmoPersonalAddressBookEmailAddress xea, XurmoPersonalAddressBookPhoneNumbers xpn WHERE (x.primaryEmail = xea.emailAddress or x.primaryMobile = xpn.phoneNumber) and xea.xurmoPersonalAddressBookEmailAddressPK.userid = xu.userid and xpn.xurmoPersonalAddressBookPhoneNumbersPK.userid = xu.userid and xu.username=:username"),
         @NamedQuery(name = "XurmoUser.findByBtAddress", query = "SELECT x FROM XurmoUser x WHERE x.btAddress = :btAddress")
     })
 public class XurmoUser implements Serializable {

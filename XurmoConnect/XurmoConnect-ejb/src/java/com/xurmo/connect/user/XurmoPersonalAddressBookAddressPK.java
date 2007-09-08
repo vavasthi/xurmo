@@ -2,7 +2,7 @@
  * Copyright (c) 2007, Xurmo.com. All rights reserved.
  *
  * File name                : XurmoPersonalAddressBookAddressPK.java
- * Created on               : September 3, 2007, 12:51 AM
+ * Created on               : September 9, 2007, 1:38 AM
  * Created by               : xurmo
  *
  */
@@ -29,6 +29,9 @@ public class XurmoPersonalAddressBookAddressPK implements Serializable {
 
     @Column(name = "attributeId", nullable = false)
     private int attributeId;
+
+    @Column(name = "entry", nullable = false)
+    private int entry;
     
     /** Creates a new instance of XurmoPersonalAddressBookAddressPK */
     public XurmoPersonalAddressBookAddressPK() {
@@ -36,11 +39,13 @@ public class XurmoPersonalAddressBookAddressPK implements Serializable {
 
     /**
      * Creates a new instance of XurmoPersonalAddressBookAddressPK with the specified values.
+     * @param entry the entry of the XurmoPersonalAddressBookAddressPK
      * @param attributeId the attributeId of the XurmoPersonalAddressBookAddressPK
      * @param uniqueId the uniqueId of the XurmoPersonalAddressBookAddressPK
      * @param userid the userid of the XurmoPersonalAddressBookAddressPK
      */
-    public XurmoPersonalAddressBookAddressPK(int attributeId, int uniqueId, int userid) {
+    public XurmoPersonalAddressBookAddressPK(int entry, int attributeId, int uniqueId, int userid) {
+        this.entry = entry;
         this.attributeId = attributeId;
         this.uniqueId = uniqueId;
         this.userid = userid;
@@ -95,6 +100,22 @@ public class XurmoPersonalAddressBookAddressPK implements Serializable {
     }
 
     /**
+     * Gets the entry of this XurmoPersonalAddressBookAddressPK.
+     * @return the entry
+     */
+    public int getEntry() {
+        return this.entry;
+    }
+
+    /**
+     * Sets the entry of this XurmoPersonalAddressBookAddressPK to the specified value.
+     * @param entry the new entry
+     */
+    public void setEntry(int entry) {
+        this.entry = entry;
+    }
+
+    /**
      * Returns a hash code value for the object.  This implementation computes 
      * a hash code value based on the id fields in this object.
      * @return a hash code value for this object.
@@ -102,6 +123,7 @@ public class XurmoPersonalAddressBookAddressPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
+        hash += (int)entry;
         hash += (int)attributeId;
         hash += (int)uniqueId;
         hash += (int)userid;
@@ -123,6 +145,7 @@ public class XurmoPersonalAddressBookAddressPK implements Serializable {
             return false;
         }
         XurmoPersonalAddressBookAddressPK other = (XurmoPersonalAddressBookAddressPK)object;
+        if (this.entry != other.entry) return false;
         if (this.attributeId != other.attributeId) return false;
         if (this.uniqueId != other.uniqueId) return false;
         if (this.userid != other.userid) return false;
@@ -136,7 +159,7 @@ public class XurmoPersonalAddressBookAddressPK implements Serializable {
      */
     @Override
     public String toString() {
-        return "com.xurmo.connect.user.XurmoPersonalAddressBookAddressPK[attributeId=" + attributeId + ", uniqueId=" + uniqueId + ", userid=" + userid + "]";
+        return "com.xurmo.connect.user.XurmoPersonalAddressBookAddressPK[entry=" + entry + ", attributeId=" + attributeId + ", uniqueId=" + uniqueId + ", userid=" + userid + "]";
     }
     
 }

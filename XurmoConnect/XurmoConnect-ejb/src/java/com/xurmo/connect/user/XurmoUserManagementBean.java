@@ -210,13 +210,10 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
                     = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
             XurmoUser xu = (XurmoUser) (em_.createNamedQuery("XurmoUser.findByUsername").setParameter("username", username).getSingleResult());
             
-
-            XurmoPhoneAddressBookSync pabs = new XurmoPhoneAddressBookSync(1, "Vinay Avsthi", "Vinay", new Date());
-        
-            pabs.addAddress(1, "3243243");
-        
-            pabs.addAddress(2, "sdfsdf");
-        
+            XurmoPhoneContactSync[] cs = new XurmoPhoneContactSync[2];
+            cs[0] = new XurmoPhoneContactSync(1, "Vinay Avsthi", "Vinay", new Date());
+            cs[1] = new XurmoPhoneContactSync(2, "Some Other Name", "SoN", new Date());
+            XurmoPhoneAddressBookSync pabs = new XurmoPhoneAddressBookSync(cs);
             return pabs;
         } else {
             return new XurmoPhoneAddressBookSync(XurmoUserInteractionStatus.INTERACTIONFAILED_DOWNLOAD_ADDRESSBOOK_FAILED);

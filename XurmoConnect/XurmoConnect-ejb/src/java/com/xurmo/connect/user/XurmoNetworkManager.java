@@ -9,20 +9,46 @@
 
 package com.xurmo.connect.user;
 
+import org.jboss.util.platform.Java;
+
 /**
  *
  * @author xurmo
  */
 public class XurmoNetworkManager {
     
-    public static XurmoNetworkManager instance() {
-        if (self_ == null) {
-            self_ = new XurmoNetworkManager();
+    public static String[] memberOfNetworks(String username, javax.persistence.EntityManager em) {
+        javax.persistence.Query q = em.createNamedQuery("XurmoNetworkLinkType.findUniqueByUsername");
+        q.setParameter("username", username);
+        java.util.List l = q.getResultList();
+        java.util.Iterator li = l.iterator();
+        String[] out = new String[l.size()];
+        int i = 0;
+        while (li.hasNext()) {
+            XurmoNetworkLinkType xnlt = (XurmoNetworkLinkType)li.next();
+            out[i] = xnlt.getLinkName();
+            ++i;
         }
-        return self_;
+        return out;
     }
-    /** Creates a new instance of XurmoNetworkManager */
-    private XurmoNetworkManager() {
+    public static int numberOfContacts(String username, javax.persistence.EntityManager em) {
+        javax.persistence.Query q = em.createNamedQuery("XurmoPersonalAddressBook.findByUsername");
+        q.setParameter("username", username);
+        java.util.List l = q.getResultList();
+        return l.size();
     }
-    private static XurmoNetworkManager self_ = null;
+    public static XurmoUserGlobalData[] contactsAlreadyUser(String username, javax.persistence.EntityManager em) {
+        javax.persistence.Query q = em.createNamedQuery("XurmoUser.findByPersonalAddressBookMatch");
+        q.setParameter("username", username);
+        java.util.List l = q.getResultList();
+        java.util.Iterator itr = l.iterator();
+        XurmoUserGlobalData[] out = new XurmoUserGlobalData[l.size()];
+        int j = 0;
+        while (itr.hasNext()) {
+            XurmoUser xu = (XurmoUser)itr.next();
+            out[j] = new XurmoUserGlobalData(xu.getUserid(), xu.getUsername(), xu.getFname(), xu.getLname());
+            ++j;
+        }
+        return out;
+    }
 }

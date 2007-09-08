@@ -2,123 +2,35 @@
  * Copyright (c) 2007, Xurmo.com. All rights reserved.
  *
  * File name                : XurmoPhoneAddressBookSync.java
- * Created on               : September 3, 2007, 12:52 AM
+ * Created on               : September 3, 2007, 5:05 PM
  * Created by               : xurmo
  *
  */
 
 package com.xurmo.connect.user;
 
-import java.util.Date;
-import java.util.Vector;
-
 /**
  *
  * @author xurmo
  */
 public class XurmoPhoneAddressBookSync implements java.io.Serializable {
-
     public int errorCode;
-    public int uniqueId;
-    public String contactName;
-    public String nickName;
-    public Date birthday;
     
-    private Vector<XurmoPhoneAddressBookAttributeValuePair> phoneNumbers;
-    private Vector<XurmoPhoneAddressBookAttributeValuePair> emailAddresses;
-    private Vector<XurmoPhoneAddressBookAttributeValuePair> addresses;
-    
-    public XurmoPhoneAddressBookAttributeValuePair[] getphoneNumbers() {
-        XurmoPhoneAddressBookAttributeValuePair[] t = new XurmoPhoneAddressBookAttributeValuePair[phoneNumbers.size()];
-        return phoneNumbers.toArray(t);
+    /** Creates a new instance of XurmoPhoneAddressBookSync */
+    public XurmoPhoneAddressBookSync(XurmoPhoneContactSync[] contact) {
+        this.contact = contact;
+        this.errorCode = XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR;
     }
-    public XurmoPhoneAddressBookAttributeValuePair[] getemailAddresses() {
-        
-        XurmoPhoneAddressBookAttributeValuePair[] t = new XurmoPhoneAddressBookAttributeValuePair[emailAddresses.size()];
-        return emailAddresses.toArray(t);
-    }
-    public XurmoPhoneAddressBookAttributeValuePair[] getaddresses() {
-        
-        XurmoPhoneAddressBookAttributeValuePair[] t = new XurmoPhoneAddressBookAttributeValuePair[addresses.size()];
-        return addresses.toArray(t);
-    }
-    
     /** Creates a new instance of XurmoPhoneAddressBookSync */
     public XurmoPhoneAddressBookSync(int errorCode) {
         this.errorCode = errorCode;
-        this.uniqueId = 0;
-        this.contactName = new String("");
-        this.nickName = new String("");
-        this.birthday = null;
-        phoneNumbers = new Vector<XurmoPhoneAddressBookAttributeValuePair>();
-        emailAddresses = new Vector<XurmoPhoneAddressBookAttributeValuePair>();
-        addresses = new Vector<XurmoPhoneAddressBookAttributeValuePair>();
+        contact = new XurmoPhoneContactSync[0];
     }
-    /** Creates a new instance of XurmoPhoneAddressBookSync */
-    public XurmoPhoneAddressBookSync(int uniqueId, String contactName, String nickName, Date birthday) {
-        errorCode = XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR;
-        this.uniqueId = uniqueId;
-        this.contactName = contactName;
-        this.nickName = nickName;
-        this.birthday = birthday;
-        phoneNumbers = new Vector<XurmoPhoneAddressBookAttributeValuePair>();
-        emailAddresses = new Vector<XurmoPhoneAddressBookAttributeValuePair>();
-        addresses = new Vector<XurmoPhoneAddressBookAttributeValuePair>();
+    public int numberOfContacts() {
+        return contact.length;
     }
-    void addPhoneNumber(int type, String value) {
-        XurmoPhoneAddressBookAttributeValuePair t = new XurmoPhoneAddressBookAttributeValuePair(type, value);
-        phoneNumbers.add(t);
+    public XurmoPhoneContactSync contactAt(int i) {
+        return contact[i];
     }
-    void addEmailAddress(int type, String value) {
-        XurmoPhoneAddressBookAttributeValuePair t = new XurmoPhoneAddressBookAttributeValuePair(type, value);
-        emailAddresses.add(t);
-    }
-    void addAddress(int type, String value) {
-        XurmoPhoneAddressBookAttributeValuePair t = new XurmoPhoneAddressBookAttributeValuePair(type, value);
-        addresses.add(t);
-    }
-    XurmoPersonalAddressBook getPersonalAddressBookBean(int userid) {
-        XurmoPersonalAddressBookPK pk = new XurmoPersonalAddressBookPK(uniqueId, userid);
-        XurmoPersonalAddressBook bean = new XurmoPersonalAddressBook(pk);
-        bean.setBirthday(this.birthday);
-        bean.setContactName(this.contactName);
-        bean.setNickname(nickName);
-        return bean;
-    }
-    XurmoPersonalAddressBookEmailAddress[] getPersonalAddressBookEmailAddresses(int userid) {
-        if (this.emailAddresses.size() == 0) {
-            return new XurmoPersonalAddressBookEmailAddress[0];
-        }
-        else {
-            XurmoPersonalAddressBookEmailAddress[] out = new XurmoPersonalAddressBookEmailAddress[emailAddresses.size()];
-            for (int i = 0; i < emailAddresses.size(); ++i) {
-                out[i] = new XurmoPersonalAddressBookEmailAddress(userid, this.uniqueId, emailAddresses.elementAt(i).attributeId, emailAddresses.elementAt(i).value);
-            }
-            return out;                
-        }
-    }
-    XurmoPersonalAddressBookPhoneNumbers[] getPersonalAddressBookPhoneNumbers(int userid) {
-        if (this.phoneNumbers.size() == 0) {
-            return new XurmoPersonalAddressBookPhoneNumbers[0];
-        }
-        else {
-            XurmoPersonalAddressBookPhoneNumbers[] out = new XurmoPersonalAddressBookPhoneNumbers[phoneNumbers.size()];
-            for (int i = 0; i < emailAddresses.size(); ++i) {
-                out[i] = new XurmoPersonalAddressBookPhoneNumbers(userid, this.uniqueId, phoneNumbers.elementAt(i).attributeId, phoneNumbers.elementAt(i).value);
-            }
-            return out;                
-        }
-    }
-    XurmoPersonalAddressBookAddress[] getPersonalAddressBookAddresses(int userid) {
-        if (this.addresses.size() == 0) {
-            return new XurmoPersonalAddressBookAddress[0];
-        }
-        else {
-            XurmoPersonalAddressBookAddress[] out = new XurmoPersonalAddressBookAddress[addresses.size()];
-            for (int i = 0; i < addresses.size(); ++i) {
-                out[i] = new XurmoPersonalAddressBookAddress(userid, this.uniqueId, this.addresses.elementAt(i).attributeId, addresses.elementAt(i).value);
-            }
-            return out;                
-        }
-    }
+    public XurmoPhoneContactSync[] contact;
 }

@@ -4,4 +4,10 @@
   <module>
     <ejb>XurmoConnect-ejb.jar</ejb>
   </module>
+  <module>
+    <web>
+      <web-uri>XurmoWeb.war</web-uri>
+      <context-root>/XurmoWeb</context-root>
+    </web>
+  </module>
 </application>

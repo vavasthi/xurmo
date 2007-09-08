@@ -2,7 +2,7 @@
  * Copyright (c) 2007, Xurmo.com. All rights reserved.
  *
  * File name                : XurmoPersonalAddressBookAddress.java
- * Created on               : September 3, 2007, 12:51 AM
+ * Created on               : September 9, 2007, 1:38 AM
  * Created by               : xurmo
  *
  */
@@ -28,6 +28,7 @@ import javax.persistence.Table;
         @NamedQuery(name = "XurmoPersonalAddressBookAddress.findByUserid", query = "SELECT x FROM XurmoPersonalAddressBookAddress x WHERE x.xurmoPersonalAddressBookAddressPK.userid = :userid"),
         @NamedQuery(name = "XurmoPersonalAddressBookAddress.findByUniqueId", query = "SELECT x FROM XurmoPersonalAddressBookAddress x WHERE x.xurmoPersonalAddressBookAddressPK.uniqueId = :uniqueId"),
         @NamedQuery(name = "XurmoPersonalAddressBookAddress.findByAttributeId", query = "SELECT x FROM XurmoPersonalAddressBookAddress x WHERE x.xurmoPersonalAddressBookAddressPK.attributeId = :attributeId"),
+        @NamedQuery(name = "XurmoPersonalAddressBookAddress.findByEntry", query = "SELECT x FROM XurmoPersonalAddressBookAddress x WHERE x.xurmoPersonalAddressBookAddressPK.entry = :entry"),
         @NamedQuery(name = "XurmoPersonalAddressBookAddress.findByAddress", query = "SELECT x FROM XurmoPersonalAddressBookAddress x WHERE x.address = :address")
     })
 public class XurmoPersonalAddressBookAddress implements Serializable {
@@ -55,23 +56,25 @@ public class XurmoPersonalAddressBookAddress implements Serializable {
 
     /**
      * Creates a new instance of XurmoPersonalAddressBookAddressPK with the specified values.
+     * @param entry the entry of the XurmoPersonalAddressBookAddressPK
      * @param attributeId the attributeId of the XurmoPersonalAddressBookAddressPK
      * @param uniqueId the uniqueId of the XurmoPersonalAddressBookAddressPK
      * @param userid the userid of the XurmoPersonalAddressBookAddressPK
      */
-    public XurmoPersonalAddressBookAddress(int attributeId, int uniqueId, int userid) {
-        this.xurmoPersonalAddressBookAddressPK = new XurmoPersonalAddressBookAddressPK(attributeId, uniqueId, userid);
+    public XurmoPersonalAddressBookAddress(int userid, int entry, int uniqueId, int attributeId, String address) {
+        this.xurmoPersonalAddressBookAddressPK = new XurmoPersonalAddressBookAddressPK(entry, attributeId, uniqueId, userid);
+        this.address = address;
     }
 
     /**
      * Creates a new instance of XurmoPersonalAddressBookAddressPK with the specified values.
+     * @param entry the entry of the XurmoPersonalAddressBookAddressPK
      * @param attributeId the attributeId of the XurmoPersonalAddressBookAddressPK
      * @param uniqueId the uniqueId of the XurmoPersonalAddressBookAddressPK
      * @param userid the userid of the XurmoPersonalAddressBookAddressPK
      */
-    public XurmoPersonalAddressBookAddress(int userid, int uniqueId, int attributeId, String value) {
-        this.xurmoPersonalAddressBookAddressPK = new XurmoPersonalAddressBookAddressPK(attributeId, uniqueId, userid);
-        this.address = value;
+    public XurmoPersonalAddressBookAddress(int entry, int attributeId, int uniqueId, int userid) {
+        this.xurmoPersonalAddressBookAddressPK = new XurmoPersonalAddressBookAddressPK(entry, attributeId, uniqueId, userid);
     }
 
     /**

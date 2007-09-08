@@ -54,4 +54,13 @@ public class XurmoNetworkManagementServiceBean {
         // TODO implement operation 
         return xurmoNetworkManagementBean.disposeInvitations(username, cookie, invitationDisposition, msg);
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod
+    public XurmoNetworkSummaryStatus getNetworkSummary(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie) {
+        // TODO implement operation 
+        return xurmoNetworkManagementBean.getNetworkSummary(username, cookie);
+    }
 }

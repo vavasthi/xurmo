@@ -8,11 +8,7 @@
             <web-module-libraries/>
             <web-module-additional-libraries>
                 <library files="1">
-                    <file>${reference.XurmoConnectClient.j2ee-module-car}</file>
-                    <path-in-war>/</path-in-war>
-                </library>
-                <library files="1">
-                    <file>${reference.XurmoConnectClient.j2ee-module-car}</file>
+                    <file>${reference.XurmoWeb.dist-ear}</file>
                     <path-in-war>/</path-in-war>
                 </library>
                 <library files="1">
@@ -31,12 +27,12 @@
                 <id>dist-ear</id>
             </reference>
             <reference>
-                <foreign-project>XurmoConnectClient</foreign-project>
+                <foreign-project>XurmoWeb</foreign-project>
                 <artifact-type>j2ee_ear_archive</artifact-type>
                 <script>build.xml</script>
                 <target>dist-ear</target>
                 <clean-target>clean-ear</clean-target>
-                <id>j2ee-module-car</id>
+                <id>dist-ear</id>
             </reference>
         </references>
     </configuration>
