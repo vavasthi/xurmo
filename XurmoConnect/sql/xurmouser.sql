@@ -43,8 +43,9 @@ create table XurmoPersonalAddressBookPhoneNumbers
   userid integer,
   uniqueId integer,
   attributeId integer,
+  entry integer,
   phoneNumber char(128),
-  primary key(userid, uniqueId, attributeId)
+  primary key(userid, uniqueId, attributeId, entry)
 ) default character set utf8;
 
 drop table XurmoPersonalAddressBookEmailAddress;
@@ -53,8 +54,9 @@ create table XurmoPersonalAddressBookEmailAddress
   userid integer,
   uniqueId integer,
   attributeId integer,
+  entry integer,
   emailAddress char(128),
-  primary key(userid, uniqueId, attributeId)
+  primary key(userid, uniqueId, attributeId, entry)
 ) default character set utf8;
 
 drop table XurmoPersonalAddressBookAddress;
@@ -63,8 +65,9 @@ create table XurmoPersonalAddressBookAddress
   userid integer,
   uniqueId integer,
   attributeId integer,
+  entry integer,
   address char(255),
-  primary key(userid, uniqueId, attributeId)
+  primary key(userid, uniqueId, attributeId, entry)
 ) default character set utf8;
 
 drop table XurmoCellLocationMap;
