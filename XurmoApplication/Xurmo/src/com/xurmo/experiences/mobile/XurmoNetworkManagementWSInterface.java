@@ -12,7 +12,7 @@
 
 /**
  *
- * @file   XurmoUserAuthenticationAndSessionWSInterface.java
+ * @file   XurmoNetworkManagementWSInterface.java
  * @author
  * @date   May 4, 2007
  *
@@ -33,7 +33,7 @@ import org.kxml2.io.*;
 
 
 
-public class XurmoUserAuthenticationAndSessionWSInterface {
+public class XurmoNetworkManagementWSInterface {
   
 //  private static final String serverName_ = new String("mirl.miel.mot.com");
   private static final String serverName_ = new String("www.xurmoconnect.com");
@@ -44,7 +44,7 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
   /**
    * Creates a new instance of XurmoUserAuthenticationAndSessionWSInterface
    */
-  private XurmoUserAuthenticationAndSessionWSInterface() {
+  private XurmoNetworkManagementWSInterface() {
   }
   public static XurmoUserAuthenticationAndSessionWSInterface instance() {
     

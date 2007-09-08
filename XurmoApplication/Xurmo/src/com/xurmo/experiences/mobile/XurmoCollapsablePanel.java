@@ -84,8 +84,8 @@ public class XurmoCollapsablePanel {
       g.setFont(sf);
     }
     else {
-      g.setColor(ct.collapsablePanelUnselectedBackgroundColorValue_);
-      g.fillRect(x, y, screenWidth_, th_);
+//      g.setColor(ct.collapsablePanelUnselectedBackgroundColorValue_);
+//      g.fillRect(x, y, screenWidth_, th_);
       g.setColor(ct.collapsablePanelUnselectedForegroundColorValue_);
       g.drawImage(icon_, x + 1, y, g.LEFT | g.TOP);
       int w = icon_.getWidth();

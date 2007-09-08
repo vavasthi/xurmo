@@ -98,6 +98,7 @@ public class XurmoThemeManager {
     try {
       String nameValue= null;
       String descriptionValue= null;
+      String titlebarLogoValue = null;
       String iconDirValue= null;
       String arrowLeftValue= null;
       String arrowRightValue= null;
@@ -122,6 +123,8 @@ public class XurmoThemeManager {
       String unreadMsgValue= null;
       String writeNewInteractionValue = null;
       int titleForegroundColorValue = 0;
+      int gradientStartColorValue = 0;
+      int gradientEndColorValue = 0;
       int collapsablePanelSelectedTitleBackgroundValue = 0;
       int collapsablePanelSelectedContentBackgroundColorValue = 0;
       int collapsablePanelSelectedForegroundColorValue = 0;
@@ -155,6 +158,8 @@ public class XurmoThemeManager {
               descriptionValue = themes.getText();
             } else if(cc == iconDirTag_.context()) {
               iconDirValue = themes.getText();
+            } else if(cc == titlebarLogoTag_.context()) {
+              titlebarLogoValue = themes.getText();
             } else if(cc == arrowLeftTag_.context()) {
               arrowLeftValue = themes.getText();
             } else if(cc == arrowRightTag_.context()) {
@@ -208,6 +213,26 @@ public class XurmoThemeManager {
               else {
                 
                 titleForegroundColorValue = Integer.parseInt(sv);
+              }
+            } else if(cc == gradientStartColorTag_.context()) {
+              String sv = themes.getText().toUpperCase();
+              if (sv.startsWith("0X")) {
+                sv = sv.substring(2);
+                gradientStartColorValue = Integer.parseInt(sv, 16);
+              }
+              else {
+                
+                gradientStartColorValue = Integer.parseInt(sv);
+              }
+            } else if(cc == gradientEndColorTag_.context()) {
+              String sv = themes.getText().toUpperCase();
+              if (sv.startsWith("0X")) {
+                sv = sv.substring(2);
+                gradientEndColorValue = Integer.parseInt(sv, 16);
+              }
+              else {
+                
+                gradientEndColorValue = Integer.parseInt(sv);
               }
             } else if(cc == collapsablePanelSelectedTitleBackgroundColorTag_.context()) {
               String sv = themes.getText().toUpperCase();
@@ -299,6 +324,7 @@ public class XurmoThemeManager {
                   nameValue,
                   descriptionValue,
                   iconDirValue,
+                  titlebarLogoValue,
                   arrowLeftValue,
                   arrowRightValue,
                   backgroundMiddleValue,
@@ -322,6 +348,8 @@ public class XurmoThemeManager {
                   unreadMsgValue,
                   writeNewInteractionValue,
                   titleForegroundColorValue,
+                  gradientStartColorValue,
+                  gradientEndColorValue,
                   collapsablePanelSelectedTitleBackgroundValue,
                   collapsablePanelSelectedContentBackgroundColorValue,
                   collapsablePanelSelectedForegroundColorValue,
@@ -355,6 +383,7 @@ public class XurmoThemeManager {
   private final XurmoThemeXmlTag nameTag_               = new XurmoThemeXmlTag("name");
   private final XurmoThemeXmlTag descriptionTag_        = new XurmoThemeXmlTag("description");
   private final XurmoThemeXmlTag iconDirTag_            = new XurmoThemeXmlTag("icon-dir");
+  private final XurmoThemeXmlTag titlebarLogoTag_       = new XurmoThemeXmlTag("titlebar-logo");
   private final XurmoThemeXmlTag arrowLeftTag_          = new XurmoThemeXmlTag("arrow-left");
   private final XurmoThemeXmlTag arrowRightTag_         = new XurmoThemeXmlTag("arrow-right");
   private final XurmoThemeXmlTag backgroundMiddleTag_   = new XurmoThemeXmlTag("background-middle");
@@ -378,6 +407,8 @@ public class XurmoThemeManager {
   private final XurmoThemeXmlTag unreadMsgTag_          = new XurmoThemeXmlTag("unread-msg");
   private final XurmoThemeXmlTag writeNewInteractionTag_= new XurmoThemeXmlTag("write-new-interaction");
   private final XurmoThemeXmlTag titleForegroundColorTag_ = new XurmoThemeXmlTag("title-fgcolor");
+  private final XurmoThemeXmlTag gradientStartColorTag_ = new XurmoThemeXmlTag("gradient-start-color");
+  private final XurmoThemeXmlTag gradientEndColorTag_ = new XurmoThemeXmlTag("gradient-end-color");
   private final XurmoThemeXmlTag collapsablePanelSelectedTitleBackgroundColorTag_ = new XurmoThemeXmlTag("collapsable-panel-selected-title-bgcolor");
   private final XurmoThemeXmlTag collapsablePanelSelectedContentBackgroundColorTag_ = new XurmoThemeXmlTag("collapsable-panel-selected-content-bgcolor");
   private final XurmoThemeXmlTag collapsablePanelSelectedForegroundColorTag_ = new XurmoThemeXmlTag("collapsable-panel-selected-fgcolor");
@@ -391,6 +422,7 @@ public class XurmoThemeManager {
     nameTag_,
     descriptionTag_,
     iconDirTag_,
+    titlebarLogoTag_,
     arrowLeftTag_,
     arrowRightTag_,
     backgroundMiddleTag_,
@@ -414,6 +446,8 @@ public class XurmoThemeManager {
     unreadMsgTag_,
     writeNewInteractionTag_,
     titleForegroundColorTag_,
+    gradientStartColorTag_,
+    gradientEndColorTag_,
     collapsablePanelSelectedTitleBackgroundColorTag_,
     collapsablePanelSelectedContentBackgroundColorTag_,
     collapsablePanelSelectedForegroundColorTag_,

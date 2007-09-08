@@ -45,6 +45,7 @@ public class XurmoTheme {
       String name,
       String description,
       String iconDirectory,
+      String titlebarLogo,
       String arrowLeftValue,
       String arrowRightValue,
       String backgroundMiddleValue,
@@ -68,6 +69,8 @@ public class XurmoTheme {
       String unreadMsgValue,
       String writeNewInteractionValue,
       int titleForegroundColorValue,
+      int gradientStartColorValue,
+      int gradientEndColorValue,
       int collapsablePanelSelectedTitleBackgroundValue,
       int collapsablePanelSelectedContentBackgroundColorValue,
       int collapsablePanelSelectedForegroundColorValue,
@@ -81,6 +84,8 @@ public class XurmoTheme {
     description_ = description;
     iconDirectory_ = "/resources/themes/" + name + "/" + iconDirectory + "/";
     titleForegroundColor_ = titleForegroundColorValue;
+    gradientStartColor_ = gradientStartColorValue;
+    gradientEndColor_ = gradientEndColorValue;
     collapsablePanelSelectedTitleBackgroundValue_ = collapsablePanelSelectedTitleBackgroundValue;
     collapsablePanelSelectedContentBackgroundColorValue_ = collapsablePanelSelectedContentBackgroundColorValue;
     collapsablePanelSelectedForegroundColorValue_ = collapsablePanelSelectedForegroundColorValue;
@@ -90,6 +95,7 @@ public class XurmoTheme {
       
       arrowLeftImage_ = Image.createImage(getClass().getResourceAsStream(iconDirectory_+arrowLeftValue));
       arrowRightImage_ = Image.createImage(getClass().getResourceAsStream(iconDirectory_+arrowRightValue));
+      titlebarLogo_ = Image.createImage(getClass().getResourceAsStream(iconDirectory_+titlebarLogo));
       backgroundMiddleImage_ = null;
       //Image.createImage(getClass().getResourceAsStream(iconDirectory_+backgroundMiddleValue));
       Image tmp = Image.createImage(getClass().getResourceAsStream(iconDirectory_+backgroundTopValue));
@@ -117,7 +123,8 @@ public class XurmoTheme {
   private String name_;
   private String description_;
   private String iconDirectory_;
-  
+
+  Image titlebarLogo_;
   Image arrowLeftImage_;
   Image arrowRightImage_;
   Image backgroundMiddleImage_;
@@ -141,11 +148,13 @@ public class XurmoTheme {
   Image writeNewInteractionImage_;
   
   int titleForegroundColor_;
-  public int collapsablePanelSelectedTitleBackgroundValue_;
-  public int collapsablePanelSelectedContentBackgroundColorValue_;
-  public int collapsablePanelSelectedForegroundColorValue_;
-  public int collapsablePanelUnselectedForegroundColorValue_;
-  public int collapsablePanelUnselectedBackgroundColorValue_;
+  int gradientStartColor_;
+  int gradientEndColor_;
+  int collapsablePanelSelectedTitleBackgroundValue_;
+  int collapsablePanelSelectedContentBackgroundColorValue_;
+  int collapsablePanelSelectedForegroundColorValue_;
+  int collapsablePanelUnselectedForegroundColorValue_;
+  int collapsablePanelUnselectedBackgroundColorValue_;
   
   private int screenWidth_;
   private int screenHeight_;

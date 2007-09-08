@@ -34,25 +34,26 @@ public class XurmoMyDoodlePanel extends XurmoCollapsablePanel {
     int oc = g.getColor();
     int origY = y;
     drawBoundingBox(g, x, y);
-      y = th_ + origY;
-    XurmoDoodleSummary mds = XurmoUserAuthenticationAndSessionWSInterface.instance().getDoodleSummary(midlet_.currentUser_.username_, midlet_.currentUser_.cookie_);
-    g.drawString(mds.getSummaryTitleString(), 0, y, g.LEFT | g.TOP); 
-    y += g.getFont().getHeight();
-    String[] sa = mds.getSummaryStrings();
-    if (sa.length == 1) {
-      g.drawString((String)sa[0], 0, y, g.LEFT | g.TOP);
-    }
-    else if(sa.length == 2) {
+    y = th_ + origY;
+    if (selected_) {
       
-      g.drawString((String)sa[0], 0, y, g.LEFT | g.TOP);
+      XurmoDoodleSummary mds = XurmoUserAuthenticationAndSessionWSInterface.instance().getDoodleSummary(midlet_.currentUser_.username_, midlet_.currentUser_.cookie_);
+      g.drawString(mds.getSummaryTitleString(), 0, y, g.LEFT | g.TOP);
       y += g.getFont().getHeight();
-      g.drawString((String)sa[1], 0, y, g.LEFT | g.TOP);
-    }
-    else {
-      
-      g.drawString((String)sa[0], 0, y, g.LEFT | g.TOP);
-      y += g.getFont().getHeight();
-      g.drawString("more...", 0, y, g.LEFT | g.TOP);
+      String[] sa = mds.getSummaryStrings();
+      if (sa.length == 1) {
+        g.drawString((String)sa[0], 0, y, g.LEFT | g.TOP);
+      } else if(sa.length == 2) {
+        
+        g.drawString((String)sa[0], 0, y, g.LEFT | g.TOP);
+        y += g.getFont().getHeight();
+        g.drawString((String)sa[1], 0, y, g.LEFT | g.TOP);
+      } else {
+        
+        g.drawString((String)sa[0], 0, y, g.LEFT | g.TOP);
+        y += g.getFont().getHeight();
+        g.drawString("more...", 0, y, g.LEFT | g.TOP);
+      }
     }
     g.setColor(oc);
     g.setFont(of);

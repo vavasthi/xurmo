@@ -57,6 +57,12 @@ public class Xurmo extends MIDlet {
     } catch(javax.bluetooth.BluetoothStateException bsex) {
       
     }
+/*      javax.microedition.lcdui.List l = new javax.microedition.lcdui.List("Phonebook", javax.microedition.lcdui.List.IMPLICIT);
+      String[] s = XurmoPhoneBookInterface.getContacts();
+      for (int i = 0; i < s.length; ++i) {
+        l.append(s[i], null);
+      }
+      this.getDisplay().setCurrent(l);*/
     if (this.loadUsernameAndPasswordIfExist()) {
       XurmoUserAuthenticationReturnStatus status = performLogin();
       if (XurmoUserAuthenticationAndSessionWSInterface.isAuthenticationStatusSuccessful(status.errorCode_)) {
@@ -192,7 +198,7 @@ public class Xurmo extends MIDlet {
       currentUser_.loggedIn(currentUser_.username_, currentUser_.password_, status.cookie_, status.cellName_);
       XurmoInfoServicesListener listener = new XurmoInfoServicesListener(this, currentUser_.username_, currentUser_.cookie_);
       storeUsernameAndPassword();
-      home_  = new XurmoCanvas(this);
+      home_  = new XurmoCanvas(this, false);
       this.getDisplay().setCurrent(home_);
       home_.setFullScreenMode(true);
     }
@@ -227,9 +233,15 @@ public class Xurmo extends MIDlet {
     return status;
   }
   public void transitionToHomeScreen() {
-      home_  = new XurmoCanvas(this);
-      this.getDisplay().setCurrent(home_);
+    if (home_ == null || !(getDisplay().getCurrent() instanceof XurmoCanvas) ) {
+      
+      home_  = new XurmoCanvas(this, false);
       home_.setFullScreenMode(true);
+    }
+    else {
+      
+      getDisplay().setCurrent(new XurmoSliderCanvas(this, (XurmoCanvas)(getDisplay().getCurrent()), home_, XurmoSliderCanvas.LEFT));
+    }
   }
   public void transitionToRegisterScreen() {
     doRegister();

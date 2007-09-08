@@ -28,7 +28,8 @@ package com.xurmo.experiences.mobile;
 // Imports
 // *********************************************************************
 
-
+import java.util.Calendar;
+import java.util.Date;
 
 public class XurmoDevice {
   
@@ -84,6 +85,58 @@ public class XurmoDevice {
   public static String mobileNetworkCode() {
     return getOneProperty("IMSI").substring(3, 6);
   }
+  public static String getTimezoneOffsetString() {
+    if (timeZoneOffsetString_ == null) {
+      timeZoneOffsetString_ = XurmoDevice.defaultTimeZone_;
+      int plus = '+';
+      int plusPos = timeZoneOffsetString_.indexOf(plus);
+      int minus = '-';
+      int minusPos = timeZoneOffsetString_.indexOf(minus);
+      if (plusPos != -1) {
+        timeZoneOffsetString_ = timeZoneOffsetString_.substring(plusPos);
+      }
+      else if(minusPos != -1) {
+        
+        timeZoneOffsetString_ = timeZoneOffsetString_.substring(minusPos);
+      }
+      else {
+        timeZoneOffsetString_ = "+0:00";
+      }
+    }
+    return timeZoneOffsetString_;
+  }
+  private static String getFixedWidthStringValue(int no, int width) {
+    String cNo = String.valueOf(no);
+    while (cNo.length() < width) {
+      cNo = "0" + cNo;
+    }
+    return cNo;
+  }
+  private static String getYearInFourDigits(int no) {
+    String cNo = String.valueOf(no);
+    if (no < 10) {
+      cNo = "200" + cNo;
+    }
+    else if (no < 100) {
+      cNo = "19" + cNo;
+    }
+    return cNo;
+  }
+  public static String getXMLTime(Date dt) {
+    
+      Calendar c = Calendar.getInstance();
+      c.setTime(dt);
+      String out = new String("") 
+      + getYearInFourDigits(c.get(Calendar.YEAR)) + "-" 
+      + getFixedWidthStringValue(c.get(Calendar.MONTH),2) + "-" 
+      + getFixedWidthStringValue(c.get(Calendar.DAY_OF_MONTH),2) 
+      + "T" + getFixedWidthStringValue(c.get(Calendar.HOUR_OF_DAY),2) 
+      + ":" + getFixedWidthStringValue(c.get(Calendar.MINUTE),2) 
+      + ":" + getFixedWidthStringValue(c.get(Calendar.SECOND),2) 
+      + "." + c.get(Calendar.MILLISECOND) 
+      + XurmoDevice.getTimezoneOffsetString();
+      return out;
+  }
   static final String unknownString_ = new String("Unknown");
   
   final static String defaultTimeZone_ = getOneProperty("default.timezone");
@@ -106,4 +159,5 @@ public class XurmoDevice {
   
   static String cellId_ = getOneProperty("CellID");
   static String locAreaCode_ = getOneProperty("LocAreaCode");
+  static String timeZoneOffsetString_ = null;
 }
