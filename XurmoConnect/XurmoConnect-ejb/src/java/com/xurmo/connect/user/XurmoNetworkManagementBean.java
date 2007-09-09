@@ -133,10 +133,10 @@ public class XurmoNetworkManagementBean implements XurmoNetworkManagementRemote,
              String[] memberOfNetworks = XurmoNetworkManager.memberOfNetworks(username, em_);
             int numberOfContacts = XurmoNetworkManager.numberOfContacts(username, em_);
             XurmoUserGlobalData[] contactsAlreadyUser = XurmoNetworkManager.contactsAlreadyUser(username, em_);
-            return new XurmoNetworkSummaryStatus(cookie, memberOfNetworks, numberOfContacts, contactsAlreadyUser);
+            return new XurmoNetworkSummaryStatus(cookie, xclm.getLocation(), memberOfNetworks, numberOfContacts, contactsAlreadyUser);
         }
        //TODO implement getNetworkSummary
-        return new XurmoNetworkSummaryStatus(XurmoNetworkInteractionStatus.NETWORKINTERACTION_COULD_NOT_GET_SUMMARY, cookie);
+        return new XurmoNetworkSummaryStatus(XurmoNetworkInteractionStatus.NETWORKINTERACTION_COULD_NOT_GET_SUMMARY, cookie, cellName);
     }
     
 }

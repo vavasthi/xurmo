@@ -16,19 +16,24 @@ package com.xurmo.connect.user;
 public class XurmoNetworkInteractionStatus implements java.io.Serializable {
     
     /** Creates a new instance of XurmoInvitationDispositionStatus */
-    public XurmoNetworkInteractionStatus(int error, String cookie) {
-        error_ = error;
+    public XurmoNetworkInteractionStatus(int errorCode, String cookie, String cellName) {
+        errorCode_ = errorCode;
         cookie_ = cookie;
+        cellName_ = cellName;
     }
-    public XurmoNetworkInteractionStatus(String cookie) {
-        error_ = XurmoNetworkInteractionStatus.NETWORKINTERACTION_NO_ERROR;
+    public XurmoNetworkInteractionStatus(String cookie, String cellName) {
+        errorCode_ = XurmoNetworkInteractionStatus.NETWORKINTERACTION_NO_ERROR;
         cookie_ = cookie;
+        cellName_ = cellName;
     }
-    public int getError() {
-        return error_;
+    public int getErrorCode() {
+        return errorCode_;
     }
     public String getCookie() {
         return cookie_;
+    }
+    public String getCellName() {
+        return cellName_;
     }
     public static final int NETWORKINTERACTION_NO_ERROR = 0;
     public static final int NETWORKINTERACTION_COULD_NOT_GET_SUMMARY = 0x01;
@@ -39,6 +44,7 @@ public class XurmoNetworkInteractionStatus implements java.io.Serializable {
     public static final int NETWORKINTERACTION_UPLOAD_ADDRESSBOOK_FAILED = 0x06;
     public static final int NETWORKINTERACTION_DOWNLOAD_ADDRESSBOOK_FAILED = 0x07;
 
-    private int error_;
-    private String cookie_;    
+    private int errorCode_;
+    private String cookie_;  
+    private String cellName_;
 }
