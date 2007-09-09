@@ -124,11 +124,13 @@ public class XurmoNetworkManagementBean implements XurmoNetworkManagementRemote,
         }
     }
 
-    public XurmoNetworkSummaryStatus getNetworkSummary(String username, String cookie) {
+    public XurmoNetworkSummaryStatus getNetworkSummary(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
 
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         if (xus != null && cookie.equals(xus.getCookie())) {
-            String[] memberOfNetworks = XurmoNetworkManager.memberOfNetworks(username, em_);
+           XurmoCellLocationMap xclm 
+                    = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
+             String[] memberOfNetworks = XurmoNetworkManager.memberOfNetworks(username, em_);
             int numberOfContacts = XurmoNetworkManager.numberOfContacts(username, em_);
             XurmoUserGlobalData[] contactsAlreadyUser = XurmoNetworkManager.contactsAlreadyUser(username, em_);
             return new XurmoNetworkSummaryStatus(cookie, memberOfNetworks, numberOfContacts, contactsAlreadyUser);
