@@ -38,18 +38,18 @@ public class XurmoNetworkManagementWSInterface {
 //  private static final String serverName_ = new String("mirl.miel.mot.com");
   private static final String serverName_ = new String("www.xurmoconnect.com");
   private static final String baseURL_ = new String("http://" + serverName_ + "/XurmoConnect-ejb/");
-  private static final String userAuthenticationAndSessionURL_ = baseURL_ + new String("XurmoUserManagementServiceBean");
+  private static final String userAuthenticationAndSessionURL_ = baseURL_ + new String("XurmoNetworkManagementServiceBean");
   private static final String userAgent_ = new String("XurmoUA Profile/MIDP-2.0 Configuration/CLDC-1.1");
-  private static XurmoUserAuthenticationAndSessionWSInterface self_ = null;
+  private static XurmoNetworkManagementWSInterface self_ = null;
   /**
    * Creates a new instance of XurmoUserAuthenticationAndSessionWSInterface
    */
   private XurmoNetworkManagementWSInterface() {
   }
-  public static XurmoUserAuthenticationAndSessionWSInterface instance() {
+  public static XurmoNetworkManagementWSInterface instance() {
     
     if (self_ == null) {
-      self_ = new XurmoUserAuthenticationAndSessionWSInterface();
+      self_ = new XurmoNetworkManagementWSInterface();
     }
     return self_;
   }
@@ -76,147 +76,43 @@ public class XurmoNetworkManagementWSInterface {
     conn.close();
     return resp;
   }
-  public static XurmoUserAuthenticationReturnStatus registerUser(String username, String password, String salutation, String firstName, String lastName, String mobile, String email, String gender, String dob) {
+  public static XurmoNetworkSummaryStatus getNetworkSummary(String username, String cookie) {
     String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
         "<env:Header/>\n" +
         "<env:Body>\n" +
-        "<ns0:createUser>\n" +
-        "<ns0:username>" + username + "</ns0:username>\n" +
-        "<ns0:password>" + password + "</ns0:password>\n" +
-        "<ns0:salutation>" + salutation + "</ns0:salutation>\n" +
-        "<ns0:fname>" + firstName + "</ns0:fname>\n" +
-        "<ns0:lname>" + lastName + "</ns0:lname>\n" +
-        "<ns0:mobile>" + mobile + "</ns0:mobile>\n" +
-        "<ns0:email>" + email + "</ns0:email>\n" +
-        "<ns0:gender>" + gender + "</ns0:gender>\n" +
-        "<ns0:dob>" + dob + "</ns0:dob>\n" +
-        "<ns0:imei>" + XurmoDevice.imei_ + "</ns0:imei>\n" +
-        "<ns0:btAddress>" + XurmoBluetoothServiceListener.instance().localBtAddress() + "</ns0:btAddress>\n" +
-        getLocationParameters() +
-        "</ns0:createUser>\n</env:Body>\n</env:Envelope>\n");
-    try {
-      String resp = sendRequest(soapRequest);
-      return parseStatus(resp);
-    } catch(IOException ioex) {
-      ioex.printStackTrace();
-    }
-    return new XurmoUserAuthenticationReturnStatus();
-  }
-  public static XurmoUserHomeScreenData loginUser(String username, String password) {
-    String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
-        "<env:Header/>\n" +
-        "<env:Body>\n" +
-        "<ns0:doLogin>\n" +
-        "<ns0:username>" + username + "</ns0:username>\n" +
-        "<ns0:password>" + password + "</ns0:password>\n" +
-        "<ns0:imei>" + XurmoDevice.imei_ + "</ns0:imei>\n" +
-        getLocationParameters() +
-        "</ns0:doLogin>\n</env:Body>\n</env:Envelope>\n");
-    try {
-      String resp = sendRequest(soapRequest);
-      return parseHomeScreenData(resp);
-    } catch(IOException ioex) {
-      ioex.printStackTrace();
-    }
-    return new XurmoUserHomeScreenData();
-  }
-  public static XurmoUserHomeScreenData uploadPhoneBook(String username, String cookie) {
-    String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
-        "<env:Header/>\n" +
-        "<env:Body>\n" +
-        "<ns0:uploadPhoneBook>\n" +
+        "<ns0:getNetworkSummary>\n" +
         "<ns0:username>" + username + "</ns0:username>\n" +
         "<ns0:cookie>" + cookie + "</ns0:cookie>\n" +
-        getLocationParameters() +
-        XurmoPhoneBookInterface.getUploadContactXML() +
-        "</ns0:uploadPhoneBook>\n</env:Body>\n</env:Envelope>\n");
-    try {
-      String resp = sendRequest(soapRequest);
-      return parseHomeScreenData(resp);
-    } catch(IOException ioex) {
-      ioex.printStackTrace();
-    }
-    return new XurmoUserHomeScreenData();
-  }
-  public static XurmoUserAuthenticationReturnStatus logoutUser(String username, String cookie) {
-    String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
-        "<env:Header/>\n" +
-        "<env:Body>\n" +
-        "<ns0:doLogout>\n" +
-        "<ns0:username>" + username + "</ns0:username>\n" +
-        "<ns0:cookie>" + cookie+ "</ns0:cookie>\n" +
-        "</ns0:doLogout>\n</env:Body>\n</env:Envelope>\n");
+        XurmoDevice.getLocationParameters() +
+        "</ns0:getNetworkSummary>\n</env:Body>\n</env:Envelope>\n");
     try {
       String resp = sendRequest(soapRequest);
       return parseStatus(resp);
     } catch(IOException ioex) {
       ioex.printStackTrace();
     }
-    return new XurmoUserAuthenticationReturnStatus();
+    return new XurmoNetworkSummaryStatus();
   }
-  public static XurmoUserAuthenticationReturnStatus updateLocation(String username, String cookie) {
-    String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
-        "<env:Header/>\n" +
-        "<env:Body>\n" +
-        "<ns0:updateLocation>\n" +
-        "<ns0:username>" + username + "</ns0:username>\n" +
-        "<ns0:cookie>" + cookie+ "</ns0:cookie>\n" +
-        "<ns0:imei>" + XurmoDevice.imei_ + "</ns0:imei>\n" +
-        getLocationParameters() +
-        "</ns0:updateLocation>\n</env:Body>\n</env:Envelope>\n");
-    try {
-      String resp = sendRequest(soapRequest);
-      return parseStatus(resp);
-    } catch(IOException ioex) {
-      ioex.printStackTrace();
-    }
-    return new XurmoUserAuthenticationReturnStatus();
+  public static boolean isInteractionSuccessful(int status) {
+    return status == NETWORK_INTERACTION_SUCCESS;
   }
-  public static XurmoUserHomeScreenData homeScreenData(String username, String cookie) {
-    String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
-        "<env:Header/>\n" +
-        "<env:Body>\n" +
-        "<ns0:getHomeScreenData\">\n" +
-        "<ns0:username>" + username + "</ns0:username>\n" +
-        "<ns0:cookie>" + cookie+ "</ns0:cookie>\n" +
-        "<ns0:imei>" + XurmoDevice.imei_ + "</ns0:imei>\n" +
-        getLocationParameters() +
-        "</ns0:getHomeScreenData>\n</env:Body>\n</env:Envelope>\n");
-    try {
-      String resp = sendRequest(soapRequest);
-      return parseHomeScreenData(resp);
-    } catch(IOException ioex) {
-      ioex.printStackTrace();
-    }
-    return new XurmoUserHomeScreenData();
-  }
-  public static String getAuthenticationStringMessage(XurmoUserAuthenticationReturnStatus status) {
-    if (status == null) {
-      return messages_[USER_AUTHENTICATION_STATUS_SERVER_UNAVAILABLE];
-    } else if (status.errorCode_ >= messages_.length - 1) {
-      return messages_[messages_.length - 1];
-    }
-    return messages_[status.errorCode_];
-  }
-  public static boolean isAuthenticationStatusSuccessful(int status) {
-    return status == USER_AUTHENTICATION_SUCCESS;
-  }
-  private static String getLocationParameters() {
-    String s = "<ns0:mobileCountryCode>" + XurmoDevice.mobileCountryCode() + "</ns0:mobileCountryCode>\n" +
-        "<ns0:mobileNetworkCode>" + XurmoDevice.mobileNetworkCode() + "</ns0:mobileNetworkCode>\n" +
-        "<ns0:siteId>" + XurmoDevice.siteId() + "</ns0:siteId>\n" +
-        "<ns0:cellId>" + XurmoDevice.cellId() + "</ns0:cellId>\n" +
-        "<ns0:cellName>" + XurmoDevice.cellName_ + "</ns0:cellName>\n";
-    return s;
-  }
-  public static XurmoUserAuthenticationReturnStatus parseStatus(String resp) {
+  public static XurmoNetworkSummaryStatus parseStatus(String resp) {
     
     try {
       String cookie = null;
       String errorCode = null;
       String cellName = null;
+      String numberOfContacts = null;
+      boolean doingContacts = false;
+      String fname = null;
+      String lname = null;
+      String userid = null;
+      String username = null;
+      System.out.println("Response " + resp);
       InputStream is = new java.io.ByteArrayInputStream(resp.getBytes());
       InputStreamReader in = new InputStreamReader( is );
+      java.util.Vector contactsAlreadyUser = new java.util.Vector();
+      java.util.Vector memberOfNetworks = new java.util.Vector();
       //Initilialize XML parser
       KXmlParser parser = new KXmlParser();
       parser.setInput(in);
@@ -226,25 +122,67 @@ public class XurmoNetworkManagementWSInterface {
           case org.xmlpull.v1.XmlPullParser.START_TAG:
           {
             String tag = parser.getName();
+            System.out.println(tag);
             if (tag.equalsIgnoreCase("ns1:errorcode")) {
               errorCode = new String(parser.nextText());
             } else if (tag.equalsIgnoreCase("ns1:cookie")) {
               cookie = new String(parser.nextText());
-            } else if (tag.equalsIgnoreCase("ns1:cellName")) {
+            } else if (tag.equalsIgnoreCase("ns1:cellname")) {
               cellName = new String(parser.nextText());
+            } else if (tag.equalsIgnoreCase("ns1:numberofcontacts")) {
+              
+              numberOfContacts = new String(parser.nextText());
+            } else if (tag.equalsIgnoreCase("ns1:contactsaalreadyuser")) {
+
+              doingContacts = true;
+            } else if (tag.equalsIgnoreCase("ns1:memberofnetworks")) {
+
+              String nw = new String(parser.nextText());
+              memberOfNetworks.addElement(nw);
+              doingContacts = false;
+            } else if (tag.equalsIgnoreCase("ns1:fname")) {
+
+              if (doingContacts) {
+                fname = new String(parser.nextText());
+              }
+            } else if (tag.equalsIgnoreCase("ns1:lname")) {
+
+              if (doingContacts) {
+                lname = new String(parser.nextText());
+              }
+            } else if (tag.equalsIgnoreCase("ns1:userid")) {
+
+              if (doingContacts) {
+                userid = new String(parser.nextText());
+              }
+            } else if (tag.equalsIgnoreCase("ns1:username")) {
+
+              if (doingContacts) {
+                username = new String(parser.nextText());
+              }
             }
-          }
+         }
           break;
           case org.xmlpull.v1.XmlPullParser.END_TAG:
           {
             String tag = parser.getName();
-            if (tag.equalsIgnoreCase("env:envelope")) {
-              if (cellName != null && cookie != null && errorCode != null) {
-                
-                return new XurmoUserAuthenticationReturnStatus(cookie, Integer.parseInt(errorCode), cellName);
+            if (tag.equalsIgnoreCase("ns1:contactsalreadyuser")) {
+              if (fname != null && lname != null && userid != null && username != null) {
+                XurmoUserGlobalData xugd = new XurmoUserGlobalData(Integer.parseInt(userid), username, fname, lname);
+                userid = null;
+                username = null;
+                fname = null;
+                lname = null;
+                contactsAlreadyUser.addElement(xugd);
+                doingContacts = false;
+              }
+            } else if (tag.equalsIgnoreCase("env:envelope")) {
+              if (cellName != null && cookie != null && errorCode != null && numberOfContacts != null) {
+                System.out.println("Envelope close tag cellName =" + cellName + " cookie " + cookie + " errorCode " + errorCode + " number of contacts " + numberOfContacts);
+                return new XurmoNetworkSummaryStatus(Integer.parseInt(errorCode), cookie, cellName, memberOfNetworks, contactsAlreadyUser, Integer.parseInt(numberOfContacts));
               } else {
                 
-                return new XurmoUserAuthenticationReturnStatus();
+                return new XurmoNetworkSummaryStatus();
               }
             }
             
@@ -254,91 +192,25 @@ public class XurmoNetworkManagementWSInterface {
       }
     } catch (org.xmlpull.v1.XmlPullParserException ppex) {
       
-    } catch(IOException e){
-    }
-    return new XurmoUserAuthenticationReturnStatus();
-  }
-  public static XurmoUserHomeScreenData parseHomeScreenData(String resp) {
-    
-    try {
-      String fname = null;
-      String lname = null;
-      String cookie = null;
-      String errorCode = null;
-      String cellName = null;
-      String salutation = null;
-      String username = null;
-      XurmoUserAuthenticationReturnStatus status = null;
-      InputStream is = new java.io.ByteArrayInputStream(resp.getBytes());
-      InputStreamReader in = new InputStreamReader( is );
-      //Initilialize XML parser
-      KXmlParser parser = new KXmlParser();
-      parser.setInput(in);
-      while(true){
-        int evt = parser.nextTag();
-        switch(evt){
-          case org.xmlpull.v1.XmlPullParser.START_TAG:
-          {
-            String tag = parser.getName();
-            if (tag.equalsIgnoreCase("ns1:fname")) {
-              fname = new String(parser.nextText());
-            } else if (tag.equalsIgnoreCase("ns1:lname")) {
-              lname = new String(parser.nextText());
-            } else if (tag.equalsIgnoreCase("ns1:errorcode")) {
-              errorCode = new String(parser.nextText());
-            } else if (tag.equalsIgnoreCase("ns1:cookie")) {
-              cookie = new String(parser.nextText());
-            } else if(tag.equalsIgnoreCase("ns1:cellName")) {
-              cellName = new String(parser.nextText());
-            } else if(tag.equalsIgnoreCase("ns1:salutation")) {
-              salutation = new String(parser.nextText());
-            } else if(tag.equalsIgnoreCase("ns1:username")) {
-              username = new String(parser.nextText());
-            }
-          }
-          break;
-          case org.xmlpull.v1.XmlPullParser.END_TAG:
-          {
-            String tag = parser.getName();
-            if (tag.equalsIgnoreCase("env:envelope")) {
-              if (fname != null && lname != null && errorCode != null && cookie != null && cellName != null) {
-                
-              return new XurmoUserHomeScreenData(username, cookie, Integer.parseInt(errorCode), cellName, fname, lname, salutation);
-              }
-              else {
-                
-              return new XurmoUserHomeScreenData();
-              }
-            }
-            
-          }
-          break;
-        }
-      }
-    } catch (org.xmlpull.v1.XmlPullParserException ppex) {
+      ppex.printStackTrace();
+      System.out.println("" +ppex.getLineNumber() + ":" + " Column " + ppex.getColumnNumber() + " " + ppex.getDetail());
       
     } catch(IOException e){
     }
-    return new XurmoUserHomeScreenData();
+    return new XurmoNetworkSummaryStatus();
   }
-  public XurmoDoodleSummary getDoodleSummary(String username, String cookie) {
-    XurmoDoodleSummary mds = new XurmoDoodleSummary();
-    mds.addDoodleSummaryForALocation(1, "Forum", 3);
-    mds.addDoodleSummaryForALocation(7, "Bangalore Central", 5);
-    return mds;
-  }
-  static public final int USER_AUTHENTICATION_SUCCESS = 0;
-  static public final int USER_AUTHENTICATION_STATUS_SUCCESS_MOBILE_NOT_VALIDATED = 1;
-  static public final int USER_AUTHENTICATION_STATUS_FAILURE_SESSION_NEVER_EXISTED = 2;
-  static public final int USER_AUTHENTICATION_STATUS_FAILURE_MOBILE_NUMBER_AUTHENTICATION_FAILED = 3;
-  static public final int USER_AUTHENTICATION_STATUS_FAILURE_EMAIL_AUTHENTICATION_FAILED = 4;
-  static public final int USER_AUTHENTICATION_STATUS_FAILURE_ACCOUNT_CREATION_ERROR = 5;
-  static public final int USER_AUTHENTICATION_STATUS_FAILURE_USER_DOES_NOT_EXIST = 6;
-  static public final int USER_AUTHENTICATION_STATUS_FAILURE_ADDRESS_NOT_VALIDATED = 7;
-  static public final int USER_AUTHENTICATION_STATUS_FAILURE_INCORRECT_USERNAME_OR_PASSWORD = 8;
-  static public final int USER_AUTHENTICATION_STATUS_FAILURE_SESSION_TIMED_OUT = 9;
-  static public final int USER_AUTHENTICATION_STATUS_FAILURE_USER_NOT_ACTIVE = 10;
-  static public final int USER_AUTHENTICATION_STATUS_SERVER_UNAVAILABLE = 11;
+  static public final int NETWORK_INTERACTION_SUCCESS = 0;
+  static public final int NETWORK_INTERACTION_STATUS_SUCCESS_MOBILE_NOT_VALIDATED = 1;
+  static public final int NETWORK_INTERACTION_STATUS_FAILURE_SESSION_NEVER_EXISTED = 2;
+  static public final int NETWORK_INTERACTION_STATUS_FAILURE_MOBILE_NUMBER_AUTHENTICATION_FAILED = 3;
+  static public final int NETWORK_INTERACTION_STATUS_FAILURE_EMAIL_AUTHENTICATION_FAILED = 4;
+  static public final int NETWORK_INTERACTION_STATUS_FAILURE_ACCOUNT_CREATION_ERROR = 5;
+  static public final int NETWORK_INTERACTION_STATUS_FAILURE_USER_DOES_NOT_EXIST = 6;
+  static public final int NETWORK_INTERACTION_STATUS_FAILURE_ADDRESS_NOT_VALIDATED = 7;
+  static public final int NETWORK_INTERACTION_STATUS_FAILURE_INCORRECT_USERNAME_OR_PASSWORD = 8;
+  static public final int NETWORK_INTERACTION_STATUS_FAILURE_SESSION_TIMED_OUT = 9;
+  static public final int NETWORK_INTERACTION_STATUS_FAILURE_USER_NOT_ACTIVE = 10;
+  static public final int NETWORK_INTERACTION_STATUS_SERVER_UNAVAILABLE = 11;
   
   
   static public final String[] messages_ = {new String("Success"),

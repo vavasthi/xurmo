@@ -28,7 +28,8 @@ public class XurmoSliderCanvas extends XurmoCanvas {
   public final static int RIGHT = 2;
   private XurmoRectangle srcRect_;
   private XurmoRectangle dstRect_;
-  private Timer t_; 
+  private Timer t_;
+  private static final int pixelsPerStep_ = 5;
   /**
    * Creates a new instance of XurmoSliderCanvas
    */
@@ -53,11 +54,11 @@ public class XurmoSliderCanvas extends XurmoCanvas {
   }
   public void slide() {
   
-    if (xDelta_ >= getWidth()) {
+    if (xDelta_ + pixelsPerStep_ >= getWidth()) {
       t_.cancel();
       midlet_.getDisplay().setCurrent(destinationCanvas_);
     }
-     xDelta_ += 5;
+     xDelta_ += pixelsPerStep_;
     repaint();
     
   }

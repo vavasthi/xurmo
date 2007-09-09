@@ -198,7 +198,7 @@ public class Xurmo extends MIDlet {
       currentUser_.loggedIn(currentUser_.username_, currentUser_.password_, status.cookie_, status.cellName_);
       XurmoInfoServicesListener listener = new XurmoInfoServicesListener(this, currentUser_.username_, currentUser_.cookie_);
       storeUsernameAndPassword();
-      home_  = new XurmoCanvas(this, false);
+      home_  = new XurmoHomeScreen(this);
       this.getDisplay().setCurrent(home_);
       home_.setFullScreenMode(true);
     }
@@ -235,8 +235,7 @@ public class Xurmo extends MIDlet {
   public void transitionToHomeScreen() {
     if (home_ == null || !(getDisplay().getCurrent() instanceof XurmoCanvas) ) {
       
-      home_  = new XurmoCanvas(this, false);
-      home_.setFullScreenMode(true);
+      home_  = new XurmoHomeScreen(this);
     }
     else {
       

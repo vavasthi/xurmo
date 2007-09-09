@@ -30,25 +30,26 @@ package com.xurmo.experiences.mobile;
 
 import javax.microedition.io.*;
 
-public class XurmoHomeScreen extends XurmoTransitionableScreen {
-  Xurmo midlet_;
+public class XurmoHomeScreen extends XurmoCanvas {
   /**
    * Creates a new instance of XurmoHomeScreen
    */
-  public XurmoHomeScreen(Xurmo midlet, int screenWidth, int screenHeight) {
-    midlet_ = midlet;
+  public XurmoHomeScreen(Xurmo midlet) {
+    super(midlet, false);
+    setFullScreenMode(true);
+    XurmoThemeManager.init(midlet);
     XurmoTheme ct = XurmoThemeManager.instance().getCurrentTheme();
     
-    me_ = new XurmoMePanel(midlet_, screenWidth, screenHeight, ct.meIconImage_, "Me");
+    me_ = new XurmoMePanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "Me");
     me_.selected(true);
     currentPanel_ = 0;
     
-    mydoodles_ = new XurmoMyDoodlePanel(midlet_, screenWidth, screenHeight, ct.myplaceIconImage_, "My Doodles");
+    mydoodles_ = new XurmoMyDoodlePanel(midlet_, getWidth(), getHeight(), ct.myplaceIconImage_, "My Doodles");
     
-    interactions_ = new XurmoCollapsablePanel(screenWidth, screenHeight, ct.interactionIconImage_, "Interactions");
+    interactions_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.interactionIconImage_, "Interactions");
     
-    friendsAndCommunity_ = new XurmoCollapsablePanel(screenWidth, screenHeight, ct.friendsSmallImage_, "Friends & Community");
-    exit_ = new XurmoCollapsablePanel(screenWidth, screenHeight, ct.friendsSmallImage_, "Exit");
+    friendsAndCommunity_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Friends & Community");
+    exit_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Exit");
     
     panels_ = new XurmoCollapsablePanel[]{
       me_,
@@ -57,21 +58,24 @@ public class XurmoHomeScreen extends XurmoTransitionableScreen {
       friendsAndCommunity_,
       exit_
     };
+    repaint();
   }
-  public void draw(javax.microedition.lcdui.Graphics g, int x, int y) {
-    
+  public void paint(javax.microedition.lcdui.Graphics g) {
+    try {
+      
+    drawBackgroundGradient(g);
+    drawTitle(g);
+    int x = 0;
+    int y = tbHeight_;
     for (int i = 0; i < panels_.length; ++i) {
       panels_[i].draw(g, x, y);
       y += panels_[i].h();
     }
-/*    me_.draw(g, x, y);
-    y += me_.h();
-    mydoodles_.draw(g, x, y);
-    y += mydoodles_.h();
-    interactions_.draw(g, x, y);
-    y += interactions_.h();
-    friendsAndCommunity_.draw(g, x, y);
-    y += friendsAndCommunity_.h();*/
+    }
+    catch(NullPointerException npe) {
+      npe.getMessage();
+      npe.printStackTrace();
+    }
   }
   public void downKey() {
     panels_[currentPanel_].selected(false);
@@ -94,6 +98,32 @@ public class XurmoHomeScreen extends XurmoTransitionableScreen {
     if (panels_[currentPanel_] == exit_) {
       midlet_.exitMIDlet();
     }
+  }
+  public void keyPressed(int keyCode) {
+    switch(getGameAction(keyCode)) {
+      case DOWN:
+        downKey();
+        break;
+      case UP:
+        upKey();
+        break;
+      case FIRE:
+        fireKey();
+        break;
+      case RIGHT:
+      {
+          midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoMyNetworksScreen(midlet_), XurmoSliderCanvas.RIGHT));
+      }        
+        break;
+      case LEFT:
+      {
+          midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, this, XurmoSliderCanvas.LEFT));
+      }        
+        break;
+      default:
+        break;
+    }
+    repaint();
   }
   int ypos_;
   private int currentPanel_;

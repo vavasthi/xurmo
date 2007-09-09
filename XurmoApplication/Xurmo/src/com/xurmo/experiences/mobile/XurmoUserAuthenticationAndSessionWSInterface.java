@@ -92,7 +92,7 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
         "<ns0:dob>" + dob + "</ns0:dob>\n" +
         "<ns0:imei>" + XurmoDevice.imei_ + "</ns0:imei>\n" +
         "<ns0:btAddress>" + XurmoBluetoothServiceListener.instance().localBtAddress() + "</ns0:btAddress>\n" +
-        getLocationParameters() +
+        XurmoDevice.getLocationParameters() +
         "</ns0:createUser>\n</env:Body>\n</env:Envelope>\n");
     try {
       String resp = sendRequest(soapRequest);
@@ -110,7 +110,7 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
         "<ns0:username>" + username + "</ns0:username>\n" +
         "<ns0:password>" + password + "</ns0:password>\n" +
         "<ns0:imei>" + XurmoDevice.imei_ + "</ns0:imei>\n" +
-        getLocationParameters() +
+        XurmoDevice.getLocationParameters() +
         "</ns0:doLogin>\n</env:Body>\n</env:Envelope>\n");
     try {
       String resp = sendRequest(soapRequest);
@@ -127,7 +127,7 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
         "<ns0:uploadPhoneBook>\n" +
         "<ns0:username>" + username + "</ns0:username>\n" +
         "<ns0:cookie>" + cookie + "</ns0:cookie>\n" +
-        getLocationParameters() +
+        XurmoDevice.getLocationParameters() +
         XurmoPhoneBookInterface.getUploadContactXML() +
         "</ns0:uploadPhoneBook>\n</env:Body>\n</env:Envelope>\n");
     try {
@@ -162,7 +162,7 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
         "<ns0:username>" + username + "</ns0:username>\n" +
         "<ns0:cookie>" + cookie+ "</ns0:cookie>\n" +
         "<ns0:imei>" + XurmoDevice.imei_ + "</ns0:imei>\n" +
-        getLocationParameters() +
+        XurmoDevice.getLocationParameters() +
         "</ns0:updateLocation>\n</env:Body>\n</env:Envelope>\n");
     try {
       String resp = sendRequest(soapRequest);
@@ -180,7 +180,7 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
         "<ns0:username>" + username + "</ns0:username>\n" +
         "<ns0:cookie>" + cookie+ "</ns0:cookie>\n" +
         "<ns0:imei>" + XurmoDevice.imei_ + "</ns0:imei>\n" +
-        getLocationParameters() +
+        XurmoDevice.getLocationParameters() +
         "</ns0:getHomeScreenData>\n</env:Body>\n</env:Envelope>\n");
     try {
       String resp = sendRequest(soapRequest);
@@ -200,14 +200,6 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
   }
   public static boolean isAuthenticationStatusSuccessful(int status) {
     return status == USER_AUTHENTICATION_SUCCESS;
-  }
-  private static String getLocationParameters() {
-    String s = "<ns0:mobileCountryCode>" + XurmoDevice.mobileCountryCode() + "</ns0:mobileCountryCode>\n" +
-        "<ns0:mobileNetworkCode>" + XurmoDevice.mobileNetworkCode() + "</ns0:mobileNetworkCode>\n" +
-        "<ns0:siteId>" + XurmoDevice.siteId() + "</ns0:siteId>\n" +
-        "<ns0:cellId>" + XurmoDevice.cellId() + "</ns0:cellId>\n" +
-        "<ns0:cellName>" + XurmoDevice.cellName_ + "</ns0:cellName>\n";
-    return s;
   }
   public static XurmoUserAuthenticationReturnStatus parseStatus(String resp) {
     

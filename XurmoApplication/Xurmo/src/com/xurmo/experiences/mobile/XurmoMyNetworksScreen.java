@@ -30,30 +30,35 @@ package com.xurmo.experiences.mobile;
 
 import javax.microedition.io.*;
 
-public class XurmoMyNetworksScreen extends XurmoTransitionableScreen {
-  Xurmo midlet_;
+public class XurmoMyNetworksScreen extends XurmoCanvas {
   /**
    * Creates a new instance of XurmoHomeScreen
    */
-  public XurmoMyNetworksScreen(Xurmo midlet, int screenWidth, int screenHeight) {
-    midlet_ = midlet;
+  public XurmoMyNetworksScreen(Xurmo midlet) {
+    super(midlet, false);
     XurmoTheme ct = XurmoThemeManager.instance().getCurrentTheme();
     
-    contacts_ = new XurmoMePanel(midlet_, screenWidth, screenHeight, ct.meIconImage_, "My Contacts");
-    contacts_.selected(true);
+    summary_ = new XurmoNetworkSummaryPanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "Network Summary");
+    summary_.selected(true);
     currentPanel_ = 0;
     
-    networks_ = new XurmoCollapsablePanel(screenWidth, screenHeight, ct.friendsSmallImage_, "Networks");
-    home_ = new XurmoCollapsablePanel(screenWidth, screenHeight, ct.friendsSmallImage_, "Home");
+    contacts_ = new XurmoMePanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "My Contacts");
+
+    networks_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Networks");
+    home_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Home");
     
     panels_ = new XurmoCollapsablePanel[]{
+      summary_,
       contacts_,
       networks_,
       home_
     };
   }
-  public void draw(javax.microedition.lcdui.Graphics g, int x, int y) {
-    
+  public void paint(javax.microedition.lcdui.Graphics g) {
+    drawBackgroundGradient(g);
+    drawTitle(g);
+    int x = 0;
+    int y = tbHeight_;    
     for (int i = 0; i < panels_.length; ++i) {
       panels_[i].draw(g, x, y);
       y += panels_[i].h();
@@ -91,6 +96,7 @@ public class XurmoMyNetworksScreen extends XurmoTransitionableScreen {
   }
   int ypos_;
   private int currentPanel_;
+  XurmoCollapsablePanel summary_;
   XurmoCollapsablePanel contacts_;
   XurmoCollapsablePanel networks_;
   XurmoCollapsablePanel home_;

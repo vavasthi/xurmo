@@ -33,7 +33,7 @@ import javax.microedition.lcdui.game.*;
 import java.io.*;
 
 
-public class XurmoCanvas extends GameCanvas {
+abstract public class XurmoCanvas extends GameCanvas {
   Xurmo midlet_;
   /**
    * Creates a new instance of XurmoCanvas
@@ -47,11 +47,6 @@ public class XurmoCanvas extends GameCanvas {
     f = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_PLAIN, Font.SIZE_SMALL);
     titleHeight += f.getHeight();
     tbHeight_ = XurmoThemeManager.instance().getCurrentTheme().backgroundTopImage_.getHeight();
-    screens_ = new XurmoTransitionableScreeWithPosition[2];
-    currentScreen_ = 0;
-    oldScreen_ = 0;
-    screens_[0] = new XurmoTransitionableScreeWithPosition(0, tbHeight_, new XurmoHomeScreen(midlet_, this.getWidth(), this.getHeight()));;
-    screens_[1] = new XurmoTransitionableScreeWithPosition(0 + this.getWidth(), tbHeight_, new XurmoMainScreen(midlet_));
   }
   protected void drawBackgroundGradient(Graphics g) {
     int oc = g.getColor();
@@ -96,44 +91,6 @@ public class XurmoCanvas extends GameCanvas {
     g.drawString("xtend ur mobile!", this.getWidth() / 2, y, g.HCENTER | g.TOP);
     g.setColor(oc);
   }
-  public void paint(Graphics g) {
-    this.drawBackgroundGradient(g);
-//    int oc = g.getColor();
-//    g.setColor(255,255,255);
-//    g.fillRect(0, 0, getWidth(), getHeight());
-//    g.setColor(oc);
-    drawTitle(g);
-    screens_[currentScreen_].draw(g);
-  }
-  public void keyPressed(int keyCode) {
-    switch(getGameAction(keyCode)) {
-      case DOWN:
-        screens_[currentScreen_].screen_.downKey();
-        break;
-      case UP:
-        screens_[currentScreen_].screen_.upKey();
-        break;
-      case FIRE:
-        screens_[currentScreen_].screen_.fireKey();
-        break;
-      case RIGHT:
-      {
-          XurmoUserAuthenticationAndSessionWSInterface.instance().uploadPhoneBook(midlet_.currentUser_.username_, midlet_.currentUser_.cookie_);
-          midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, this, XurmoSliderCanvas.RIGHT));
-      }        
-        break;
-      case LEFT:
-      {
-          midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, this, XurmoSliderCanvas.LEFT));
-      }        
-        break;
-      default:
-        break;
-    }
-    repaint();
-  }
-  XurmoTransitionableScreeWithPosition[] screens_;
+  abstract public void paint(Graphics g);
   protected final int tbHeight_;
-  int currentScreen_;
-  int oldScreen_;
 }

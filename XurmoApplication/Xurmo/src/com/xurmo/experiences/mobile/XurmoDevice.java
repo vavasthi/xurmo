@@ -129,13 +129,21 @@ public class XurmoDevice {
       String out = new String("") 
       + getYearInFourDigits(c.get(Calendar.YEAR)) + "-" 
       + getFixedWidthStringValue(c.get(Calendar.MONTH),2) + "-" 
-      + getFixedWidthStringValue(c.get(Calendar.DAY_OF_MONTH),2) 
+      + getFixedWidthStringValue(c.get(Calendar.DAY_OF_MONTH) + 1,2) 
       + "T" + getFixedWidthStringValue(c.get(Calendar.HOUR_OF_DAY),2) 
       + ":" + getFixedWidthStringValue(c.get(Calendar.MINUTE),2) 
       + ":" + getFixedWidthStringValue(c.get(Calendar.SECOND),2) 
       + "." + c.get(Calendar.MILLISECOND) 
       + XurmoDevice.getTimezoneOffsetString();
       return out;
+  }
+  public static String getLocationParameters() {
+    String s = "<ns0:mobileCountryCode>" + XurmoDevice.mobileCountryCode() + "</ns0:mobileCountryCode>\n" +
+        "<ns0:mobileNetworkCode>" + XurmoDevice.mobileNetworkCode() + "</ns0:mobileNetworkCode>\n" +
+        "<ns0:siteId>" + XurmoDevice.siteId() + "</ns0:siteId>\n" +
+        "<ns0:cellId>" + XurmoDevice.cellId() + "</ns0:cellId>\n" +
+        "<ns0:cellName>" + XurmoDevice.cellName_ + "</ns0:cellName>\n";
+    return s;
   }
   static final String unknownString_ = new String("Unknown");
   
