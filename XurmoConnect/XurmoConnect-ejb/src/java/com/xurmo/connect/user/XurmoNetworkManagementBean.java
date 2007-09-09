@@ -131,7 +131,10 @@ public class XurmoNetworkManagementBean implements XurmoNetworkManagementRemote,
            XurmoCellLocationMap xclm 
                     = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
              String[] memberOfNetworks = XurmoNetworkManager.memberOfNetworks(username, em_);
-            int numberOfContacts = XurmoNetworkManager.numberOfContacts(username, em_);
+             javax.persistence.Query uq = em_.createNamedQuery("XurmoUser.findByUsername");
+             uq.setParameter("username", username);
+             XurmoUser xu = (XurmoUser)uq.getSingleResult();
+            int numberOfContacts = XurmoNetworkManager.numberOfContacts(xu.getUserid(), em_);
             XurmoUserGlobalData[] contactsAlreadyUser = XurmoNetworkManager.contactsAlreadyUser(username, em_);
             return new XurmoNetworkSummaryStatus(cookie, xclm.getLocation(), memberOfNetworks, numberOfContacts, contactsAlreadyUser);
         }

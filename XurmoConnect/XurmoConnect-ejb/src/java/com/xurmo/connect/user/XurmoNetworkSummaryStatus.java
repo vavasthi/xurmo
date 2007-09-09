@@ -13,7 +13,7 @@ package com.xurmo.connect.user;
  *
  * @author xurmo
  */
-public class XurmoNetworkSummaryStatus {
+public class XurmoNetworkSummaryStatus implements java.io.Serializable {
     public XurmoNetworkInteractionStatus status;
     public String[] memberOfNetworks;
     public int numberOfContacts;

@@ -31,9 +31,9 @@ public class XurmoNetworkManager {
         }
         return out;
     }
-    public static int numberOfContacts(String username, javax.persistence.EntityManager em) {
-        javax.persistence.Query q = em.createNamedQuery("XurmoPersonalAddressBook.findByUsername");
-        q.setParameter("username", username);
+    public static int numberOfContacts(int userid, javax.persistence.EntityManager em) {
+        javax.persistence.Query q = em.createNamedQuery("XurmoPersonalAddressBook.findByUserid");
+        q.setParameter("userid", userid);
         java.util.List l = q.getResultList();
         return l.size();
     }
