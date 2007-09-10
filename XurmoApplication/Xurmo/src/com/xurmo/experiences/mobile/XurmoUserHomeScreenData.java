@@ -39,12 +39,14 @@ public class XurmoUserHomeScreenData {
                                XurmoUserAuthenticationReturnStatus status,
                                String fname,
                                String lname,
-                               String salutation) {
+                               String salutation,
+                               String presence) {
     this.username = username;
     this.status = status;
     this.fname = fname;
     this.lname = lname;
     this.salutation = salutation;
+    this.presence = presence;
     this.valid = true;
   }
   public XurmoUserHomeScreenData(String username, 
@@ -53,12 +55,14 @@ public class XurmoUserHomeScreenData {
                                String cellName,
                                String fname,
                                String lname,
-                               String salutation) {
+                               String salutation,
+                               String presence) {
     this.username = username;
     this.status = new XurmoUserAuthenticationReturnStatus(cookie, errorCode, cellName);
     this.fname = fname;
     this.lname = lname;
     this.salutation = salutation;
+    this.presence = presence;
     this.valid = true;
   }
   
@@ -71,5 +75,6 @@ public class XurmoUserHomeScreenData {
   public String fname;
   public String lname;
   public String salutation;
+  public String presence;
   public boolean valid;
 }

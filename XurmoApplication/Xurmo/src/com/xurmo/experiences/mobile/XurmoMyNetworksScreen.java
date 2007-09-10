@@ -94,6 +94,11 @@ public class XurmoMyNetworksScreen extends XurmoCanvas {
       midlet_.transitionToHomeScreen();
     }
   }
+  public void rightKey() {
+  }
+  public void leftKey() {
+    midlet_.transitionToHomeScreen();
+  }
   int ypos_;
   private int currentPanel_;
   XurmoCollapsablePanel summary_;

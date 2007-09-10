@@ -154,7 +154,7 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
     }
     return new XurmoUserAuthenticationReturnStatus();
   }
-  public static XurmoUserAuthenticationReturnStatus updateLocation(String username, String cookie) {
+  public static XurmoUserAuthenticationReturnStatus updateLocation(String username, String cookie, String presence) {
     String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
         "<env:Header/>\n" +
         "<env:Body>\n" +
@@ -162,6 +162,7 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
         "<ns0:username>" + username + "</ns0:username>\n" +
         "<ns0:cookie>" + cookie+ "</ns0:cookie>\n" +
         "<ns0:imei>" + XurmoDevice.imei_ + "</ns0:imei>\n" +
+        "<ns0:presence>" + presence + "</ns0:presence>\n" +
         XurmoDevice.getLocationParameters() +
         "</ns0:updateLocation>\n</env:Body>\n</env:Envelope>\n");
     try {
@@ -172,14 +173,15 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
     }
     return new XurmoUserAuthenticationReturnStatus();
   }
-  public static XurmoUserHomeScreenData homeScreenData(String username, String cookie) {
+  public static XurmoUserHomeScreenData homeScreenData(String username, String cookie, String presence) {
     String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
         "<env:Header/>\n" +
         "<env:Body>\n" +
-        "<ns0:getHomeScreenData\">\n" +
+        "<ns0:getHomeScreenData>\n" +
         "<ns0:username>" + username + "</ns0:username>\n" +
         "<ns0:cookie>" + cookie+ "</ns0:cookie>\n" +
         "<ns0:imei>" + XurmoDevice.imei_ + "</ns0:imei>\n" +
+        "<ns0:presence>" + presence + "</ns0:presence>\n" +
         XurmoDevice.getLocationParameters() +
         "</ns0:getHomeScreenData>\n</env:Body>\n</env:Envelope>\n");
     try {
@@ -260,6 +262,7 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
       String cellName = null;
       String salutation = null;
       String username = null;
+      String presence = null;
       XurmoUserAuthenticationReturnStatus status = null;
       InputStream is = new java.io.ByteArrayInputStream(resp.getBytes());
       InputStreamReader in = new InputStreamReader( is );
@@ -286,6 +289,8 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
               salutation = new String(parser.nextText());
             } else if(tag.equalsIgnoreCase("ns1:username")) {
               username = new String(parser.nextText());
+            } else if(tag.equalsIgnoreCase("ns1:presence")) {
+              presence = new String(parser.nextText());
             }
           }
           break;
@@ -293,9 +298,9 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
           {
             String tag = parser.getName();
             if (tag.equalsIgnoreCase("env:envelope")) {
-              if (fname != null && lname != null && errorCode != null && cookie != null && cellName != null) {
+              if (fname != null && lname != null && errorCode != null && cookie != null && cellName != null && presence != null) {
                 
-              return new XurmoUserHomeScreenData(username, cookie, Integer.parseInt(errorCode), cellName, fname, lname, salutation);
+              return new XurmoUserHomeScreenData(username, cookie, Integer.parseInt(errorCode), cellName, fname, lname, salutation, presence);
               }
               else {
                 

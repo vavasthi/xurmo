@@ -40,13 +40,15 @@ public class XurmoCurrentUser {
     password_ = null;
     cookie_ = null;
     cellName_ = null;
+    presence_ = new String("Unknown");
     loggedIn_ = false;
   }
-  public XurmoCurrentUser(String username, String password, String cookie, String cellName) {
+  public XurmoCurrentUser(String username, String password, String cookie, String cellName, String presence) {
     username_ = username;
     password_ = password;
     cookie_ = cookie;
     cellName_ = cellName;
+    presence_ = presence;
     loggedIn_ = true;
   }
   public void invalidate() {
@@ -55,14 +57,16 @@ public class XurmoCurrentUser {
     password_ = null;
     cookie_ = null;
     cellName_ = null;
+    presence_ = null;
     loggedIn_ = false;
   }
-  public void loggedIn(String username, String password, String cookie, String cellName) {
+  public void loggedIn(String username, String password, String cookie, String cellName, String presence) {
     
     username_ = username;
     password_ = password;
     cookie_ = cookie;
     cellName_ = cellName;
+    presence_ = presence;
     loggedIn_ = true;
   }
   public void setUsernameAndPassword(String username, String password) {
@@ -78,4 +82,5 @@ public class XurmoCurrentUser {
   String password_;
   String cookie_;
   String cellName_;
+  String presence_;
 }

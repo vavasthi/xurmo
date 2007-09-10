@@ -80,5 +80,20 @@ public class XurmoSliderCanvas extends XurmoCanvas {
       g.drawImage(Image.createImage(dst_, d.x(), d.y(), d.w(), d.h(), Sprite.TRANS_NONE), 0, tbHeight_, Graphics.LEFT|Graphics.TOP);
     }
     
+  }  
+  public void downKey() {
+    
+  }
+  public void upKey() {
+    
+  }
+  public void fireKey() {
+    
+  }
+  public void leftKey() {
+    
+  }
+  public void rightKey() {
+    
   }
 }

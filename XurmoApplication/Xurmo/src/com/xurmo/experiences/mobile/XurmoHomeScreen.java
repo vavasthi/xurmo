@@ -99,31 +99,18 @@ public class XurmoHomeScreen extends XurmoCanvas {
       midlet_.exitMIDlet();
     }
   }
-  public void keyPressed(int keyCode) {
-    switch(getGameAction(keyCode)) {
-      case DOWN:
-        downKey();
-        break;
-      case UP:
-        upKey();
-        break;
-      case FIRE:
-        fireKey();
-        break;
-      case RIGHT:
-      {
-          midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoMyNetworksScreen(midlet_), XurmoSliderCanvas.RIGHT));
-      }        
-        break;
-      case LEFT:
-      {
-          midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, this, XurmoSliderCanvas.LEFT));
-      }        
-        break;
-      default:
-        break;
+  public void rightKey() {
+    if (panels_[currentPanel_] == this.me_) {
+      midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoMeScreen(midlet_), XurmoSliderCanvas.RIGHT));
     }
-    repaint();
+    else if (panels_[currentPanel_] == this.interactions_) {
+      midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoInteractionsScreen(midlet_), XurmoSliderCanvas.RIGHT));
+    }
+    else if (panels_[currentPanel_] == this.friendsAndCommunity_) {
+      midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoMyNetworksScreen(midlet_), XurmoSliderCanvas.RIGHT));
+    }
+  }
+  public void leftKey() {
   }
   int ypos_;
   private int currentPanel_;

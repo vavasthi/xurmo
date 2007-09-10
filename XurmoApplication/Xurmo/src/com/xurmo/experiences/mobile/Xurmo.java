@@ -161,6 +161,7 @@ public class Xurmo extends MIDlet {
       
       currentUser_.username_  = din.readUTF();
       currentUser_.password_ = din.readUTF();
+      currentUser_.presence_ = new String("Unknown");
       return true;
     } catch (RecordStoreFullException e) {
       System.err.println(e.toString() + "Username and password record store could not be loaded");
@@ -195,7 +196,7 @@ public class Xurmo extends MIDlet {
     XurmoUserAuthenticationReturnStatus status = homeData_.status;
     if (status != null &&
         XurmoUserAuthenticationAndSessionWSInterface.isAuthenticationStatusSuccessful(status.errorCode_)) {
-      currentUser_.loggedIn(currentUser_.username_, currentUser_.password_, status.cookie_, status.cellName_);
+      currentUser_.loggedIn(currentUser_.username_, currentUser_.password_, status.cookie_, status.cellName_, homeData_.presence);
       XurmoInfoServicesListener listener = new XurmoInfoServicesListener(this, currentUser_.username_, currentUser_.cookie_);
       storeUsernameAndPassword();
       home_  = new XurmoHomeScreen(this);
@@ -212,7 +213,7 @@ public class Xurmo extends MIDlet {
   }
   public void updateHomeScreenData() {
     homeData_
-        = XurmoUserAuthenticationAndSessionWSInterface.homeScreenData(currentUser_.username_, currentUser_.cookie_);
+        = XurmoUserAuthenticationAndSessionWSInterface.homeScreenData(currentUser_.username_, currentUser_.cookie_, currentUser_.presence_);
   }
   public String getPropertyValue(String name) {
     
@@ -270,6 +271,10 @@ public class Xurmo extends MIDlet {
     registerForm.setCommandListener(ca);
     this.getDisplay().setCurrent(registerForm);
   }
+  public void uploadPhonebook() {
+    
+    homeData_ = XurmoUserAuthenticationAndSessionWSInterface.uploadPhoneBook(currentUser_.username_, currentUser_.cookie_);
+  }    
   public void doLogout() {
     this.logoutUser();
   }

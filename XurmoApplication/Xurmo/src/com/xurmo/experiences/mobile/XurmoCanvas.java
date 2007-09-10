@@ -92,5 +92,32 @@ abstract public class XurmoCanvas extends GameCanvas {
     g.setColor(oc);
   }
   abstract public void paint(Graphics g);
+  abstract public void downKey();
+  abstract public void upKey();
+  abstract public void fireKey();
+  abstract public void leftKey();
+  abstract public void rightKey();
+  public void keyPressed(int keyCode) {
+    switch(getGameAction(keyCode)) {
+      case DOWN:
+        downKey();
+        break;
+      case UP:
+        upKey();
+        break;
+      case FIRE:
+        fireKey();
+        break;
+      case RIGHT:
+        rightKey();
+        break;
+      case LEFT:
+        leftKey();
+        break;
+      default:
+        break;
+    }
+    repaint();
+  }
   protected final int tbHeight_;
 }
