@@ -97,6 +97,7 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
                 gender,
                 dob,
                 imei,
+                "Unknown",
                 btAddress);
         em_.persist(xu);
         return XurmoUserRegistrationStatus.USER_REGISTRATION_NO_ERROR;
@@ -154,12 +155,12 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
                 XurmoUserSession xus = XurmoUserSessionManager.instance().createSession(xu.getUsername(), XurmoUserEncryption.instance().getRandomCookie(mobileCountryCode + "-" + mobileNetworkCode + "-" + username), xclm.getLocationId(), em_);
                 cookie = xus.getCookie();
             } else {
-            return new XurmoUserHomeScreenData(xu.getUsername(), cookie, XurmoUserInteractionStatus.INTERACTIONFAILED_INVALID_USERNAME_OR_PASSWORD, "Unknown", "", "", "");
+            return new XurmoUserHomeScreenData(xu.getUsername(), cookie, XurmoUserInteractionStatus.INTERACTIONFAILED_INVALID_USERNAME_OR_PASSWORD, "Unknown", "", "", "","");
             }
         } catch (Exception ex) {
-            return new XurmoUserHomeScreenData("", cookie, XurmoUserInteractionStatus.INTERACTIONFAILED_INVALID_USERNAME_OR_PASSWORD, "Unknown", "", "", "");
+            return new XurmoUserHomeScreenData("", cookie, XurmoUserInteractionStatus.INTERACTIONFAILED_INVALID_USERNAME_OR_PASSWORD, "Unknown", "", "", "", "");
         }
-        return new XurmoUserHomeScreenData(xu.getUsername(), cookie, XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, xclm.getLocation(), xu.getFname(), xu.getLname(), xu.getSalutation());
+        return new XurmoUserHomeScreenData(xu.getUsername(), cookie, XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, xclm.getLocation(), xu.getFname(), xu.getLname(), xu.getSalutation(), xu.getPresence());
     }
     
     
@@ -173,7 +174,7 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
     public XurmoUserManagementStatus updateLocation(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
         return XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
     }
-    public XurmoUserHomeScreenData getHomeScreenData(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
+    public XurmoUserHomeScreenData getHomeScreenData(String username, String cookie, String imei, String presence, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
         
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         if (xus != null && cookie.equals(xus.getCookie())) {
@@ -181,9 +182,13 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
             XurmoCellLocationMap xclm 
                     = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
             XurmoUser xu = (XurmoUser) (em_.createNamedQuery("XurmoUser.findByUsername").setParameter("username", username).getSingleResult());
-            return new XurmoUserHomeScreenData(xu.getUsername(), xus.getCookie(), XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, xclm.getLocation(), xu.getFname(), xu.getLname(), xu.getSalutation());
+            if (presence != null && !presence.equals("") && !presence.equals("Unknown")) {
+                xu.setPresence(presence);
+                em_.persist(xu);
+            }
+            return new XurmoUserHomeScreenData(xu.getUsername(), xus.getCookie(), XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, xclm.getLocation(), xu.getFname(), xu.getLname(), xu.getSalutation(), xu.getPresence());
         } else {
-            return new XurmoUserHomeScreenData("", xus.getCookie(), XurmoUserInteractionStatus.INTERACTIONFAILED_USER_NOT_LOGGED_IN, "Unknown", "", "", "");
+            return new XurmoUserHomeScreenData("", xus.getCookie(), XurmoUserInteractionStatus.INTERACTIONFAILED_USER_NOT_LOGGED_IN, "Unknown", "", "", "", "");
         }
     }
 

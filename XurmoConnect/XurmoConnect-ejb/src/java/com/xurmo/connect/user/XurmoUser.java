@@ -43,6 +43,7 @@ import javax.persistence.TemporalType;
         @NamedQuery(name = "XurmoUser.findByGender", query = "SELECT x FROM XurmoUser x WHERE x.gender = :gender"),
         @NamedQuery(name = "XurmoUser.findByDob", query = "SELECT x FROM XurmoUser x WHERE x.dob = :dob"),
         @NamedQuery(name = "XurmoUser.findByImei", query = "SELECT x FROM XurmoUser x WHERE x.imei = :imei"),
+        @NamedQuery(name = "XurmoUser.findByPresence", query = "SELECT x FROM XurmoUser x WHERE x.presence = :presence"),
         @NamedQuery(name = "XurmoUser.findByPersonalAddressBookMatch", query = "SELECT distinct x FROM XurmoUser x, XurmoUser xu, XurmoPersonalAddressBookEmailAddress xea, XurmoPersonalAddressBookPhoneNumbers xpn WHERE (x.primaryEmail = xea.emailAddress or x.primaryMobile = xpn.phoneNumber) and xea.xurmoPersonalAddressBookEmailAddressPK.userid = xu.userid and xpn.xurmoPersonalAddressBookPhoneNumbersPK.userid = xu.userid and xu.username=:username"),
         @NamedQuery(name = "XurmoUser.findByBtAddress", query = "SELECT x FROM XurmoUser x WHERE x.btAddress = :btAddress")
     })
@@ -91,6 +92,9 @@ public class XurmoUser implements Serializable {
     @Column(name = "imei", nullable = false)
     private String imei;
 
+    @Column(name = "presence", nullable = false)
+    private String presence;
+
     @Column(name = "btAddress", nullable = false)
     private String btAddress;
     
@@ -122,7 +126,7 @@ public class XurmoUser implements Serializable {
      * @param imei the imei of the XurmoUser
      * @param btAddress the btAddress of the XurmoUser
      */
-    public XurmoUser(String username, byte [] password, String salutation, String fname, String lname, String primaryMobile, boolean primaryMobileValidated, String primaryEmail, boolean primaryEmailValidated, String gender, Date dob, String imei, String btAddress) {
+    public XurmoUser(String username, byte [] password, String salutation, String fname, String lname, String primaryMobile, boolean primaryMobileValidated, String primaryEmail, boolean primaryEmailValidated, String gender, Date dob, String imei, String presence, String btAddress) {
         this.username = username;
         this.password = password;
         this.salutation = salutation;
@@ -135,6 +139,7 @@ public class XurmoUser implements Serializable {
         this.gender = gender.charAt(0);
         this.dob = dob;
         this.imei = imei;
+        this.presence = presence;
         this.btAddress = btAddress;
     }
 
@@ -344,6 +349,22 @@ public class XurmoUser implements Serializable {
      */
     public void setImei(String imei) {
         this.imei = imei;
+    }
+
+    /**
+     * Gets the presence of this XurmoUser.
+     * @return the presence
+     */
+    public String getPresence() {
+        return this.presence;
+    }
+
+    /**
+     * Sets the presence of this XurmoUser to the specified value.
+     * @param presence the new presence
+     */
+    public void setPresence(String presence) {
+        this.presence = presence;
     }
 
     /**

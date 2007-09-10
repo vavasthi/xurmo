@@ -14,6 +14,7 @@ create table XurmoUser
   gender char(1),
   dob datetime not null,
   imei char(16) not null unique key,
+  presence char(255) not null,
   btAddress char(24) not null unique key
 ) default character set utf8;
 

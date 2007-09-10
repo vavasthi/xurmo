@@ -16,7 +16,7 @@ package com.xurmo.connect.user;
 public class XurmoUserHomeScreenData implements java.io.Serializable {
     
     /** Creates a new instance of XurmoUserHomeScreenData */
-    public XurmoUserHomeScreenData(String username, String cookie, int errorCode, String cellName, String fname, String lname, String salutation) {
+    public XurmoUserHomeScreenData(String username, String cookie, int errorCode, String cellName, String fname, String lname, String salutation, String presence) {
         this.username = username;
         this.cookie = cookie;
         this.errorCode = errorCode;
@@ -24,6 +24,7 @@ public class XurmoUserHomeScreenData implements java.io.Serializable {
         this.fname = fname;
         this.lname = lname;
         this.salutation = salutation;
+        this.presence = presence;
     }
     public String username;
     public String cookie;
@@ -32,4 +33,5 @@ public class XurmoUserHomeScreenData implements java.io.Serializable {
     public String fname;
     public String lname;
     public String salutation;
+    public String presence;
 }
