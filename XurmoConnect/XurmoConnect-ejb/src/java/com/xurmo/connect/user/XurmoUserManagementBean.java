@@ -174,7 +174,7 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
     public XurmoUserManagementStatus updateLocation(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
         return XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
     }
-    public XurmoUserHomeScreenData getHomeScreenData(String username, String cookie, String imei, String presence, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
+    public XurmoUserHomeScreenData getHomeScreenData(String username, String cookie, String imei, String presence, String twitterUsername, String twitterPassword, String jaikuUsername, String jaikuPersonalKey, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
         
         XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
         if (xus != null && cookie.equals(xus.getCookie())) {
@@ -186,6 +186,7 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
                 xu.setPresence(presence);
                 em_.persist(xu);
             }
+            XurmoMessageQueueToPresence.updatePresencePortals(presence, twitterUsername, twitterPassword, jaikuUsername, jaikuPersonalKey, mobileCountryCode, mobileNetworkCode,  siteId, cellId, cellName, em_);
             return new XurmoUserHomeScreenData(xu.getUsername(), xus.getCookie(), XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, xclm.getLocation(), xu.getFname(), xu.getLname(), xu.getSalutation(), xu.getPresence());
         } else {
             return new XurmoUserHomeScreenData("", xus.getCookie(), XurmoUserInteractionStatus.INTERACTIONFAILED_USER_NOT_LOGGED_IN, "Unknown", "", "", "", "");

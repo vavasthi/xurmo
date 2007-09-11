@@ -58,9 +58,9 @@ public class XurmoUserManagementServiceBean {
      * Web service operation
      */
     @WebMethod
-    public XurmoUserHomeScreenData getHomeScreenData(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "imei") String imei,@WebParam(name = "presence") String presence, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode,  @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
+    public XurmoUserHomeScreenData getHomeScreenData(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "imei") String imei, @WebParam(name = "presence") String presence, @WebParam(name = "twitterUsername") String twitterUsername, @WebParam(name = "twitterPassword") String twitterPassword, @WebParam(name = "jaikuUsername") String jaikuUsername, @WebParam(name = "jaikuPersonalKey") String jaikuPersonalKey, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode,  @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
         
-        return xurmoUserAuthenticationBean.getHomeScreenData(username, cookie, imei, presence, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
+        return xurmoUserAuthenticationBean.getHomeScreenData(username, cookie, imei, presence, twitterUsername, twitterPassword, jaikuUsername, jaikuPersonalKey, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
     }
 
     /**

@@ -176,3 +176,10 @@ create table XurmoErrors
   errorMsg varchar(1024)
 ) default character set utf8;
 
+drop table XurmoCountries;
+create table XurmoCountries
+(
+  mobileCountryCode char(10) primary key not null,
+  countryName char(255) not null
+)  default character set utf8;
+insert into XurmoCountries values('404','India');
