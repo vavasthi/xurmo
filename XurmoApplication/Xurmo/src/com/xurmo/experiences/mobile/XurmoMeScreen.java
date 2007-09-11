@@ -30,29 +30,25 @@ package com.xurmo.experiences.mobile;
 
 import javax.microedition.io.*;
 
-public class XurmoMyNetworksScreen extends XurmoCanvas {
+public class XurmoMeScreen extends XurmoCanvas {
   /**
    * Creates a new instance of XurmoHomeScreen
    */
-  public XurmoMyNetworksScreen(Xurmo midlet) {
+  public XurmoMeScreen(Xurmo midlet) {
     super(midlet, false);
     XurmoTheme ct = XurmoThemeManager.instance().getCurrentTheme();
     
-    summary_ = new XurmoNetworkSummaryPanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "Network Summary");
-    summary_.selected(true);
+    presence_ = new XurmoMyPresencePanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "My Presence");
+    presence_.selected(true);
     currentPanel_ = 0;
     
-    contacts_ = new XurmoMePanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "My Contacts");
+    contacts_ = new XurmoNetworkSummaryPanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "My Contacts");
 
-    otherSocialNetworks_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Other Social Networks");
-    networks_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Networks");
     home_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Home");
     
     panels_ = new XurmoCollapsablePanel[]{
-      summary_,
+      presence_,
       contacts_,
-      networks_,
-      otherSocialNetworks_,
       home_
     };
   }
@@ -95,8 +91,11 @@ public class XurmoMyNetworksScreen extends XurmoCanvas {
     if (panels_[currentPanel_] == home_) {
       midlet_.transitionToHomeScreen();
     }
-    else if (panels_[currentPanel_] == otherSocialNetworks_) {
-      midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoMySocialNetworksScreen(midlet_), XurmoSliderCanvas.RIGHT));      
+    else if (panels_[currentPanel_] == presence_) {
+      midlet_.getDisplay().setCurrent(new XurmoPresenceEdit(this,"Editing Presence", midlet_.getHomeScreenData().presence));
+    }
+    else if (panels_[currentPanel_] == contacts_) {
+      midlet_.uploadPhonebook();
     }
   }
   public void rightKey() {
@@ -104,12 +103,18 @@ public class XurmoMyNetworksScreen extends XurmoCanvas {
   public void leftKey() {
     midlet_.transitionToHomeScreen();
   }
+  public void updatePresence(String presence) {
+    midlet_.currentUser_.presence_ = presence;
+    midlet_.updateHomeScreenData();
+    midlet_.getDisplay().setCurrent(this);
+  }
+  public void cancelPresenceEdit() {
+    midlet_.getDisplay().setCurrent(this);
+  }
   int ypos_;
   private int currentPanel_;
-  XurmoCollapsablePanel summary_;
+  XurmoCollapsablePanel presence_;
   XurmoCollapsablePanel contacts_;
-  XurmoCollapsablePanel networks_;
-  XurmoCollapsablePanel otherSocialNetworks_;
   XurmoCollapsablePanel home_;
   XurmoCollapsablePanel[] panels_;
 }

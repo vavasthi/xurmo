@@ -25,6 +25,7 @@ import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.AlertType;
 import javax.microedition.lcdui.Image;
 import java.util.Timer;
+import java.util.Vector;
 
 public class Xurmo extends MIDlet {
   /* These vars are used in the examples below */
@@ -32,8 +33,10 @@ public class Xurmo extends MIDlet {
   XurmoCurrentUser currentUser_;
   XurmoCanvas home_;
   XurmoUserHomeScreenData homeData_;
+  Vector otherSocialNetworks_;
   
-  private final String userAuthenticationRecordName_ = new String("UserAuthenticationRecords");;
+  private final String userAuthenticationRecordName_ = new String("XurmoUserAuthenticationRecords");;
+  private final String otherSocialNetworksRecordName_ = new String("XurmoMyOtherSocialNetworkRecords");;
   private XurmoBluetoothServiceListener localBtListener_;
   private Timer timer_;
   
@@ -51,6 +54,7 @@ public class Xurmo extends MIDlet {
     currentUser_ = new XurmoCurrentUser();
     XurmoThemeManager.init(this);
     homeData_ = null;
+    otherSocialNetworks_ = new Vector();
     try {
       
       localBtListener_ = new XurmoBluetoothServiceListener();
@@ -63,6 +67,7 @@ public class Xurmo extends MIDlet {
         l.append(s[i], null);
       }
       this.getDisplay().setCurrent(l);*/
+    loadOtherSocialNetworkDetails();
     if (this.loadUsernameAndPasswordIfExist()) {
       XurmoUserAuthenticationReturnStatus status = performLogin();
       if (XurmoUserAuthenticationAndSessionWSInterface.isAuthenticationStatusSuccessful(status.errorCode_)) {
@@ -119,6 +124,7 @@ public class Xurmo extends MIDlet {
   }
   
   public void destroyApp(boolean unconditional) {
+    storeOtherSocialNetworkDetails();
   }
   
   
@@ -146,6 +152,36 @@ public class Xurmo extends MIDlet {
       e.printStackTrace();
     } catch (IOException e) {
       System.err.println(e.toString() + "Username and password record store could not be stored");
+      e.printStackTrace();
+    }
+  }
+  private void storeOtherSocialNetworkDetails() {
+    try {
+      deleteOtherSocialNetworkDetails();
+      RecordStore rs = RecordStore.openRecordStore(this.otherSocialNetworksRecordName_, true);
+      
+      ByteArrayOutputStream bout = new ByteArrayOutputStream();
+      DataOutputStream dout = new DataOutputStream( bout );
+      
+      int kount = otherSocialNetworks_.size();
+      dout.writeInt(kount);
+      for (int i = 0; i < kount; ++i) {
+        ((XurmoOtherSocialNetworkDetails) otherSocialNetworks_.elementAt(i)).storeTo(dout);
+      }
+      dout.flush();
+      byte[] data = bout.toByteArray();
+      rs.addRecord(data, 0, data.length);
+    } catch (RecordStoreFullException e) {
+      System.err.println(e.toString() + "Other social networks record store could not be stored");
+      e.printStackTrace();
+    } catch (RecordStoreNotFoundException e) {
+      System.err.println(e.toString() + "Other social networks record store could not be stored");
+      e.printStackTrace();
+    } catch (RecordStoreException e) {
+      System.err.println(e.toString() + "Other social networks record store could not be stored");
+      e.printStackTrace();
+    } catch (IOException e) {
+      System.err.println(e.toString() + "Other social networks record store could not be stored");
       e.printStackTrace();
     }
   }
@@ -179,6 +215,39 @@ public class Xurmo extends MIDlet {
     }
     return false;
   }
+  private boolean loadOtherSocialNetworkDetails() {
+    try {
+      RecordStore rs = RecordStore.openRecordStore(otherSocialNetworksRecordName_, true);
+      
+      byte[] data = rs.getRecord(1);
+      System.out.println("Loading Other social network details.");
+      
+      ByteArrayInputStream bin = new ByteArrayInputStream(data);
+      DataInputStream din = new DataInputStream( bin );
+      
+      int kount = din.readInt();
+      for (int i = 0; i < kount; ++i) {
+        XurmoOtherSocialNetworkDetails xosnd = new XurmoOtherSocialNetworkDetails();
+        xosnd.restoreFrom(din);
+        otherSocialNetworks_.addElement(xosnd);
+      }
+      return true;
+    } catch (RecordStoreFullException e) {
+      System.err.println(e.toString() + "Other social networks record store could not be loaded");
+      e.printStackTrace();
+    } catch (RecordStoreNotFoundException e) {
+      System.err.println(e.toString() + "Other social networks record store could not be loaded");
+      e.printStackTrace();
+    } catch (RecordStoreException e) {
+      System.err.println(e.toString() + "Other social networks record store could not be loaded");
+      e.printStackTrace();
+    } catch (IOException e) {
+      System.err.println(e.toString() + "Other social networks record store could not be loaded");
+      System.err.println("IO Exception");
+      e.printStackTrace();
+    }
+    return false;
+  }
   private void deleteUsernameAndPassword() {
     try {
       RecordStore.deleteRecordStore(userAuthenticationRecordName_);
@@ -188,6 +257,19 @@ public class Xurmo extends MIDlet {
       System.err.println(e.toString() + "Username and password record store could not be deleted");
     } catch (RecordStoreException e) {
       System.err.println(e.toString() + "Username and password record store could not be deleted");
+    }
+  }
+  private void deleteOtherSocialNetworkDetails() {
+    try {
+      RecordStore rs = RecordStore.openRecordStore(otherSocialNetworksRecordName_, false);
+      rs.deleteRecord(1);
+      RecordStore.deleteRecordStore(otherSocialNetworksRecordName_);
+    } catch (RecordStoreFullException e) {
+      System.err.println(e.toString() + "Other social networks record store could not be deleted");
+    } catch (RecordStoreNotFoundException e) {
+      System.err.println(e.toString() + "Other social networks record store could not be deleted");
+    } catch (RecordStoreException e) {
+      System.err.println(e.toString() + "Other social networks record store could not be deleted");
     }
   }
   public XurmoUserAuthenticationReturnStatus performLogin() {
@@ -212,8 +294,38 @@ public class Xurmo extends MIDlet {
     return homeData_;
   }
   public void updateHomeScreenData() {
+    int k = this.otherSocialNetworks_.size();
+    String twitterUsername = new String("");
+    String twitterPassword = new String("");
+    String jaikuUsername = new String("");
+    String jaikuPersonalKey = new String("");
+    String tmp;
+    for (int i = 0; i < k; ++i) {
+      XurmoOtherSocialNetworkDetails xosnd 
+          = (XurmoOtherSocialNetworkDetails)(otherSocialNetworks_.elementAt(i));
+      if (xosnd.socialNetwork_.equals("Twitter")) {
+        tmp = xosnd.getAttribute("username");
+        if (tmp != null) {
+          twitterUsername = tmp;
+        }
+        tmp = xosnd.getAttribute("password");
+        if (tmp != null) {
+          twitterPassword = tmp;
+        }
+      }
+      else if (xosnd.socialNetwork_.equals("Jaiku")) {
+        tmp = xosnd.getAttribute("username");
+        if (tmp != null) {
+          jaikuUsername = tmp;
+        }
+        tmp = xosnd.getAttribute("personalKey");
+        if (tmp != null) {
+          jaikuPersonalKey = tmp;
+        }
+      }
+    }
     homeData_
-        = XurmoUserAuthenticationAndSessionWSInterface.homeScreenData(currentUser_.username_, currentUser_.cookie_, currentUser_.presence_);
+        = XurmoUserAuthenticationAndSessionWSInterface.homeScreenData(currentUser_.username_, currentUser_.cookie_, currentUser_.presence_, twitterUsername, twitterPassword, jaikuUsername, jaikuPersonalKey);
   }
   public String getPropertyValue(String name) {
     

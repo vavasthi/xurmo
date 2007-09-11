@@ -30,29 +30,25 @@ package com.xurmo.experiences.mobile;
 
 import javax.microedition.io.*;
 
-public class XurmoMyNetworksScreen extends XurmoCanvas {
+public class XurmoInteractionsScreen extends XurmoCanvas {
   /**
    * Creates a new instance of XurmoHomeScreen
    */
-  public XurmoMyNetworksScreen(Xurmo midlet) {
+  public XurmoInteractionsScreen(Xurmo midlet) {
     super(midlet, false);
     XurmoTheme ct = XurmoThemeManager.instance().getCurrentTheme();
     
-    summary_ = new XurmoNetworkSummaryPanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "Network Summary");
+    summary_ = new XurmoNetworkSummaryPanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "My Details");
     summary_.selected(true);
     currentPanel_ = 0;
     
-    contacts_ = new XurmoMePanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "My Contacts");
+    contacts_ = new XurmoNetworkSummaryPanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "My Contacts");
 
-    otherSocialNetworks_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Other Social Networks");
-    networks_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Networks");
     home_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Home");
     
     panels_ = new XurmoCollapsablePanel[]{
       summary_,
       contacts_,
-      networks_,
-      otherSocialNetworks_,
       home_
     };
   }
@@ -95,9 +91,6 @@ public class XurmoMyNetworksScreen extends XurmoCanvas {
     if (panels_[currentPanel_] == home_) {
       midlet_.transitionToHomeScreen();
     }
-    else if (panels_[currentPanel_] == otherSocialNetworks_) {
-      midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoMySocialNetworksScreen(midlet_), XurmoSliderCanvas.RIGHT));      
-    }
   }
   public void rightKey() {
   }
@@ -109,7 +102,6 @@ public class XurmoMyNetworksScreen extends XurmoCanvas {
   XurmoCollapsablePanel summary_;
   XurmoCollapsablePanel contacts_;
   XurmoCollapsablePanel networks_;
-  XurmoCollapsablePanel otherSocialNetworks_;
   XurmoCollapsablePanel home_;
   XurmoCollapsablePanel[] panels_;
 }

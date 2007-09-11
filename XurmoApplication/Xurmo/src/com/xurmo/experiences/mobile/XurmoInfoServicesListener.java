@@ -59,9 +59,10 @@ public class XurmoInfoServicesListener implements MessageListener {
                 }
                 PushRegistry.registerConnection(cbsUrl_, Xurmo.class.getName(), "*");
             } catch(ClassNotFoundException ex) {
-                
+                ex.printStackTrace();
             }
         } catch(IOException ioex) {
+          ioex.printStackTrace();
             
         }
         

@@ -154,7 +154,7 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
     }
     return new XurmoUserAuthenticationReturnStatus();
   }
-  public static XurmoUserAuthenticationReturnStatus updateLocation(String username, String cookie, String presence) {
+  public static XurmoUserAuthenticationReturnStatus updateLocation(String username, String cookie, String presence,String twitterUsername, String twitterPassword, String jaikuUsername, String jaikuPersonalKey) {
     String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
         "<env:Header/>\n" +
         "<env:Body>\n" +
@@ -163,6 +163,10 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
         "<ns0:cookie>" + cookie+ "</ns0:cookie>\n" +
         "<ns0:imei>" + XurmoDevice.imei_ + "</ns0:imei>\n" +
         "<ns0:presence>" + presence + "</ns0:presence>\n" +
+        "<ns0:twitterUsername>" + twitterUsername + "</ns0:twitterUsername>\n" +
+        "<ns0:twitterPassword>" + twitterPassword + "</ns0:twitterPassword>\n" +
+        "<ns0:jaikuUsername>" + jaikuUsername + "</ns0:jaikuUsername>\n" +
+        "<ns0:jaikuPersonalKey>" + jaikuPersonalKey + "</ns0:jaikuPersonalKey>\n" +
         XurmoDevice.getLocationParameters() +
         "</ns0:updateLocation>\n</env:Body>\n</env:Envelope>\n");
     try {
@@ -173,7 +177,7 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
     }
     return new XurmoUserAuthenticationReturnStatus();
   }
-  public static XurmoUserHomeScreenData homeScreenData(String username, String cookie, String presence) {
+  public static XurmoUserHomeScreenData homeScreenData(String username, String cookie, String presence, String twitterUsername, String twitterPassword, String jaikuUsername, String jaikuPersonalKey) {
     String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
         "<env:Header/>\n" +
         "<env:Body>\n" +
@@ -182,6 +186,10 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
         "<ns0:cookie>" + cookie+ "</ns0:cookie>\n" +
         "<ns0:imei>" + XurmoDevice.imei_ + "</ns0:imei>\n" +
         "<ns0:presence>" + presence + "</ns0:presence>\n" +
+        "<ns0:twitterUsername>" + twitterUsername + "</ns0:twitterUsername>\n" +
+        "<ns0:twitterPassword>" + twitterPassword + "</ns0:twitterPassword>\n" +
+        "<ns0:jaikuUsername>" + jaikuUsername + "</ns0:jaikuUsername>\n" +
+        "<ns0:jaikuPersonalKey>" + jaikuPersonalKey + "</ns0:jaikuPersonalKey>\n" +
         XurmoDevice.getLocationParameters() +
         "</ns0:getHomeScreenData>\n</env:Body>\n</env:Envelope>\n");
     try {

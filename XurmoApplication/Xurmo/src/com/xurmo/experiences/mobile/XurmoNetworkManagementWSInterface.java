@@ -132,7 +132,7 @@ public class XurmoNetworkManagementWSInterface {
             } else if (tag.equalsIgnoreCase("ns1:numberofcontacts")) {
               
               numberOfContacts = new String(parser.nextText());
-            } else if (tag.equalsIgnoreCase("ns1:contactsaalreadyuser")) {
+            } else if (tag.equalsIgnoreCase("ns1:contactsalreadyuser")) {
 
               doingContacts = true;
             } else if (tag.equalsIgnoreCase("ns1:memberofnetworks")) {
