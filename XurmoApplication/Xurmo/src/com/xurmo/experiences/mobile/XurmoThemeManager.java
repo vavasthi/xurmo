@@ -122,6 +122,7 @@ public class XurmoThemeManager {
       String ringtoneIconValue= null;
       String unreadMsgValue= null;
       String writeNewInteractionValue = null;
+      String checkmarkValue = null;
       int titleForegroundColorValue = 0;
       int gradientStartColorValue = 0;
       int gradientEndColorValue = 0;
@@ -204,6 +205,8 @@ public class XurmoThemeManager {
               unreadMsgValue = themes.getText();
             } else if(cc == writeNewInteractionTag_.context()) {
               writeNewInteractionValue = themes.getText();
+            } else if(cc == checkmarkTag_.context()) {
+              checkmarkValue = themes.getText();
             } else if(cc == titleForegroundColorTag_.context()) {
               String sv = themes.getText().toUpperCase();
               if (sv.startsWith("0X")) {
@@ -291,6 +294,7 @@ public class XurmoThemeManager {
           {
             int c = popContext();
             String tag = themes.getName();
+            System.out.println("Checkmark tag " + checkmarkValue + " name value " + nameValue);
             if (c == themeTag_.context() && 
                 nameValue != null &&
                 descriptionValue != null &&
@@ -316,7 +320,8 @@ public class XurmoThemeManager {
                 readMsgValue != null &&
                 ringtoneIconValue != null &&
                 unreadMsgValue != null &&
-                writeNewInteractionValue  != null) {
+                writeNewInteractionValue  != null &&
+                checkmarkValue != null) {
               XurmoTheme t = new XurmoTheme(screenWidth_, 
                   screenHeight_,
                   titleHeight_,
@@ -347,6 +352,7 @@ public class XurmoThemeManager {
                   ringtoneIconValue,
                   unreadMsgValue,
                   writeNewInteractionValue,
+                  checkmarkValue,
                   titleForegroundColorValue,
                   gradientStartColorValue,
                   gradientEndColorValue,
@@ -406,6 +412,7 @@ public class XurmoThemeManager {
   private final XurmoThemeXmlTag ringtoneIconTag_       = new XurmoThemeXmlTag("ringtone-icon");
   private final XurmoThemeXmlTag unreadMsgTag_          = new XurmoThemeXmlTag("unread-msg");
   private final XurmoThemeXmlTag writeNewInteractionTag_= new XurmoThemeXmlTag("write-new-interaction");
+  private final XurmoThemeXmlTag checkmarkTag_          = new XurmoThemeXmlTag("checkmark");
   private final XurmoThemeXmlTag titleForegroundColorTag_ = new XurmoThemeXmlTag("title-fgcolor");
   private final XurmoThemeXmlTag gradientStartColorTag_ = new XurmoThemeXmlTag("gradient-start-color");
   private final XurmoThemeXmlTag gradientEndColorTag_ = new XurmoThemeXmlTag("gradient-end-color");
@@ -445,6 +452,7 @@ public class XurmoThemeManager {
     ringtoneIconTag_,
     unreadMsgTag_,
     writeNewInteractionTag_,
+    checkmarkTag_,
     titleForegroundColorTag_,
     gradientStartColorTag_,
     gradientEndColorTag_,

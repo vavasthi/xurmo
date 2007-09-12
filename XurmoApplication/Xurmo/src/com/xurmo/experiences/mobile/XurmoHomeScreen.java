@@ -38,10 +38,8 @@ public class XurmoHomeScreen extends XurmoScrollableScreen {
     super(midlet, new XurmoCollapsablePanel[5]);
     XurmoThemeManager.init(midlet);
     XurmoTheme ct = XurmoThemeManager.instance().getCurrentTheme();
-    
     me_ = new XurmoMePanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "Me");
     me_.selected(true);
-    
     mydoodles_ = new XurmoMyDoodlePanel(midlet_, getWidth(), getHeight(), ct.myplaceIconImage_, "My Doodles");
     
     interactions_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.interactionIconImage_, "Interactions");

@@ -322,14 +322,20 @@ public class Xurmo extends MIDlet {
     }
   }
   public XurmoUserAuthenticationReturnStatus performLogin() {
+    System.out.println("Performing login");
     homeData_
         = XurmoUserAuthenticationAndSessionWSInterface.loginUser(currentUser_.username_, currentUser_.password_);
+    XurmoDevice.updateLocation(homeData_.status.cellName_);
+    System.out.println("Setting presence and status");
+    currentUser_.presence_ = homeData_.presence;
     XurmoUserAuthenticationReturnStatus status = homeData_.status;
     if (status != null &&
         XurmoUserAuthenticationAndSessionWSInterface.isAuthenticationStatusSuccessful(status.errorCode_)) {
       currentUser_.loggedIn(currentUser_.username_, currentUser_.password_, status.cookie_, status.cellName_, homeData_.presence);
       XurmoInfoServicesListener listener = new XurmoInfoServicesListener(this, currentUser_.username_, currentUser_.cookie_);
+    System.out.println("Storing usernaem and password");
       storeUsernameAndPassword();
+    System.out.println("Creating home screen");
       home_  = new XurmoHomeScreen(this);
       this.getDisplay().setCurrent(home_);
       home_.setFullScreenMode(true);
@@ -374,6 +380,8 @@ public class Xurmo extends MIDlet {
     }
     homeData_
         = XurmoUserAuthenticationAndSessionWSInterface.homeScreenData(currentUser_.username_, currentUser_.cookie_, currentUser_.presence_, twitterUsername, twitterPassword, jaikuUsername, jaikuPersonalKey);
+    XurmoDevice.updateLocation(homeData_.status.cellName_);
+    currentUser_.presence_ = homeData_.presence;
   }
   public String getPropertyValue(String name) {
     

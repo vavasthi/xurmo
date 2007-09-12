@@ -68,6 +68,7 @@ public class XurmoTheme {
       String ringtoneIconValue,
       String unreadMsgValue,
       String writeNewInteractionValue,
+      String checkmarkValue,
       int titleForegroundColorValue,
       int gradientStartColorValue,
       int gradientEndColorValue,
@@ -117,6 +118,7 @@ public class XurmoTheme {
       readMsgImage_ = Image.createImage(getClass().getResourceAsStream(iconDirectory_+readMsgValue));
       unreadMsgImage_ = Image.createImage(getClass().getResourceAsStream(iconDirectory_+unreadMsgValue));
       writeNewInteractionImage_ = Image.createImage(getClass().getResourceAsStream(iconDirectory_+writeNewInteractionValue));
+      checkmarkImage_ = Image.createImage(getClass().getResourceAsStream(iconDirectory_+checkmarkValue));
     } catch(java.io.IOException ioex) {
     }
   }
@@ -146,6 +148,7 @@ public class XurmoTheme {
   Image readMsgImage_;
   Image unreadMsgImage_;
   Image writeNewInteractionImage_;
+  Image checkmarkImage_;
   
   int titleForegroundColor_;
   int gradientStartColor_;

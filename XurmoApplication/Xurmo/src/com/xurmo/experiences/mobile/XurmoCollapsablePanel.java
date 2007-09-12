@@ -32,27 +32,24 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.Graphics;
 import java.util.Vector;
 
-public class XurmoCollapsablePanel {
+public class XurmoCollapsablePanel extends XurmoPanel {
   
   /**
    * Creates a new instance of XurmoCollapsablePanel
    */
   public XurmoCollapsablePanel(int screenWidth, int screenHeight, Image icon, String title) {
-    w_ = screenWidth;
-    screenWidth_ = screenWidth;
-    screenHeight_ = screenHeight;
+    super(screenWidth, screenHeight);
     
     icon_ = icon;
     title_ = title;
     content_ = new Vector();
-    adjustHeights();
     selected_ = false;
-    
+    adjustHeights();
   }
   public void addContent(String str) {
     content_.addElement(str);
   }
-  private void adjustHeights() {
+  protected void adjustHeights() {
     
     Font lf = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_BOLD, Font.SIZE_MEDIUM);
     Font sf = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_PLAIN, Font.SIZE_SMALL);
@@ -62,6 +59,9 @@ public class XurmoCollapsablePanel {
       
       h_ += 3 * sf.getHeight();
     }
+  }
+  public int h() {
+    return h_;
   }
   protected void drawBoundingBox(Graphics g, int x, int y) {
     
@@ -106,30 +106,14 @@ public class XurmoCollapsablePanel {
     g.setFont(of);
   }
   
-  public int w() {
-    return w_;
-  }
-  public int h() {
-    return h_;
-  }
-  public int screenWidth() {
-    return screenWidth_;
-  }
-  public int screenHeight() {
-    return screenHeight_;
-  }
   public void selected(boolean flag) {
     selected_ = flag;
     adjustHeights();
   }
-  protected boolean selected_;
-  private int w_;
-  private int h_;
-  protected int th_;
-  private int screenWidth_;
-  private int screenHeight_;
   
-  private Image icon_;
-  private String title_;
-  private Vector content_;
+  protected int th_;
+  protected int h_;
+  protected Image icon_;
+  protected String title_;
+  protected Vector content_;
 }

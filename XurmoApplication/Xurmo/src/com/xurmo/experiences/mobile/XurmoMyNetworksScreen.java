@@ -45,13 +45,13 @@ public class XurmoMyNetworksScreen extends XurmoCanvas {
     contacts_ = new XurmoMePanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "My Contacts");
 
     otherSocialNetworks_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Other Social Networks");
-    networks_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Networks");
+    invite_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Invite");
     home_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Home");
     
     panels_ = new XurmoCollapsablePanel[]{
       summary_,
       contacts_,
-      networks_,
+      invite_,
       otherSocialNetworks_,
       home_
     };
@@ -95,11 +95,14 @@ public class XurmoMyNetworksScreen extends XurmoCanvas {
     if (panels_[currentPanel_] == home_) {
       midlet_.transitionToHomeScreen();
     }
-    else if (panels_[currentPanel_] == otherSocialNetworks_) {
-      midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoMySocialNetworksScreen(midlet_), XurmoSliderCanvas.RIGHT));      
-    }
   }
   public void rightKey() {
+    if (panels_[currentPanel_] == otherSocialNetworks_) {
+      midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoMySocialNetworksScreen(midlet_), XurmoSliderCanvas.RIGHT));      
+    }
+    else if (panels_[currentPanel_] == invite_) {
+      midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoInviteScreen(midlet_), XurmoSliderCanvas.RIGHT));      
+    }
   }
   public void leftKey() {
     midlet_.transitionToHomeScreen();
@@ -108,7 +111,7 @@ public class XurmoMyNetworksScreen extends XurmoCanvas {
   private int currentPanel_;
   XurmoCollapsablePanel summary_;
   XurmoCollapsablePanel contacts_;
-  XurmoCollapsablePanel networks_;
+  XurmoCollapsablePanel invite_;
   XurmoCollapsablePanel otherSocialNetworks_;
   XurmoCollapsablePanel home_;
   XurmoCollapsablePanel[] panels_;
