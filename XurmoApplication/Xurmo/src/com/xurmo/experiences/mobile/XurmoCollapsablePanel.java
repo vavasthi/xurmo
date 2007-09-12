@@ -80,8 +80,13 @@ public class XurmoCollapsablePanel {
       int w = icon_.getWidth();
       g.setFont(lf);
       g.drawString(title_, 40 , y, g.LEFT | g.TOP);
-      y += lf.getHeight();
+      y += th_;
       g.setFont(sf);
+      for (int i = 0; i < content_.size() && i < 2; ++i) {
+        
+        g.drawString((String)(content_.elementAt(i)), 0, y, g.LEFT | g.TOP);
+        y += sf.getHeight();
+      }
     }
     else {
 //      g.setColor(ct.collapsablePanelUnselectedBackgroundColorValue_);

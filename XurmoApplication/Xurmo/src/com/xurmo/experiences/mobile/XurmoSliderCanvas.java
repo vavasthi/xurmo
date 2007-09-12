@@ -54,7 +54,7 @@ public class XurmoSliderCanvas extends XurmoCanvas {
   }
   public void slide() {
   
-    if (xDelta_ + pixelsPerStep_ >= getWidth()) {
+    if (xDelta_ + pixelsPerStep_ > getWidth()) {
       t_.cancel();
       midlet_.getDisplay().setCurrent(destinationCanvas_);
     }

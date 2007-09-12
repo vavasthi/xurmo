@@ -45,40 +45,4 @@
         <collapsable-panel-unselected-bgcolor>0xffffff</collapsable-panel-unselected-bgcolor>
         <collapsable-panel-unselected-fgcolor>0x000000</collapsable-panel-unselected-fgcolor>
     </theme>
-    <theme>
-        <name>green</name>
-        <description>Green Theme</description>
-        <icon-dir>icons</icon-dir>
-        <titlebar-logo>title-logo-small-transparent.png</titlebar-logo>
-        <arrow-left>Arrow_left.png</arrow-left>
-        <arrow-right>Arrow_left.png</arrow-right>
-        <background-middle>background_middle.png</background-middle>
-        <background-top>background_top.png</background-top>
-        <clock-icon>clock_icon.png</clock-icon>
-        <community-big>community_big.png</community-big>
-        <community-small>community_small.png</community-small>
-        <friends-big>frns_big.png</friends-big>
-        <friends-small>frns_small.png</friends-small>
-        <incoming-call>incoming_call.png</incoming-call>
-        <interaction>interaction.png</interaction>
-        <interaction-icon>interaction_icon.png</interaction-icon>
-        <me-icon>me_icon.png</me-icon>
-        <missed-call>missed_call.png</missed-call>
-        <myplace-icon>myplace_icon.png</myplace-icon>
-        <outgoing-call>outgoing_call.png</outgoing-call>
-        <photo-msg>photo_msg.png</photo-msg>
-        <radio-icon>radio_icon.png</radio-icon>
-        <read-msg>read_msg.png</read-msg>
-        <ringtone-icon>ringtone_icon.png</ringtone-icon>
-        <unread-msg>unread_msg.png</unread-msg>
-        <write-new-interaction>write_new_interaction.png</write-new-interaction>
-        <title-fgcolor>0xffffff</title-fgcolor>
-        <gradient-start-color>0x8abcff</gradient-start-color>
-        <gradient-end-color>0xffffff</gradient-end-color>
-        <collapsable-panel-selected-title-bgcolor>0xad8f41</collapsable-panel-selected-title-bgcolor>
-        <collapsable-panel-selected-content-bgcolor>0xd0e4ff</collapsable-panel-selected-content-bgcolor>
-        <collapsable-panel-selected-fgcolor>0xffffff</collapsable-panel-selected-fgcolor>
-        <collapsable-panel-unselected-bgcolor>0xffffff</collapsable-panel-unselected-bgcolor>
-        <collapsable-panel-unselected-fgcolor>0x000000</collapsable-panel-unselected-fgcolor>
-    </theme>
 </themes>

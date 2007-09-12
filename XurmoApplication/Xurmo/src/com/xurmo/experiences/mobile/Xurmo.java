@@ -124,15 +124,16 @@ public class Xurmo extends MIDlet {
   }
   
   public void destroyApp(boolean unconditional) {
-    storeOtherSocialNetworkDetails();
   }
   
   
   private void storeUsernameAndPassword() {
+    boolean rsOpened = false;
+    RecordStore rs = null;
     try {
       deleteUsernameAndPassword();
-      RecordStore rs = RecordStore.openRecordStore(userAuthenticationRecordName_, true);
-      
+      rs = RecordStore.openRecordStore(userAuthenticationRecordName_, true);
+      rsOpened = true;
       ByteArrayOutputStream bout = new ByteArrayOutputStream();
       DataOutputStream dout = new DataOutputStream( bout );
       
@@ -141,6 +142,8 @@ public class Xurmo extends MIDlet {
       dout.flush();
       byte[] data = bout.toByteArray();
       rs.addRecord(data, 0, data.length);
+      rs.closeRecordStore();
+      System.out.println("Record store " + this.userAuthenticationRecordName_+ " successfully stored and closed");
     } catch (RecordStoreFullException e) {
       System.err.println(e.toString() + "Username and password record store could not be stored");
       e.printStackTrace();
@@ -154,11 +157,22 @@ public class Xurmo extends MIDlet {
       System.err.println(e.toString() + "Username and password record store could not be stored");
       e.printStackTrace();
     }
+    if (rsOpened) {
+      try {
+        
+        rs.closeRecordStore();
+      } catch(RecordStoreException rse) {
+        System.err.println("While closing an exception encountered");
+      }
+    }
   }
-  private void storeOtherSocialNetworkDetails() {
+  void storeOtherSocialNetworkDetails() {
+    boolean rsOpened = false;
+    RecordStore rs = null;
     try {
       deleteOtherSocialNetworkDetails();
-      RecordStore rs = RecordStore.openRecordStore(this.otherSocialNetworksRecordName_, true);
+      rs = RecordStore.openRecordStore(this.otherSocialNetworksRecordName_, true);
+      rsOpened = true;
       
       ByteArrayOutputStream bout = new ByteArrayOutputStream();
       DataOutputStream dout = new DataOutputStream( bout );
@@ -171,6 +185,8 @@ public class Xurmo extends MIDlet {
       dout.flush();
       byte[] data = bout.toByteArray();
       rs.addRecord(data, 0, data.length);
+      rs.closeRecordStore();
+      System.out.println("Record store " + this.otherSocialNetworksRecordName_ + " successfully stored and closed");
     } catch (RecordStoreFullException e) {
       System.err.println(e.toString() + "Other social networks record store could not be stored");
       e.printStackTrace();
@@ -184,10 +200,21 @@ public class Xurmo extends MIDlet {
       System.err.println(e.toString() + "Other social networks record store could not be stored");
       e.printStackTrace();
     }
+    if (rsOpened) {
+      try {
+        
+        rs.closeRecordStore();
+      } catch(RecordStoreException rse) {
+        System.err.println("While closing an exception encountered");
+      }
+    }
   }
   private boolean loadUsernameAndPasswordIfExist() {
+    
+    boolean rsOpened = false;
+    RecordStore rs = null;
     try {
-      RecordStore rs = RecordStore.openRecordStore(userAuthenticationRecordName_, true);
+      rs = RecordStore.openRecordStore(userAuthenticationRecordName_, false);
       
       byte[] data = rs.getRecord(1);
       System.out.println("Loading username and password");
@@ -198,6 +225,8 @@ public class Xurmo extends MIDlet {
       currentUser_.username_  = din.readUTF();
       currentUser_.password_ = din.readUTF();
       currentUser_.presence_ = new String("Unknown");
+      rs.closeRecordStore();
+      System.out.println("Successfully loaded and closed record store " + this.userAuthenticationRecordName_);
       return true;
     } catch (RecordStoreFullException e) {
       System.err.println(e.toString() + "Username and password record store could not be loaded");
@@ -213,11 +242,22 @@ public class Xurmo extends MIDlet {
       System.err.println("IO Exception");
       e.printStackTrace();
     }
+    if (rsOpened) {
+      try {
+        
+        rs.closeRecordStore();
+      } catch(RecordStoreException rse) {
+        System.err.println("While closing an exception encountered");
+      }
+    }
     return false;
   }
   private boolean loadOtherSocialNetworkDetails() {
+    
+    boolean rsOpened = false;
+    RecordStore rs = null;
     try {
-      RecordStore rs = RecordStore.openRecordStore(otherSocialNetworksRecordName_, true);
+      rs = RecordStore.openRecordStore(otherSocialNetworksRecordName_, false);
       
       byte[] data = rs.getRecord(1);
       System.out.println("Loading Other social network details.");
@@ -231,6 +271,7 @@ public class Xurmo extends MIDlet {
         xosnd.restoreFrom(din);
         otherSocialNetworks_.addElement(xosnd);
       }
+      System.out.println("Successfully loaded and closed record store " + this.otherSocialNetworksRecordName_);
       return true;
     } catch (RecordStoreFullException e) {
       System.err.println(e.toString() + "Other social networks record store could not be loaded");
@@ -246,11 +287,20 @@ public class Xurmo extends MIDlet {
       System.err.println("IO Exception");
       e.printStackTrace();
     }
+    if (rsOpened) {
+      try {
+        
+        rs.closeRecordStore();
+      } catch(RecordStoreException rse) {
+        System.err.println("While closing an exception encountered");
+      }
+    }
     return false;
   }
   private void deleteUsernameAndPassword() {
     try {
       RecordStore.deleteRecordStore(userAuthenticationRecordName_);
+      System.out.println("Record store " + this.userAuthenticationRecordName_ + " deleted.");
     } catch (RecordStoreFullException e) {
       System.err.println(e.toString() + "Username and password record store could not be deleted");
     } catch (RecordStoreNotFoundException e) {
@@ -261,9 +311,8 @@ public class Xurmo extends MIDlet {
   }
   private void deleteOtherSocialNetworkDetails() {
     try {
-      RecordStore rs = RecordStore.openRecordStore(otherSocialNetworksRecordName_, false);
-      rs.deleteRecord(1);
       RecordStore.deleteRecordStore(otherSocialNetworksRecordName_);
+      System.out.println("Record store " + this.otherSocialNetworksRecordName_ + " deleted.");
     } catch (RecordStoreFullException e) {
       System.err.println(e.toString() + "Other social networks record store could not be deleted");
     } catch (RecordStoreNotFoundException e) {
@@ -301,7 +350,7 @@ public class Xurmo extends MIDlet {
     String jaikuPersonalKey = new String("");
     String tmp;
     for (int i = 0; i < k; ++i) {
-      XurmoOtherSocialNetworkDetails xosnd 
+      XurmoOtherSocialNetworkDetails xosnd
           = (XurmoOtherSocialNetworkDetails)(otherSocialNetworks_.elementAt(i));
       if (xosnd.socialNetwork_.equals("Twitter")) {
         tmp = xosnd.getAttribute("username");
@@ -312,8 +361,7 @@ public class Xurmo extends MIDlet {
         if (tmp != null) {
           twitterPassword = tmp;
         }
-      }
-      else if (xosnd.socialNetwork_.equals("Jaiku")) {
+      } else if (xosnd.socialNetwork_.equals("Jaiku")) {
         tmp = xosnd.getAttribute("username");
         if (tmp != null) {
           jaikuUsername = tmp;
@@ -346,13 +394,17 @@ public class Xurmo extends MIDlet {
     return status;
   }
   public void transitionToHomeScreen() {
-    if (home_ == null || !(getDisplay().getCurrent() instanceof XurmoCanvas) ) {
+    
+    if (home_ == null) {
       
       home_  = new XurmoHomeScreen(this);
     }
-    else {
+    Displayable d = getDisplay().getCurrent();
+    if (!(d instanceof XurmoCanvas) ) {
       
-      getDisplay().setCurrent(new XurmoSliderCanvas(this, (XurmoCanvas)(getDisplay().getCurrent()), home_, XurmoSliderCanvas.LEFT));
+      getDisplay().setCurrent(home_);
+    } else {
+      getDisplay().setCurrent(new XurmoSliderCanvas(this, (XurmoCanvas)d, home_, XurmoSliderCanvas.LEFT));
     }
   }
   public void transitionToRegisterScreen() {
@@ -386,7 +438,7 @@ public class Xurmo extends MIDlet {
   public void uploadPhonebook() {
     
     homeData_ = XurmoUserAuthenticationAndSessionWSInterface.uploadPhoneBook(currentUser_.username_, currentUser_.cookie_);
-  }    
+  }
   public void doLogout() {
     this.logoutUser();
   }

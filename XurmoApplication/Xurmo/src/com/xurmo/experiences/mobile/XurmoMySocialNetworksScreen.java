@@ -43,9 +43,48 @@ public class XurmoMySocialNetworksScreen extends XurmoCanvas {
     summary_.addContent("" + kount + " other social networks known.");
     summary_.selected(true);
     currentPanel_ = 0;
-    
+
+    int k = midlet_.otherSocialNetworks_.size();
+    String twitterUsername = null;
+    String twitterPassword = null;
+    String jaikuUsername = null;
+    String jaikuPersonalKey = null;
+    String tmp;
+    for (int i = 0; i < k; ++i) {
+      XurmoOtherSocialNetworkDetails xosnd 
+          = (XurmoOtherSocialNetworkDetails)(midlet_.otherSocialNetworks_.elementAt(i));
+      if (xosnd.socialNetwork_.equals("Twitter")) {
+        tmp = xosnd.getAttribute("username");
+        if (tmp != null) {
+          twitterUsername = tmp;
+        }
+        tmp = xosnd.getAttribute("password");
+        if (tmp != null) {
+          twitterPassword = tmp;
+        }
+      }
+      else if (xosnd.socialNetwork_.equals("Jaiku")) {
+        tmp = xosnd.getAttribute("username");
+        if (tmp != null) {
+          jaikuUsername = tmp;
+        }
+        tmp = xosnd.getAttribute("personalKey");
+        if (tmp != null) {
+          jaikuPersonalKey = tmp;
+        }
+      }
+    }
+  
     twitter_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.meIconImage_, "Twitter");
+    if (twitterUsername != null) {
+      
+      twitter_.addContent("Username :" + twitterUsername);
+    }
     jaiku_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.meIconImage_, "Jaiku");
+    if (jaikuUsername != null) {
+      
+      jaiku_.addContent("Username :" + jaikuUsername);
+    }
 
     home_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Home");
     
@@ -56,6 +95,7 @@ public class XurmoMySocialNetworksScreen extends XurmoCanvas {
       home_
     };
   }
+  
   public void paint(javax.microedition.lcdui.Graphics g) {
     drawBackgroundGradient(g);
     drawTitle(g);
@@ -144,6 +184,7 @@ public class XurmoMySocialNetworksScreen extends XurmoCanvas {
     xosnd.clearAttributes();
     xosnd.add("username", username);
     xosnd.add("password", password);
+    midlet_.storeOtherSocialNetworkDetails();
     midlet_.getDisplay().setCurrent(this);
   }
   public void updateJaikuPreference(String username, String personalKey) {
@@ -155,6 +196,7 @@ public class XurmoMySocialNetworksScreen extends XurmoCanvas {
     xosnd.clearAttributes();
     xosnd.add("username", username);
     xosnd.add("personalKey", personalKey);
+    midlet_.storeOtherSocialNetworkDetails();
     midlet_.getDisplay().setCurrent(this);
   }
   public void cancelSocialNetworkPreferenceEdit() {
