@@ -37,14 +37,13 @@ public class XurmoCollapsablePanel extends XurmoPanel {
   /**
    * Creates a new instance of XurmoCollapsablePanel
    */
-  public XurmoCollapsablePanel(int screenWidth, int screenHeight, Image icon, String title) {
-    super(screenWidth, screenHeight);
+  public XurmoCollapsablePanel(Xurmo midlet, int screenWidth, int screenHeight, Image icon, String title) {
+    super(midlet, screenWidth, screenHeight);
     
     icon_ = icon;
     title_ = title;
     content_ = new Vector();
-    selected_ = false;
-    adjustHeights();
+    selected(false);
   }
   public void addContent(String str) {
     content_.addElement(str);
@@ -55,7 +54,7 @@ public class XurmoCollapsablePanel extends XurmoPanel {
     Font sf = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_PLAIN, Font.SIZE_SMALL);
     th_ = Math.max(lf.getHeight(), icon_.getHeight());
     h_ = th_;
-    if (selected_) {
+    if (selected()) {
       
       h_ += 3 * sf.getHeight();
     }
@@ -68,7 +67,7 @@ public class XurmoCollapsablePanel extends XurmoPanel {
     Font lf = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_BOLD, Font.SIZE_MEDIUM);
     Font sf = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_PLAIN, Font.SIZE_SMALL);
     XurmoTheme ct = XurmoThemeManager.instance().getCurrentTheme();
-    if (selected_) {
+    if (selected()) {
       g.setColor(ct.collapsablePanelSelectedTitleBackgroundValue_);
       g.drawRect(x, y, screenWidth_, h_);
       g.setColor(ct.collapsablePanelSelectedContentBackgroundColorValue_);
@@ -105,12 +104,7 @@ public class XurmoCollapsablePanel extends XurmoPanel {
     g.setColor(oc);
     g.setFont(of);
   }
-  
-  public void selected(boolean flag) {
-    selected_ = flag;
-    adjustHeights();
-  }
-  
+    
   protected int th_;
   protected int h_;
   protected Image icon_;

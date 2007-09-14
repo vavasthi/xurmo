@@ -18,7 +18,7 @@ import javax.microedition.lcdui.game.Sprite;
  *
  * @author Vinay
  */
-public class XurmoSliderCanvas extends XurmoCanvas {
+public class XurmoSliderCanvas extends XurmoCanvas implements XurmoAnimatedCanvas {
   XurmoCanvas destinationCanvas_;
   private Image src_;
   private Image dst_;
@@ -50,17 +50,16 @@ public class XurmoSliderCanvas extends XurmoCanvas {
   }
   private void initializeTimer() {
     t_ = new Timer();
-    t_.schedule(new XurmoCanvasSliderTimerTask(this), 10, 10);
+    t_.schedule(new XurmoCanvasAnimationTimerTask(this), 10, 10);
   }
-  public void slide() {
+  public void animateStep() {
   
     if (xDelta_ + pixelsPerStep_ > getWidth()) {
       t_.cancel();
       midlet_.getDisplay().setCurrent(destinationCanvas_);
     }
      xDelta_ += pixelsPerStep_;
-    repaint();
-    
+     repaint();
   }
   public void paint(Graphics g) {
     drawTitle(g);

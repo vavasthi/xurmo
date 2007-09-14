@@ -44,7 +44,7 @@ public class XurmoInteractionsScreen extends XurmoCanvas {
     
     contacts_ = new XurmoNetworkSummaryPanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "My Contacts");
 
-    home_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Home");
+    home_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.friendsSmallImage_, "Home");
     
     panels_ = new XurmoCollapsablePanel[]{
       summary_,

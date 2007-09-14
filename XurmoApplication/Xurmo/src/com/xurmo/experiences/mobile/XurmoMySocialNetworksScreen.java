@@ -38,7 +38,7 @@ public class XurmoMySocialNetworksScreen extends XurmoCanvas {
     super(midlet, false);
     XurmoTheme ct = XurmoThemeManager.instance().getCurrentTheme();
     
-    summary_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.meIconImage_, "Social Networks Summary");
+    summary_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "Social Networks Summary");
     int kount = midlet_.otherSocialNetworks_.size();
     summary_.addContent("" + kount + " other social networks known.");
     summary_.selected(true);
@@ -75,18 +75,18 @@ public class XurmoMySocialNetworksScreen extends XurmoCanvas {
       }
     }
   
-    twitter_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.meIconImage_, "Twitter");
+    twitter_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "Twitter");
     if (twitterUsername != null) {
       
       twitter_.addContent("Username :" + twitterUsername);
     }
-    jaiku_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.meIconImage_, "Jaiku");
+    jaiku_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "Jaiku");
     if (jaikuUsername != null) {
       
       jaiku_.addContent("Username :" + jaikuUsername);
     }
 
-    home_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Home");
+    home_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.friendsSmallImage_, "Home");
     
     panels_ = new XurmoCollapsablePanel[]{
       summary_,

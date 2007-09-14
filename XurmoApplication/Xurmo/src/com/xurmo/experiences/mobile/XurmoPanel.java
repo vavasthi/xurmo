@@ -33,14 +33,15 @@ import javax.microedition.lcdui.Graphics;
 import java.util.Vector;
 
 abstract public class XurmoPanel {
-  
+  Xurmo midlet_;
   /**
    * Creates a new instance of XurmoCollapsablePanel
    */
-  public XurmoPanel(int screenWidth, int screenHeight) {
+  public XurmoPanel(Xurmo midlet, int screenWidth, int screenHeight) {
     w_ = screenWidth;
     screenWidth_ = screenWidth;
     screenHeight_ = screenHeight;
+    midlet_ = midlet;
     selected_ = false;    
   }
   abstract protected void adjustHeights();
@@ -59,7 +60,10 @@ abstract public class XurmoPanel {
     selected_ = flag;
     adjustHeights();
   }
-  protected boolean selected_;
+  public boolean selected() {
+    return selected_;
+  }
+  private boolean selected_;
   protected int w_;
   protected int screenWidth_;
   protected int screenHeight_; 

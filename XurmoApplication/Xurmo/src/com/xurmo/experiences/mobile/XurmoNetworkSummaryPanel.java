@@ -20,15 +20,13 @@ import javax.microedition.lcdui.Font;
  */
 public class XurmoNetworkSummaryPanel extends XurmoCollapsablePanel {
   
-  Xurmo midlet_;
   XurmoNetworkSummaryStatus networkSummary_;
   /**
    * Creates a new instance of XurmoNetworkSummaryPanel
    */
   public XurmoNetworkSummaryPanel(Xurmo midlet, int screenWidth, int screenHeight, Image icon, String title) {
     
-    super(screenWidth, screenHeight, icon, title);
-    midlet_ = midlet;
+    super(midlet, screenWidth, screenHeight, icon, title);
     networkSummary_ = XurmoNetworkManagementWSInterface.getNetworkSummary(midlet_.currentUser_.username_, midlet_.currentUser_.cookie_);
   }
   public void draw(Graphics g, int x, int y) {
@@ -36,7 +34,7 @@ public class XurmoNetworkSummaryPanel extends XurmoCollapsablePanel {
     int oc = g.getColor();
     int origY = y;
     drawBoundingBox(g, x, y);
-    if (selected_ ) {
+    if (selected()) {
       if (networkSummary_.status_.errorCode_ == XurmoNetworkManagementWSInterface.NETWORK_INTERACTION_SUCCESS) {
         
       y = th_ + origY;

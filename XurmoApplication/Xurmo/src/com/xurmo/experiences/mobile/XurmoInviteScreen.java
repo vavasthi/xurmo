@@ -38,30 +38,30 @@ public class XurmoInviteScreen extends XurmoScrollableScreen {
     super(midlet);
     XurmoTheme ct = XurmoThemeManager.instance().getCurrentTheme();
     
-    XurmoSelectablePanel p1 = new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2");
+    XurmoSelectablePanel p1 = new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2");
     p1.selected(true);
     currentPanel_ = 0;
     
     XurmoPanel[] panels = new XurmoSelectablePanel[] {
-    p1,
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2"),
-    new XurmoSelectablePanel(getWidth(), getHeight(), "Line1", "Line2")
+      p1,
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2"),
+      new XurmoSelectablePanel(midlet, getWidth(), getHeight(), "Line1", "Line2")
     };
     panels_ = panels;
   }
@@ -69,8 +69,7 @@ public class XurmoInviteScreen extends XurmoScrollableScreen {
     XurmoSelectablePanel xsp = (XurmoSelectablePanel)(panels_[currentPanel_]);
     if (xsp.ticked_) {
       xsp.ticked_ = false;
-    }
-    else {
+    } else {
       xsp.ticked_ = true;
     }
   }

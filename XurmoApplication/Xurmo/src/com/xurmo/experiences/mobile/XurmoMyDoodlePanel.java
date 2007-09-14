@@ -20,14 +20,12 @@ import javax.microedition.lcdui.Font;
  */
 public class XurmoMyDoodlePanel extends XurmoCollapsablePanel {
   
-  Xurmo midlet_;
   /**
    * Creates a new instance of XurmoMyDoodlePanel
    */
   public XurmoMyDoodlePanel(Xurmo midlet, int screenWidth, int screenHeight, Image icon, String title) {
     
-    super(screenWidth, screenHeight, icon, title);
-    midlet_ = midlet;
+    super(midlet, screenWidth, screenHeight, icon, title);
   }
   public void draw(Graphics g, int x, int y) {
     Font of = g.getFont();
@@ -35,7 +33,7 @@ public class XurmoMyDoodlePanel extends XurmoCollapsablePanel {
     int origY = y;
     drawBoundingBox(g, x, y);
     y = th_ + origY;
-    if (selected_) {
+    if (selected()) {
       
       XurmoDoodleSummary mds = XurmoUserAuthenticationAndSessionWSInterface.instance().getDoodleSummary(midlet_.currentUser_.username_, midlet_.currentUser_.cookie_);
       g.drawString(mds.getSummaryTitleString(), 0, y, g.LEFT | g.TOP);

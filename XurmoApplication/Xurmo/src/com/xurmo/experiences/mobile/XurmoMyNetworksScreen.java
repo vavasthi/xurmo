@@ -44,9 +44,9 @@ public class XurmoMyNetworksScreen extends XurmoCanvas {
     
     contacts_ = new XurmoMePanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "My Contacts");
 
-    otherSocialNetworks_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Other Social Networks");
-    invite_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Invite");
-    home_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Home");
+    otherSocialNetworks_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.friendsSmallImage_, "Other Social Networks");
+    invite_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.friendsSmallImage_, "Invite");
+    home_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.friendsSmallImage_, "Home");
     
     panels_ = new XurmoCollapsablePanel[]{
       summary_,

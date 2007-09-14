@@ -20,21 +20,19 @@ import javax.microedition.lcdui.Font;
  */
 public class XurmoMePanel extends XurmoCollapsablePanel {
   
-  Xurmo midlet_;
   /**
    * Creates a new instance of XurmoMePanel
    */
   public XurmoMePanel(Xurmo midlet, int screenWidth, int screenHeight, Image icon, String title) {
     
-    super(screenWidth, screenHeight, icon, title);
-    midlet_ = midlet;
+    super(midlet, screenWidth, screenHeight, icon, title);
   }
   public void draw(Graphics g, int x, int y) {
     Font of = g.getFont();
     int oc = g.getColor();
     int origY = y;
     drawBoundingBox(g, x, y);
-    if (selected_) {
+    if (selected()) {
       
       y = th_ + origY;
       g.drawString(midlet_.getHomeScreenData().fname + " " + midlet_.getHomeScreenData().lname, 0, y, g.LEFT | g.TOP);

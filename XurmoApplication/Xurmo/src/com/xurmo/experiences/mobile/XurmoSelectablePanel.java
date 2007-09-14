@@ -37,13 +37,12 @@ public class XurmoSelectablePanel extends XurmoPanel {
   /**
    * Creates a new instance of XurmoCollapsablePanel
    */
-  public XurmoSelectablePanel(int screenWidth, int screenHeight, String line1, String line2) {
-    super(screenWidth, screenHeight);
+  public XurmoSelectablePanel(Xurmo midlet, int screenWidth, int screenHeight, String line1, String line2) {
+    super(midlet, screenWidth, screenHeight);
     line1_ = line1;
     line2_ = line2;
-    selected_ = false;
     ticked_ = false;
-    adjustHeights();
+    selected(false);
   }
   protected void adjustHeights() {
     
@@ -57,10 +56,9 @@ public class XurmoSelectablePanel extends XurmoPanel {
     Font sf = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_PLAIN, Font.SIZE_SMALL);
     int origY = y;
     XurmoTheme ct = XurmoThemeManager.instance().getCurrentTheme();
-    if (selected_) {
+    if (selected()) {
       g.setColor(ct.collapsablePanelSelectedTitleBackgroundValue_);
       g.drawRect(x, y, screenWidth_, h_);
-      g.fillRect(x, y,screenWidth_, h_ );
       g.setColor(ct.collapsablePanelSelectedForegroundColorValue_);
       g.setFont(lf);
       g.drawString(line1_, 0 , y, g.LEFT | g.TOP);
@@ -71,7 +69,6 @@ public class XurmoSelectablePanel extends XurmoPanel {
     else {
       g.setColor(ct.collapsablePanelUnselectedBackgroundColorValue_);
       g.drawRect(x, y, screenWidth_, h_);
-      g.fillRect(x, y,screenWidth_, h_ );
       g.setColor(ct.collapsablePanelUnselectedForegroundColorValue_);
       g.setFont(lf);
       g.drawString(line1_, 0 , y, g.LEFT | g.TOP);
@@ -102,10 +99,6 @@ public class XurmoSelectablePanel extends XurmoPanel {
   }
   public int screenHeight() {
     return screenHeight_;
-  }
-  public void selected(boolean flag) {
-    selected_ = flag;
-    adjustHeights();
   }
   private int h_;
   protected boolean ticked_;

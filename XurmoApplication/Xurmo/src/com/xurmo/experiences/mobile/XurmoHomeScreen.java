@@ -42,10 +42,10 @@ public class XurmoHomeScreen extends XurmoScrollableScreen {
     me_.selected(true);
     mydoodles_ = new XurmoMyDoodlePanel(midlet_, getWidth(), getHeight(), ct.myplaceIconImage_, "My Doodles");
     
-    interactions_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.interactionIconImage_, "Interactions");
+    interactions_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.interactionIconImage_, "Interactions");
     
-    friendsAndCommunity_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Friends & Community");
-    exit_ = new XurmoCollapsablePanel(getWidth(), getHeight(), ct.friendsSmallImage_, "Exit");
+    friendsAndCommunity_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.friendsSmallImage_, "Friends & Community");
+    exit_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.friendsSmallImage_, "Exit");
     
     panels_[0] = me_;
     panels_[1] = mydoodles_;
