@@ -36,6 +36,9 @@ public class XurmoSliderCanvas extends XurmoCanvas implements XurmoAnimatedCanva
   public XurmoSliderCanvas(Xurmo midlet, XurmoCanvas src, XurmoCanvas dst, int dir) {
 
     super(midlet, false);
+    if (src instanceof XurmoScrollableScreen) {
+      ((XurmoScrollableScreen)src).deactivateMenu();
+    }
     destinationCanvas_ = dst;
     src_ = Image.createImage(getWidth(), getHeight());
     dst_ = Image.createImage(getWidth(), getHeight());

@@ -62,6 +62,14 @@ abstract public class XurmoScrollableScreen extends XurmoCanvas {
         panels_[i].draw(g, x, y);
         y += panels_[i].h();
       }
+      y = tbHeight_;
+      for (int i = spanel; i < panels_.length && y + panels_[i].h() < getHeight(); ++i) {
+        
+        if(i == currentPanel_) {
+          panels_[i].drawMenuIfActive(g, x, y);
+        }
+        y += panels_[i].h();
+      }
     } catch(NullPointerException npe) {
       npe.getMessage();
       npe.printStackTrace();
@@ -77,21 +85,55 @@ abstract public class XurmoScrollableScreen extends XurmoCanvas {
     return 0;
   }
   public void downKey() {
-    panels_[currentPanel_].selected(false);
-    ++currentPanel_;
-    if (currentPanel_ >= panels_.length) {
-      currentPanel_ = 0;
+    
+    // If menu is active the downKey should be sent to the menu, canvas should not pocess it.
+    if (panels_[currentPanel_].isMenuActive()) {
+      panels_[currentPanel_].menu().downKey();
+    } else {
+      
+      panels_[currentPanel_].selected(false);
+      ++currentPanel_;
+      if (currentPanel_ >= panels_.length) {
+        currentPanel_ = 0;
+      }
+      panels_[currentPanel_].selected(true);
     }
-    panels_[currentPanel_].selected(true);
   }
   public void upKey() {
     
-    panels_[currentPanel_].selected(false);
-    --currentPanel_;
-    if (currentPanel_ < 0) {
-      currentPanel_ = panels_.length - 1;
+    // If menu is active the upkey should be sent to the menu, canvas should not pocess it.
+    if (panels_[currentPanel_].isMenuActive()) {
+      
+      panels_[currentPanel_].menu().upKey();
+    } else {
+      
+      panels_[currentPanel_].selected(false);
+      --currentPanel_;
+      if (currentPanel_ < 0) {
+        currentPanel_ = panels_.length - 1;
+      }
+      panels_[currentPanel_].selected(true);
     }
-    panels_[currentPanel_].selected(true);
+  }
+  public void leftKey() {
+    defaultLeftKey();
+  }
+  public void defaultLeftKey() {
+    
+    panels_[currentPanel_].deactivateMenu();
+  }
+  public void fireKey() {
+    // If menu exists then menu should be activated.
+    defaultFireKey();
+  }
+  public void defaultFireKey() {
+    // If menu exists then menu should be activated.
+    if (panels_[currentPanel_].isMenuAvailable()) {
+      panels_[currentPanel_].activateMenu();
+    }
+  }
+  public void deactivateMenu() {
+    panels_[currentPanel_].deactivateMenu();
   }
   protected int currentPanel_;
   protected XurmoPanel[] panels_;
