@@ -18,6 +18,67 @@ create table XurmoUser
   btAddress char(24) not null unique key
 ) default character set utf8;
 
+drop table XurmoUserPreferences;
+create table XurmoUserPreferences
+(
+  userid integer not null primary key,
+  receiveDefaultMessagesDegrees integer not null default 4,
+  allowSearchIntoYourNetwork boolean not null default true,
+  forwardMessagesOnDestinationPreferences boolean not null default true,
+  forwardMessagesToExternalNetworks boolean not null default true,
+  receivePersonalEvenReminders boolean not null default true
+) default character set utf8;
+
+drop table XurmoUserPreferenceBlackList;
+create table XurmoUserPreferenceBlackList
+(
+  userid integer not null,
+  otherUserId integer not null,
+  primary key(userid, otherUserId)
+) default character set utf8;
+
+
+drop table XurmoUserPreferenceWhiteList;
+create table XurmoUserPreferenceWhiteList
+(
+  userid integer not null,
+  otherUserId integer not null,
+  primary key(userid, otherUserId)
+) default character set utf8;
+
+
+drop table XurmoUserNetworkSpecificPreferences;
+create table XurmoUserNetworkSpecificPreferences
+(
+  userid integer not null,
+  linkId integer not null,
+  receiveDefaultMessagesDegrees integer not null default 4,
+  allowSearchIntoYourNetwork boolean not null default true,
+  forwardMessagesOnDestinationPreferences boolean not null default true,
+  forwardMessagesToExternalNetworks boolean not null default true,
+  receivePersonalEvenReminders boolean not null default true,
+  primary key(userid, linkId)
+) default character set utf8;
+
+drop table XurmoUserNetworkAndUserBlackList;
+create table XurmoUserNetworkAndUserBlackList
+(
+  userid integer not null,
+  linkId integer not null,
+  otherUserid integer not null,
+  primary key(userid, linkId, otherUserId)
+) default character set utf8;
+
+drop table XurmoUserNetworkAndUserWhiteList;
+create table XurmoUserNetworkAndUserWhiteList
+(
+  userid integer not null,
+  linkId integer not null,
+  otherUserid integer not null,
+  primary key(userid, linkId, otherUserId)
+) default character set utf8;
+
+
 drop table XurmoUserSession;
 create table XurmoUserSession
 (
@@ -144,11 +205,11 @@ insert into XurmoRequestToConnectResponseType values(4, "Postpone");
 drop table XurmoNetworkLink;
 create table XurmoNetworkLink
 (
-  username1 char(32),
-  username2 char(32),
+  userid1 integer not null,
+  userid2 integer not null,
   linkId      int,
   creationDate datetime not null,
-  primary key (username1, username2, linkId)
+  primary key (userid1, userid2, linkId)
 ) default character set utf8;
 
 drop table XurmoMessagesForALocationSourceDestinationPair;
