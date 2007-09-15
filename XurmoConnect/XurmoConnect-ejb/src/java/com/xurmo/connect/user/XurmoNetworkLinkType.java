@@ -27,7 +27,7 @@ import javax.persistence.Table;
 @NamedQueries( {
         @NamedQuery(name = "XurmoNetworkLinkType.findByLinkId", query = "SELECT x FROM XurmoNetworkLinkType x WHERE x.linkId = :linkId"),
         @NamedQuery(name = "XurmoNetworkLinkType.findByLinkName", query = "SELECT x FROM XurmoNetworkLinkType x WHERE x.linkName = :linkName"),
-        @NamedQuery(name = "XurmoNetworkLinkType.findUniqueByUsername", query = "SELECT distinct x FROM XurmoNetworkLinkType x, XurmoNetworkLink l WHERE x.linkId = l.xurmoNetworkLinkPK.linkId and (l.xurmoNetworkLinkPK.username1=:username or l.xurmoNetworkLinkPK.username2=:username)"),
+        @NamedQuery(name = "XurmoNetworkLinkType.findUniqueByUserid", query = "SELECT distinct x FROM XurmoNetworkLinkType x, XurmoNetworkLink l WHERE x.linkId = l.xurmoNetworkLinkPK.linkId and (l.xurmoNetworkLinkPK.userid1=:userid or l.xurmoNetworkLinkPK.userid2=:userid)"),
         @NamedQuery(name = "XurmoNetworkLinkType.findAll", query = "SELECT x FROM XurmoNetworkLinkType x")
     })
 public class XurmoNetworkLinkType implements Serializable {

@@ -79,4 +79,22 @@ public class XurmoUserManagementServiceBean {
         
         return xurmoUserAuthenticationBean.downloadPhoneBook(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
     }
+
+  /**
+   * Web service operation
+   */
+  @WebMethod
+  public XurmoUserPreferenceDetails getUserPreferences(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode,  @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
+    // TODO implement operation 
+    return xurmoUserAuthenticationBean.getUserPreferences(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
+  }
+
+  /**
+   * Web service operation
+   */
+  @WebMethod
+  public XurmoUserManagementStatus setUserPreferences(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "userPreferences") XurmoUserPreferenceDetails userPreferences, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode,  @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
+    // TODO implement operation 
+    return xurmoUserAuthenticationBean.setUserPreferences(username, cookie, userPreferences, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
+  }
 }

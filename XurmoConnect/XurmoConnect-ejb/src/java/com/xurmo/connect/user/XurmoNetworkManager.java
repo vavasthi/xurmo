@@ -17,9 +17,9 @@ import org.jboss.util.platform.Java;
  */
 public class XurmoNetworkManager {
     
-    public static String[] memberOfNetworks(String username, javax.persistence.EntityManager em) {
-        javax.persistence.Query q = em.createNamedQuery("XurmoNetworkLinkType.findUniqueByUsername");
-        q.setParameter("username", username);
+    public static String[] memberOfNetworks(int userid, javax.persistence.EntityManager em) {
+        javax.persistence.Query q = em.createNamedQuery("XurmoNetworkLinkType.findUniqueByUserid");
+        q.setParameter("userid", userid);
         java.util.List l = q.getResultList();
         java.util.Iterator li = l.iterator();
         String[] out = new String[l.size()];

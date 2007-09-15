@@ -38,4 +38,7 @@ public interface XurmoUserManagementLocal {
     XurmoUserManagementStatus uploadPhoneBook(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName,XurmoPhoneAddressBookSync addressBook);
 
     XurmoPhoneAddressBookSync downloadPhoneBook(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName);
+
+    XurmoUserPreferenceDetails getUserPreferences(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName);
+    XurmoUserManagementStatus setUserPreferences(String username, String cookie, XurmoUserPreferenceDetails xupd, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName);
 }

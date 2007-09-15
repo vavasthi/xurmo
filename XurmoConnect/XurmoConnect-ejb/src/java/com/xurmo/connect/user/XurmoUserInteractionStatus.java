@@ -26,5 +26,6 @@ public class XurmoUserInteractionStatus {
     public static final int INTERACTIONFAILED_INVALID_USERNAME_OR_PASSWORD = 0x05;
     public static final int INTERACTIONFAILED_UPLOAD_ADDRESSBOOK_FAILED = 0x06;
     public static final int INTERACTIONFAILED_DOWNLOAD_ADDRESSBOOK_FAILED = 0x07;
+    public static final int INTERACTIONFAILED_FATAL_ERROR_WHILE_SETTING_PREFERENCES = 0x08;
 
 }
