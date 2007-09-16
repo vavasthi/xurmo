@@ -2,7 +2,7 @@
  * Copyright (c) 2007, Xurmo.com. All rights reserved.
  *
  * File name                : XurmoResponseToRequestToConnectInbox.java
- * Created on               : March 30, 2007, 11:41 PM
+ * Created on               : September 16, 2007, 3:24 PM
  * Created by               : xurmo
  *
  */
@@ -25,136 +25,189 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "XurmoResponseToRequestToConnectInbox")
 @NamedQueries( {
-        @NamedQuery(name = "XurmoResponseToRequestToConnectInbox.findByUsername", query = "SELECT x FROM XurmoResponseToRequestToConnectInbox x WHERE x.xurmoResponseToRequestToConnectInboxPK.username = :username"),
-        @NamedQuery(name = "XurmoResponseToRequestToConnectInbox.findBySource", query = "SELECT x FROM XurmoResponseToRequestToConnectInbox x WHERE x.xurmoResponseToRequestToConnectInboxPK.source = :source"),
-        @NamedQuery(name = "XurmoResponseToRequestToConnectInbox.findByLinkId", query = "SELECT x FROM XurmoResponseToRequestToConnectInbox x WHERE x.xurmoResponseToRequestToConnectInboxPK.linkId = :linkId"),
-        @NamedQuery(name = "XurmoResponseToRequestToConnectInbox.findByMsg", query = "SELECT x FROM XurmoResponseToRequestToConnectInbox x WHERE x.msg = :msg")
-    })
+    @NamedQuery(name = "XurmoResponseToRequestToConnectInbox.findByMessageId", query = "SELECT x FROM XurmoResponseToRequestToConnectInbox x WHERE x.messageId = :messageId"),
+    @NamedQuery(name = "XurmoResponseToRequestToConnectInbox.findByResponseFrom", query = "SELECT x FROM XurmoResponseToRequestToConnectInbox x WHERE x.xurmoResponseToRequestToConnectInboxPK.responseFrom = :responseFrom"),
+    @NamedQuery(name = "XurmoResponseToRequestToConnectInbox.findByResponseTo", query = "SELECT x FROM XurmoResponseToRequestToConnectInbox x WHERE x.xurmoResponseToRequestToConnectInboxPK.responseTo = :responseTo"),
+    @NamedQuery(name = "XurmoResponseToRequestToConnectInbox.findByLinkId", query = "SELECT x FROM XurmoResponseToRequestToConnectInbox x WHERE x.linkId = :linkId"),
+    @NamedQuery(name = "XurmoResponseToRequestToConnectInbox.findByRequestMessageId", query = "SELECT x FROM XurmoResponseToRequestToConnectInbox x WHERE x.requestMessageId = :requestMessageId"),
+    @NamedQuery(name = "XurmoResponseToRequestToConnectInbox.findByMsg", query = "SELECT x FROM XurmoResponseToRequestToConnectInbox x WHERE x.msg = :msg")
+  })
 public class XurmoResponseToRequestToConnectInbox implements Serializable {
 
-    /**
-     * EmbeddedId primary key field
-     */
-    @EmbeddedId
-    protected XurmoResponseToRequestToConnectInboxPK xurmoResponseToRequestToConnectInboxPK;
+  /**
+   * EmbeddedId primary key field
+   */
+  @EmbeddedId
+  protected XurmoResponseToRequestToConnectInboxPK xurmoResponseToRequestToConnectInboxPK;
 
-    @Column(name = "msg", nullable = false)
-    private String msg;
-    
-    /** Creates a new instance of XurmoResponseToRequestToConnectInbox */
-    public XurmoResponseToRequestToConnectInbox() {
-    }
+  @Column(name = "messageId", nullable = false)
+  private int messageId;
 
-    /**
-     * Creates a new instance of XurmoResponseToRequestToConnectInbox with the specified values.
-     * @param xurmoResponseToRequestToConnectInboxPK the xurmoResponseToRequestToConnectInboxPK of the XurmoResponseToRequestToConnectInbox
-     */
-    public XurmoResponseToRequestToConnectInbox(XurmoResponseToRequestToConnectInboxPK xurmoResponseToRequestToConnectInboxPK) {
-        this.xurmoResponseToRequestToConnectInboxPK = xurmoResponseToRequestToConnectInboxPK;
-    }
+  @Column(name = "linkId", nullable = false)
+  private int linkId;
 
-    /**
-     * Creates a new instance of XurmoResponseToRequestToConnectInbox with the specified values.
-     * @param xurmoResponseToRequestToConnectInboxPK the xurmoResponseToRequestToConnectInboxPK of the XurmoResponseToRequestToConnectInbox
-     * @param msg the msg of the XurmoResponseToRequestToConnectInbox
-     */
-    public XurmoResponseToRequestToConnectInbox(XurmoResponseToRequestToConnectInboxPK xurmoResponseToRequestToConnectInboxPK, String msg) {
-        this.xurmoResponseToRequestToConnectInboxPK = xurmoResponseToRequestToConnectInboxPK;
-        this.msg = msg;
-    }
+  @Column(name = "requestMessageId", nullable = false)
+  private int requestMessageId;
 
-    /**
-     * Creates a new instance of XurmoResponseToRequestToConnectInboxPK with the specified values.
-     * @param linkId the linkId of the XurmoResponseToRequestToConnectInboxPK
-     * @param source the source of the XurmoResponseToRequestToConnectInboxPK
-     * @param username the username of the XurmoResponseToRequestToConnectInboxPK
-     */
-    public XurmoResponseToRequestToConnectInbox(int linkId, String source, String username) {
-        this.xurmoResponseToRequestToConnectInboxPK = new XurmoResponseToRequestToConnectInboxPK(linkId, source, username);
-    }
+  @Column(name = "msg", nullable = false)
+  private String msg;
+  
+  /** Creates a new instance of XurmoResponseToRequestToConnectInbox */
+  public XurmoResponseToRequestToConnectInbox() {
+  }
 
-    /**
-     * Creates a new instance of XurmoResponseToRequestToConnectInboxPK with the specified values.
-     * @param linkId the linkId of the XurmoResponseToRequestToConnectInboxPK
-     * @param source the source of the XurmoResponseToRequestToConnectInboxPK
-     * @param username the username of the XurmoResponseToRequestToConnectInboxPK
-     */
-    public XurmoResponseToRequestToConnectInbox(int linkId, String source, String username, String msg) {
-        this.xurmoResponseToRequestToConnectInboxPK = new XurmoResponseToRequestToConnectInboxPK(linkId, source, username);
-        this.msg = msg;
-    }
+  /**
+   * Creates a new instance of XurmoResponseToRequestToConnectInbox with the specified values.
+   * @param xurmoResponseToRequestToConnectInboxPK the xurmoResponseToRequestToConnectInboxPK of the XurmoResponseToRequestToConnectInbox
+   */
+  public XurmoResponseToRequestToConnectInbox(XurmoResponseToRequestToConnectInboxPK xurmoResponseToRequestToConnectInboxPK) {
+    this.xurmoResponseToRequestToConnectInboxPK = xurmoResponseToRequestToConnectInboxPK;
+  }
 
-    /**
-     * Gets the xurmoResponseToRequestToConnectInboxPK of this XurmoResponseToRequestToConnectInbox.
-     * @return the xurmoResponseToRequestToConnectInboxPK
-     */
-    public XurmoResponseToRequestToConnectInboxPK getXurmoResponseToRequestToConnectInboxPK() {
-        return this.xurmoResponseToRequestToConnectInboxPK;
-    }
+  /**
+   * Creates a new instance of XurmoResponseToRequestToConnectInbox with the specified values.
+   * @param xurmoResponseToRequestToConnectInboxPK the xurmoResponseToRequestToConnectInboxPK of the XurmoResponseToRequestToConnectInbox
+   * @param messageId the messageId of the XurmoResponseToRequestToConnectInbox
+   * @param linkId the linkId of the XurmoResponseToRequestToConnectInbox
+   * @param requestMessageId the requestMessageId of the XurmoResponseToRequestToConnectInbox
+   * @param msg the msg of the XurmoResponseToRequestToConnectInbox
+   */
+  public XurmoResponseToRequestToConnectInbox(XurmoResponseToRequestToConnectInboxPK xurmoResponseToRequestToConnectInboxPK, int messageId, int linkId, int requestMessageId, String msg) {
+    this.xurmoResponseToRequestToConnectInboxPK = xurmoResponseToRequestToConnectInboxPK;
+    this.messageId = messageId;
+    this.linkId = linkId;
+    this.requestMessageId = requestMessageId;
+    this.msg = msg;
+  }
 
-    /**
-     * Sets the xurmoResponseToRequestToConnectInboxPK of this XurmoResponseToRequestToConnectInbox to the specified value.
-     * @param xurmoResponseToRequestToConnectInboxPK the new xurmoResponseToRequestToConnectInboxPK
-     */
-    public void setXurmoResponseToRequestToConnectInboxPK(XurmoResponseToRequestToConnectInboxPK xurmoResponseToRequestToConnectInboxPK) {
-        this.xurmoResponseToRequestToConnectInboxPK = xurmoResponseToRequestToConnectInboxPK;
-    }
+  /**
+   * Creates a new instance of XurmoResponseToRequestToConnectInboxPK with the specified values.
+   * @param responseTo the responseTo of the XurmoResponseToRequestToConnectInboxPK
+   * @param responseFrom the responseFrom of the XurmoResponseToRequestToConnectInboxPK
+   */
+  public XurmoResponseToRequestToConnectInbox(int responseTo, int responseFrom) {
+    this.xurmoResponseToRequestToConnectInboxPK = new XurmoResponseToRequestToConnectInboxPK(responseTo, responseFrom);
+  }
 
-    /**
-     * Gets the msg of this XurmoResponseToRequestToConnectInbox.
-     * @return the msg
-     */
-    public String getMsg() {
-        return this.msg;
-    }
+  /**
+   * Gets the xurmoResponseToRequestToConnectInboxPK of this XurmoResponseToRequestToConnectInbox.
+   * @return the xurmoResponseToRequestToConnectInboxPK
+   */
+  public XurmoResponseToRequestToConnectInboxPK getXurmoResponseToRequestToConnectInboxPK() {
+    return this.xurmoResponseToRequestToConnectInboxPK;
+  }
 
-    /**
-     * Sets the msg of this XurmoResponseToRequestToConnectInbox to the specified value.
-     * @param msg the new msg
-     */
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
+  /**
+   * Sets the xurmoResponseToRequestToConnectInboxPK of this XurmoResponseToRequestToConnectInbox to the specified value.
+   * @param xurmoResponseToRequestToConnectInboxPK the new xurmoResponseToRequestToConnectInboxPK
+   */
+  public void setXurmoResponseToRequestToConnectInboxPK(XurmoResponseToRequestToConnectInboxPK xurmoResponseToRequestToConnectInboxPK) {
+    this.xurmoResponseToRequestToConnectInboxPK = xurmoResponseToRequestToConnectInboxPK;
+  }
 
-    /**
-     * Returns a hash code value for the object.  This implementation computes 
-     * a hash code value based on the id fields in this object.
-     * @return a hash code value for this object.
-     */
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (this.xurmoResponseToRequestToConnectInboxPK != null ? this.xurmoResponseToRequestToConnectInboxPK.hashCode() : 0);
-        return hash;
-    }
+  /**
+   * Gets the messageId of this XurmoResponseToRequestToConnectInbox.
+   * @return the messageId
+   */
+  public int getMessageId() {
+    return this.messageId;
+  }
 
-    /**
-     * Determines whether another object is equal to this XurmoResponseToRequestToConnectInbox.  The result is 
-     * <code>true</code> if and only if the argument is not null and is a XurmoResponseToRequestToConnectInbox object that 
-     * has the same id field values as this object.
-     * @param object the reference object with which to compare
-     * @return <code>true</code> if this object is the same as the argument;
-     * <code>false</code> otherwise.
-     */
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof XurmoResponseToRequestToConnectInbox)) {
-            return false;
-        }
-        XurmoResponseToRequestToConnectInbox other = (XurmoResponseToRequestToConnectInbox)object;
-        if (this.xurmoResponseToRequestToConnectInboxPK != other.xurmoResponseToRequestToConnectInboxPK && (this.xurmoResponseToRequestToConnectInboxPK == null || !this.xurmoResponseToRequestToConnectInboxPK.equals(other.xurmoResponseToRequestToConnectInboxPK))) return false;
-        return true;
-    }
+  /**
+   * Sets the messageId of this XurmoResponseToRequestToConnectInbox to the specified value.
+   * @param messageId the new messageId
+   */
+  public void setMessageId(int messageId) {
+    this.messageId = messageId;
+  }
 
-    /**
-     * Returns a string representation of the object.  This implementation constructs 
-     * that representation based on the id fields.
-     * @return a string representation of the object.
-     */
-    @Override
-    public String toString() {
-        return "com.xurmo.connect.user.XurmoResponseToRequestToConnectInbox[xurmoResponseToRequestToConnectInboxPK=" + xurmoResponseToRequestToConnectInboxPK + "]";
+  /**
+   * Gets the linkId of this XurmoResponseToRequestToConnectInbox.
+   * @return the linkId
+   */
+  public int getLinkId() {
+    return this.linkId;
+  }
+
+  /**
+   * Sets the linkId of this XurmoResponseToRequestToConnectInbox to the specified value.
+   * @param linkId the new linkId
+   */
+  public void setLinkId(int linkId) {
+    this.linkId = linkId;
+  }
+
+  /**
+   * Gets the requestMessageId of this XurmoResponseToRequestToConnectInbox.
+   * @return the requestMessageId
+   */
+  public int getRequestMessageId() {
+    return this.requestMessageId;
+  }
+
+  /**
+   * Sets the requestMessageId of this XurmoResponseToRequestToConnectInbox to the specified value.
+   * @param requestMessageId the new requestMessageId
+   */
+  public void setRequestMessageId(int requestMessageId) {
+    this.requestMessageId = requestMessageId;
+  }
+
+  /**
+   * Gets the msg of this XurmoResponseToRequestToConnectInbox.
+   * @return the msg
+   */
+  public String getMsg() {
+    return this.msg;
+  }
+
+  /**
+   * Sets the msg of this XurmoResponseToRequestToConnectInbox to the specified value.
+   * @param msg the new msg
+   */
+  public void setMsg(String msg) {
+    this.msg = msg;
+  }
+
+  /**
+   * Returns a hash code value for the object.  This implementation computes 
+   * a hash code value based on the id fields in this object.
+   * @return a hash code value for this object.
+   */
+  @Override
+  public int hashCode() {
+    int hash = 0;
+    hash += (this.xurmoResponseToRequestToConnectInboxPK != null ? this.xurmoResponseToRequestToConnectInboxPK.hashCode() : 0);
+    return hash;
+  }
+
+  /**
+   * Determines whether another object is equal to this XurmoResponseToRequestToConnectInbox.  The result is 
+   * <code>true</code> if and only if the argument is not null and is a XurmoResponseToRequestToConnectInbox object that 
+   * has the same id field values as this object.
+   * @param object the reference object with which to compare
+   * @return <code>true</code> if this object is the same as the argument;
+   * <code>false</code> otherwise.
+   */
+  @Override
+  public boolean equals(Object object) {
+    // TODO: Warning - this method won't work in the case the id fields are not set
+    if (!(object instanceof XurmoResponseToRequestToConnectInbox)) {
+      return false;
     }
-    
+    XurmoResponseToRequestToConnectInbox other = (XurmoResponseToRequestToConnectInbox)object;
+    if (this.xurmoResponseToRequestToConnectInboxPK != other.xurmoResponseToRequestToConnectInboxPK && (this.xurmoResponseToRequestToConnectInboxPK == null || !this.xurmoResponseToRequestToConnectInboxPK.equals(other.xurmoResponseToRequestToConnectInboxPK))) return false;
+    return true;
+  }
+
+  /**
+   * Returns a string representation of the object.  This implementation constructs 
+   * that representation based on the id fields.
+   * @return a string representation of the object.
+   */
+  @Override
+  public String toString() {
+    return "com.xurmo.connect.user.XurmoResponseToRequestToConnectInbox[xurmoResponseToRequestToConnectInboxPK=" + xurmoResponseToRequestToConnectInboxPK + "]";
+  }
+  
 }

@@ -16,18 +16,21 @@ package com.xurmo.connect.user;
 public class XurmoInvitationForLink implements java.io.Serializable {
     
     /** Creates a new instance of XurmoInvitationForLink */
-    public XurmoInvitationForLink(int linkId, String destination) {
-        
-        linkId_ = linkId;
-        destination_ = destination;
+    public XurmoInvitationForLink(String requestFromUser,
+        String phoneNumberToUser,
+        int linkId,
+        String linkName,
+        String message) {
+      
+        this.requestFromUser = requestFromUser;
+        this.requestToUser = requestToUser;
+        this.linkId = linkId;
+        this.linkName = linkName;
+        this.message = message;
     }
-    public int getLinkId() {
-        return linkId_;
-    }
-    public String getDestination() {
-        return destination_;
-    }
-    private int linkId_;
-    private String destination_;
-    
+    public String requestFromUser;
+    public String requestToUser;    
+    public int linkId;
+    public String linkName;
+    public String message;
 }

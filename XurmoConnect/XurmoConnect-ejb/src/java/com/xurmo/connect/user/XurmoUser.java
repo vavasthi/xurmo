@@ -45,6 +45,8 @@ import javax.persistence.TemporalType;
         @NamedQuery(name = "XurmoUser.findByImei", query = "SELECT x FROM XurmoUser x WHERE x.imei = :imei"),
         @NamedQuery(name = "XurmoUser.findByPresence", query = "SELECT x FROM XurmoUser x WHERE x.presence = :presence"),
         @NamedQuery(name = "XurmoUser.findByPersonalAddressBookMatch", query = "SELECT distinct x FROM XurmoUser x, XurmoUser xu, XurmoPersonalAddressBookEmailAddress xea, XurmoPersonalAddressBookPhoneNumbers xpn WHERE (x.primaryEmail = xea.emailAddress or x.primaryMobile = xpn.phoneNumber) and xea.xurmoPersonalAddressBookEmailAddressPK.userid = xu.userid and xpn.xurmoPersonalAddressBookPhoneNumbersPK.userid = xu.userid and xu.username=:username"),
+        @NamedQuery(name = "XurmoUser.findByUsersForPersonalAddressBookEntries", query = "SELECT DISTINCT x from XurmoUser x, XurmoPersonalAddressBookPhoneNumbers pn where pn.phoneNumber = x.primaryMobile and pn.xurmoPersonalAddressBookPhoneNumbersPK.userid = :userid and x.primaryMobileValidated = true"),
+        @NamedQuery(name = "XurmoUser.findByUseridAndUniqueIdForPersonalAddressBook", query = "SELECT DISTINCT x from XurmoUser x, XurmoPersonalAddressBookPhoneNumbers pn where pn.phoneNumber = x.primaryMobile and pn.xurmoPersonalAddressBookPhoneNumbersPK.userid = :userid and pn.xurmoPersonalAddressBookPhoneNumbersPK.uniqueId = :uniqueId and x.primaryMobileValidated = true"),
         @NamedQuery(name = "XurmoUser.findByBtAddress", query = "SELECT x FROM XurmoUser x WHERE x.btAddress = :btAddress")
     })
 public class XurmoUser implements Serializable {

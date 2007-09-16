@@ -32,7 +32,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "XurmoUserNetworkSpecificPreferences.findByAllowSearchIntoYourNetwork", query = "SELECT x FROM XurmoUserNetworkSpecificPreferences x WHERE x.allowSearchIntoYourNetwork = :allowSearchIntoYourNetwork"),
     @NamedQuery(name = "XurmoUserNetworkSpecificPreferences.findByForwardMessagesOnDestinationPreferences", query = "SELECT x FROM XurmoUserNetworkSpecificPreferences x WHERE x.forwardMessagesOnDestinationPreferences = :forwardMessagesOnDestinationPreferences"),
     @NamedQuery(name = "XurmoUserNetworkSpecificPreferences.findByForwardMessagesToExternalNetworks", query = "SELECT x FROM XurmoUserNetworkSpecificPreferences x WHERE x.forwardMessagesToExternalNetworks = :forwardMessagesToExternalNetworks"),
-    @NamedQuery(name = "XurmoUserNetworkSpecificPreferences.findByReceivePersonalEvenReminders", query = "SELECT x FROM XurmoUserNetworkSpecificPreferences x WHERE x.receivePersonalEvenReminders = :receivePersonalEvenReminders")
+    @NamedQuery(name = "XurmoUserNetworkSpecificPreferences.findByReceivePersonalEventReminders", query = "SELECT x FROM XurmoUserNetworkSpecificPreferences x WHERE x.receivePersonalEventReminders = :receivePersonalEventReminders")
   })
 public class XurmoUserNetworkSpecificPreferences implements Serializable {
 
@@ -54,9 +54,12 @@ public class XurmoUserNetworkSpecificPreferences implements Serializable {
   @Column(name = "forwardMessagesToExternalNetworks", nullable = false)
   private boolean forwardMessagesToExternalNetworks;
 
-  @Column(name = "receivePersonalEvenReminders", nullable = false)
-  private boolean receivePersonalEvenReminders;
+  @Column(name = "receivePersonalEventReminders", nullable = false)
+  private boolean receivePersonalEventReminders;
   
+  @Column(name = "receiveInviteFromEverybody", nullable = false)
+  private boolean receiveInviteFromEverybody;
+
   /** Creates a new instance of XurmoUserNetworkSpecificPreferences */
   public XurmoUserNetworkSpecificPreferences() {
   }
@@ -76,15 +79,16 @@ public class XurmoUserNetworkSpecificPreferences implements Serializable {
    * @param allowSearchIntoYourNetwork the allowSearchIntoYourNetwork of the XurmoUserNetworkSpecificPreferences
    * @param forwardMessagesOnDestinationPreferences the forwardMessagesOnDestinationPreferences of the XurmoUserNetworkSpecificPreferences
    * @param forwardMessagesToExternalNetworks the forwardMessagesToExternalNetworks of the XurmoUserNetworkSpecificPreferences
-   * @param receivePersonalEvenReminders the receivePersonalEvenReminders of the XurmoUserNetworkSpecificPreferences
+   * @param receivePersonalEventReminders the receivePersonalEventReminders of the XurmoUserNetworkSpecificPreferences
    */
-  public XurmoUserNetworkSpecificPreferences(XurmoUserNetworkSpecificPreferencesPK xurmoUserNetworkSpecificPreferencesPK, int receiveDefaultMessagesDegrees, boolean allowSearchIntoYourNetwork, boolean forwardMessagesOnDestinationPreferences, boolean forwardMessagesToExternalNetworks, boolean receivePersonalEvenReminders) {
+  public XurmoUserNetworkSpecificPreferences(XurmoUserNetworkSpecificPreferencesPK xurmoUserNetworkSpecificPreferencesPK, int receiveDefaultMessagesDegrees, boolean allowSearchIntoYourNetwork, boolean forwardMessagesOnDestinationPreferences, boolean forwardMessagesToExternalNetworks, boolean receivePersonalEventReminders, boolean receiveInviteFromEverybody) {
     this.xurmoUserNetworkSpecificPreferencesPK = xurmoUserNetworkSpecificPreferencesPK;
     this.receiveDefaultMessagesDegrees = receiveDefaultMessagesDegrees;
     this.allowSearchIntoYourNetwork = allowSearchIntoYourNetwork;
     this.forwardMessagesOnDestinationPreferences = forwardMessagesOnDestinationPreferences;
     this.forwardMessagesToExternalNetworks = forwardMessagesToExternalNetworks;
-    this.receivePersonalEvenReminders = receivePersonalEvenReminders;
+    this.receivePersonalEventReminders = receivePersonalEventReminders;
+    this.receiveInviteFromEverybody = receiveInviteFromEverybody;
   }
 
   /**
@@ -177,19 +181,35 @@ public class XurmoUserNetworkSpecificPreferences implements Serializable {
   }
 
   /**
-   * Gets the receivePersonalEvenReminders of this XurmoUserNetworkSpecificPreferences.
-   * @return the receivePersonalEvenReminders
+   * Gets the receivePersonalEventReminders of this XurmoUserNetworkSpecificPreferences.
+   * @return the receivePersonalEventReminders
    */
-  public boolean getReceivePersonalEvenReminders() {
-    return this.receivePersonalEvenReminders;
+  public boolean getReceivePersonalEventReminders() {
+    return this.receivePersonalEventReminders;
   }
 
   /**
-   * Sets the receivePersonalEvenReminders of this XurmoUserNetworkSpecificPreferences to the specified value.
-   * @param receivePersonalEvenReminders the new receivePersonalEvenReminders
+   * Sets the receivePersonalEventReminders of this XurmoUserNetworkSpecificPreferences to the specified value.
+   * @param receivePersonalEventReminders the new receivePersonalEventReminders
    */
-  public void setReceivePersonalEvenReminders(boolean receivePersonalEvenReminders) {
-    this.receivePersonalEvenReminders = receivePersonalEvenReminders;
+  public void setReceivePersonalEventReminders(boolean receivePersonalEventReminders) {
+    this.receivePersonalEventReminders = receivePersonalEventReminders;
+  }
+
+  /**
+   * Gets the receiveInviteFromEverybody of this XurmoUserNetworkSpecificPreferences.
+   * @return the receiveInviteFromEverybody
+   */
+  public boolean getReceiveInviteFromEverybody() {
+    return this.receiveInviteFromEverybody;
+  }
+
+  /**
+   * Sets the receiveInviteFromEverybody of this XurmoUserNetworkSpecificPreferences to the specified value.
+   * @param receiveInviteFromEverybody the new receiveInviteFromEverybody
+   */
+  public void setReceiveInviteFromEverybody(boolean receiveInviteFromEverybody) {
+    this.receiveInviteFromEverybody = receiveInviteFromEverybody;
   }
 
   /**

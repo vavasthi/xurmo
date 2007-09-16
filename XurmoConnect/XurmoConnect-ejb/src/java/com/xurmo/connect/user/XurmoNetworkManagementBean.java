@@ -75,14 +75,17 @@ public class XurmoNetworkManagementBean implements XurmoNetworkManagementRemote,
   }
   
   public XurmoInvitationDispositionStatus disposeInvitations(String username, String cookie, XurmoInvitationDisposition[] invitationDisposition, String msg) {
-    XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
+/*    XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
     
     if (xus != null && cookie.equals(xus.getCookie())) {
       javax.persistence.Query q1 = em_.createNamedQuery("XurmoUser.findByUsername");
       q1.setParameter("username", username);
       XurmoUser xu = (XurmoUser)(q1.getSingleResult());
       for (int i = 0; i < invitationDisposition.length; ++i) {
-        
+
+        javax.persistence.Query iq = em_.createNamedQuery("XurmoRequestToConnectInbox.findByUseridAndSource");
+        iq.setParameter()
+
         javax.persistence.Query q2 = em_.createNamedQuery("XurmoUser.findByUsername");
         q2.setParameter("username", invitationDisposition[i].getDestination());
         XurmoUser dest = (XurmoUser)(q1.getSingleResult());
@@ -101,7 +104,13 @@ public class XurmoNetworkManagementBean implements XurmoNetworkManagementRemote,
           break;
           case XurmoInvitationDisposition.DECLINE:
           {
-            XurmoResponseToRequestToConnectInbox xnl = new XurmoResponseToRequestToConnectInbox(invitationDisposition[i].getLinkId(), username, invitationDisposition[i].getDestination(), msg);
+            XurmoResponseToRequestToConnectInboxPK xnlpk 
+                = new XurmoResponseToRequestToConnectInboxPK(invitationDisposition[i].getLinkId(), dest.getUserid(), xu.getUserid());
+            XurmoResponseToRequestToConnectInbox xnl 
+                = new XurmoResponseToRequestToConnectInbox(xnlpk);
+            xnl.setMsg(msg);
+            xnl.setResponseTo(invitationDisposition[i].)
+            invitationDisposition[i].getLinkId(), username, invitationDisposition[i].getDestination(), msg);
             Query qry = em_.createNamedQuery("XurmoRequestToConnectInbox.findByUsernameSourceAndLinkId");
             qry.setParameter("username", username);
             qry.setParameter("source", invitationDisposition[i].getDestination());
@@ -126,9 +135,9 @@ public class XurmoNetworkManagementBean implements XurmoNetworkManagementRemote,
         }
       }
       return new XurmoInvitationDispositionStatus(XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, cookie);
-    } else {
+    } else {*/
       return new XurmoInvitationDispositionStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_USER_NOT_LOGGED_IN, cookie);
-    }
+    /*}*/
   }
   
   public XurmoNetworkSummaryStatus getNetworkSummary(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {

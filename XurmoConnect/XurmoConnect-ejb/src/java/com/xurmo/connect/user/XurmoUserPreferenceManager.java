@@ -295,12 +295,12 @@ public class XurmoUserPreferenceManager {
       // Check network specific preferences
       XurmoUserNetworkSpecificPreferences xunsp = getNetworkSpecificPreferences(userid, linkId, em);
       if (xunsp != null) {
-        return xunsp.getReceivePersonalEvenReminders();
+        return xunsp.getReceivePersonalEventReminders();
       } else {
         
         XurmoUserPreferences xup = getUserPreferences(userid, linkId, em);
         if (xup != null) {
-          return xup.getReceivePersonalEvenReminders();
+          return xup.getReceivePersonalEventReminders();
         }
       }
       // Check global preferences
@@ -358,7 +358,8 @@ public class XurmoUserPreferenceManager {
           xunsp.getAllowSearchIntoYourNetwork(),
           xunsp.getForwardMessagesOnDestinationPreferences(),
           xunsp.getForwardMessagesToExternalNetworks(),
-          xunsp.getReceivePersonalEvenReminders());
+          xunsp.getReceivePersonalEventReminders(),
+          xunsp.getReceiveInviteFromEverybody());
       ++k;
     }
     
@@ -430,7 +431,8 @@ public class XurmoUserPreferenceManager {
         xup.getAllowSearchIntoYourNetwork(),
         xup.getForwardMessagesOnDestinationPreferences(),
         xup.getForwardMessagesToExternalNetworks(),
-        xup.getReceivePersonalEvenReminders(),
+        xup.getReceivePersonalEventReminders(),
+        xup.getReceiveReceiveInviteFromEverybody(),
         black,
         white,
         xunspd,
@@ -444,7 +446,7 @@ public class XurmoUserPreferenceManager {
       q.setParameter("userid", userid);
       xup = (XurmoUserPreferences)(q.getSingleResult());
     } catch(javax.persistence.NoResultException nre) {
-      xup = new XurmoUserPreferences(userid, xupd.receiveDefaultMessagesDegrees, xupd.allowSearchIntoYourNetwork, xupd.forwardMessagesOnDestinationPreferences, xupd.forwardMessagesToExternalNetworks, xupd.receivePersonalEvenReminders);
+      xup = new XurmoUserPreferences(userid, xupd.receiveDefaultMessagesDegrees, xupd.allowSearchIntoYourNetwork, xupd.forwardMessagesOnDestinationPreferences, xupd.forwardMessagesToExternalNetworks, xupd.receivePersonalEvenReminders, xupd.receiveInviteFromEverybody);
     }
     em.persist(xup);
     
@@ -482,7 +484,8 @@ public class XurmoUserPreferenceManager {
           xupd.networkSpecificPreference[i].allowSearchIntoYourNetwork,
           xupd.networkSpecificPreference[i].forwardMessagesOnDestinationPreferences,
           xupd.networkSpecificPreference[i].forwardMessagesToExternalNetworks,
-          xupd.networkSpecificPreference[i].receivePersonalEvenReminders);
+          xupd.networkSpecificPreference[i].receivePersonalEventReminders,
+          xupd.networkSpecificPreference[i].receiveInviteFromEverybody);
       em.persist(xunsp);
     }
     

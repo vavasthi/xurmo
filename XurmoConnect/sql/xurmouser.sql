@@ -26,7 +26,8 @@ create table XurmoUserPreferences
   allowSearchIntoYourNetwork boolean not null default true,
   forwardMessagesOnDestinationPreferences boolean not null default true,
   forwardMessagesToExternalNetworks boolean not null default true,
-  receivePersonalEvenReminders boolean not null default true
+  receivePersonalEventReminders boolean not null default true,
+  receiveInviteFromEverybody boolean not null default false
 ) default character set utf8;
 
 drop table XurmoUserPreferenceBlackList;
@@ -56,7 +57,8 @@ create table XurmoUserNetworkSpecificPreferences
   allowSearchIntoYourNetwork boolean not null default true,
   forwardMessagesOnDestinationPreferences boolean not null default true,
   forwardMessagesToExternalNetworks boolean not null default true,
-  receivePersonalEvenReminders boolean not null default true,
+  receivePersonalEventReminders boolean not null default true,
+  receiveInviteFromEverybody boolean not null default false,
   primary key(userid, linkId)
 ) default character set utf8;
 
@@ -96,6 +98,8 @@ create table XurmoPersonalAddressBook
   contactName varchar(128) not null,
   nickname varchar(128),
   birthday datetime,
+  xurmoMember boolean not null default false,
+  xurmoMemberUserId integer,
   primary key(userid, uniqueId)
 ) default character set utf8;
 
@@ -156,25 +160,43 @@ create table XurmoMessageInbox
   msg varchar(1024) not null
 ) default character set utf8;
 
+drop table XurmoRequestToJoinInbox;
+create table XurmoRequestToJoinInbox
+(
+  
+  messageId  integer not null unique key auto_increment,
+  source integer not null,
+  linkId integer not null,
+  phoneNumber char(128),
+  msg varchar(1024) not null,
+  primary key(source, linkId, phoneNumber)
+) default character set utf8;
+
 drop table XurmoRequestToConnectInbox;
 create table XurmoRequestToConnectInbox
 (
   
-  username char(32) not null,
-  source char(32) not null,
-  linkId int not null,
+  messageId  integer not null unique key auto_increment,
+  requestFrom integer  not null,
+  requestTo integer not null,
+  linkId integer not null,
   msg varchar(1024) not null,
-  primary key(username, source, linkId)
+  disposed boolean not null,
+  responseId integer not null,
+  responseMessageId integer not null,
+  primary key(requestFrom, requestTo)
 ) default character set utf8;
 
 drop table XurmoResponseToRequestToConnectInbox;
 create table XurmoResponseToRequestToConnectInbox
 (
-  username char(32) not null,
-  source char(32) not null,
-  linkId int not null,
+  messageId  integer not null unique key auto_increment,
+  responseFrom integer not null,
+  responseTo integer not null,
+  linkId integer not null,
+  requestMessageId  integer not null,
   msg varchar(1024) not null,
-  primary key(username, source, linkId)
+  primary key(responseFrom, responseTo)
 ) default character set utf8;
 
 drop table XurmoNetworkLinkType;

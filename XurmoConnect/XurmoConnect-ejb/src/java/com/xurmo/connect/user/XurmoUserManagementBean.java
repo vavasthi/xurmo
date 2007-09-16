@@ -100,6 +100,9 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
         "Unknown",
         btAddress);
     em_.persist(xu);
+    // If this new user is in the address book of existing users, please update their
+    // address books with the reference to this user.
+    XurmoPersonalAddressBookManager.identifyAndUpdateExistingPhoneBookEntries(xu, em_); 
     return XurmoUserRegistrationStatus.USER_REGISTRATION_NO_ERROR;
   }
   private boolean validUsername(String username) {

@@ -19,18 +19,21 @@ public class XurmoUserNetworkSpecificPreferenceDetails implements java.io.Serial
   public boolean allowSearchIntoYourNetwork;
   public boolean forwardMessagesOnDestinationPreferences;
   public boolean forwardMessagesToExternalNetworks;
-  public boolean receivePersonalEvenReminders;
+  public boolean receivePersonalEventReminders;
+  public boolean receiveInviteFromEverybody;
   public XurmoUserNetworkSpecificPreferenceDetails(int linkId, 
       int receiveDefaultMessagesDegrees,
       boolean allowSearchIntoYourNetwork,
       boolean forwardMessagesOnDestinationPreferences,
       boolean forwardMessagesToExternalNetworks,
-      boolean receivePersonalEvenReminders) {
+      boolean receivePersonalEventReminders,
+      boolean receiveInviteFromEverybody) {
     this.linkId = linkId;
     this.receiveDefaultMessagesDegrees = receiveDefaultMessagesDegrees;
     this.allowSearchIntoYourNetwork = allowSearchIntoYourNetwork;
     this.forwardMessagesOnDestinationPreferences = forwardMessagesOnDestinationPreferences;
     this.forwardMessagesToExternalNetworks = forwardMessagesToExternalNetworks;
-    this.receivePersonalEvenReminders = receivePersonalEvenReminders;
+    this.receivePersonalEventReminders = receivePersonalEventReminders;
+    this.receiveInviteFromEverybody= receiveInviteFromEverybody;
   }  
 }

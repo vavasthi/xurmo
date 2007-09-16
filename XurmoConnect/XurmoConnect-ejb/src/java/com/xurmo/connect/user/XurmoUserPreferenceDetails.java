@@ -22,6 +22,7 @@ public class XurmoUserPreferenceDetails implements java.io.Serializable {
   public boolean forwardMessagesOnDestinationPreferences;
   public boolean forwardMessagesToExternalNetworks;
   public boolean receivePersonalEvenReminders;
+  public boolean receiveInviteFromEverybody;
   public int[] black;
   public int[] white;
   public XurmoUserNetworkSpecificPreferenceDetails[] networkSpecificPreference;
@@ -36,6 +37,7 @@ public class XurmoUserPreferenceDetails implements java.io.Serializable {
       boolean forwardMessagesOnDestinationPreferences,
       boolean forwardMessagesToExternalNetworks,
       boolean receivePersonalEvenReminders,
+      boolean receiveInviteFromEverybody,
       int[] black,
       int[] white,
       XurmoUserNetworkSpecificPreferenceDetails[] networkSpecificPreference,
@@ -47,6 +49,7 @@ public class XurmoUserPreferenceDetails implements java.io.Serializable {
     this.forwardMessagesOnDestinationPreferences = forwardMessagesOnDestinationPreferences;
     this.forwardMessagesToExternalNetworks = forwardMessagesToExternalNetworks;
     this.receivePersonalEvenReminders = receivePersonalEvenReminders;
+    this.receiveInviteFromEverybody = receiveInviteFromEverybody;
     this.black = black;
     this.white = white;
     this.networkSpecificPreference = networkSpecificPreference;
@@ -63,6 +66,7 @@ public class XurmoUserPreferenceDetails implements java.io.Serializable {
     this.forwardMessagesOnDestinationPreferences = false;
     this.forwardMessagesToExternalNetworks = false;
     this.receivePersonalEvenReminders = true;
+    this.receiveInviteFromEverybody = true;
     this.black = new int[0];
     this.white = new int[0];
     this.networkSpecificPreference = new XurmoUserNetworkSpecificPreferenceDetails[0];
@@ -79,6 +83,7 @@ public class XurmoUserPreferenceDetails implements java.io.Serializable {
     this.forwardMessagesOnDestinationPreferences = false;
     this.forwardMessagesToExternalNetworks = false;
     this.receivePersonalEvenReminders = true;
+    this.receiveInviteFromEverybody = true;
     this.black = new int[0];
     this.white = new int[0];
     this.networkSpecificPreference = new XurmoUserNetworkSpecificPreferenceDetails[0];

@@ -30,7 +30,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "XurmoUserPreferences.findByAllowSearchIntoYourNetwork", query = "SELECT x FROM XurmoUserPreferences x WHERE x.allowSearchIntoYourNetwork = :allowSearchIntoYourNetwork"),
     @NamedQuery(name = "XurmoUserPreferences.findByForwardMessagesOnDestinationPreferences", query = "SELECT x FROM XurmoUserPreferences x WHERE x.forwardMessagesOnDestinationPreferences = :forwardMessagesOnDestinationPreferences"),
     @NamedQuery(name = "XurmoUserPreferences.findByForwardMessagesToExternalNetworks", query = "SELECT x FROM XurmoUserPreferences x WHERE x.forwardMessagesToExternalNetworks = :forwardMessagesToExternalNetworks"),
-    @NamedQuery(name = "XurmoUserPreferences.findByReceivePersonalEvenReminders", query = "SELECT x FROM XurmoUserPreferences x WHERE x.receivePersonalEvenReminders = :receivePersonalEvenReminders")
+    @NamedQuery(name = "XurmoUserPreferences.findByReceivePersonalEventReminders", query = "SELECT x FROM XurmoUserPreferences x WHERE x.receivePersonalEventReminders = :receivePersonalEventReminders")
   })
 public class XurmoUserPreferences implements Serializable {
 
@@ -50,9 +50,13 @@ public class XurmoUserPreferences implements Serializable {
   @Column(name = "forwardMessagesToExternalNetworks", nullable = false)
   private boolean forwardMessagesToExternalNetworks;
 
-  @Column(name = "receivePersonalEvenReminders", nullable = false)
-  private boolean receivePersonalEvenReminders;
+  @Column(name = "receivePersonalEventReminders", nullable = false)
+  private boolean receivePersonalEventReminders;
   
+  @Column(name = "receiveInviteFromEverybody", nullable = false)
+  private boolean receiveInviteFromEverybody;
+
+    
   /** Creates a new instance of XurmoUserPreferences */
   public XurmoUserPreferences() {
   }
@@ -72,15 +76,16 @@ public class XurmoUserPreferences implements Serializable {
    * @param allowSearchIntoYourNetwork the allowSearchIntoYourNetwork of the XurmoUserPreferences
    * @param forwardMessagesOnDestinationPreferences the forwardMessagesOnDestinationPreferences of the XurmoUserPreferences
    * @param forwardMessagesToExternalNetworks the forwardMessagesToExternalNetworks of the XurmoUserPreferences
-   * @param receivePersonalEvenReminders the receivePersonalEvenReminders of the XurmoUserPreferences
+   * @param receivePersonalEventReminders the receivePersonalEventReminders of the XurmoUserPreferences
    */
-  public XurmoUserPreferences(Integer userid, int receiveDefaultMessagesDegrees, boolean allowSearchIntoYourNetwork, boolean forwardMessagesOnDestinationPreferences, boolean forwardMessagesToExternalNetworks, boolean receivePersonalEvenReminders) {
+  public XurmoUserPreferences(Integer userid, int receiveDefaultMessagesDegrees, boolean allowSearchIntoYourNetwork, boolean forwardMessagesOnDestinationPreferences, boolean forwardMessagesToExternalNetworks, boolean receivePersonalEventReminders, boolean receiveInviteFromEverybody) {
     this.userid = userid;
     this.receiveDefaultMessagesDegrees = receiveDefaultMessagesDegrees;
     this.allowSearchIntoYourNetwork = allowSearchIntoYourNetwork;
     this.forwardMessagesOnDestinationPreferences = forwardMessagesOnDestinationPreferences;
     this.forwardMessagesToExternalNetworks = forwardMessagesToExternalNetworks;
-    this.receivePersonalEvenReminders = receivePersonalEvenReminders;
+    this.receivePersonalEventReminders = receivePersonalEventReminders;
+    this.receiveInviteFromEverybody = receiveInviteFromEverybody;
   }
 
   /**
@@ -164,19 +169,35 @@ public class XurmoUserPreferences implements Serializable {
   }
 
   /**
-   * Gets the receivePersonalEvenReminders of this XurmoUserPreferences.
-   * @return the receivePersonalEvenReminders
+   * Gets the receivePersonalEventReminders of this XurmoUserPreferences.
+   * @return the receivePersonalEventReminders
    */
-  public boolean getReceivePersonalEvenReminders() {
-    return this.receivePersonalEvenReminders;
+  public boolean getReceivePersonalEventReminders() {
+    return this.receivePersonalEventReminders;
   }
 
   /**
-   * Sets the receivePersonalEvenReminders of this XurmoUserPreferences to the specified value.
-   * @param receivePersonalEvenReminders the new receivePersonalEvenReminders
+   * Sets the receivePersonalEventReminders of this XurmoUserPreferences to the specified value.
+   * @param receivePersonalEventReminders the new receivePersonalEventReminders
    */
-  public void setReceivePersonalEvenReminders(boolean receivePersonalEvenReminders) {
-    this.receivePersonalEvenReminders = receivePersonalEvenReminders;
+  public void setReceivePersonalEventReminders(boolean receivePersonalEventReminders) {
+    this.receivePersonalEventReminders = receivePersonalEventReminders;
+  }
+
+  /**
+   * Gets the receiveInviteFromEverybody of this XurmoUserPreferences.
+   * @return the receiveInviteFromEverybody
+   */
+  public boolean getReceiveReceiveInviteFromEverybody() {
+    return this.receiveInviteFromEverybody;
+  }
+
+  /**
+   * Sets the receiveInviteFromEverybody of this XurmoUserPreferences to the specified value.
+   * @param receiveInviteFromEverybody the new receiveReceiveInviteFromEverybody
+   */
+  public void setReceiveReceiveInviteFromEverybody(boolean receiveInviteFromEverybody) {
+    this.receiveInviteFromEverybody = receiveInviteFromEverybody;
   }
 
   /**
