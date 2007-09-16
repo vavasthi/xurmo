@@ -43,8 +43,14 @@ public class XurmoSocialNetworkingMessageListener implements MessageListener {
       String city  = tm.getStringProperty("City");
       String location  = tm.getStringProperty("Location");
       String presence = tm.getText();
-      xjmu_.addMessage(new XurmoJaikuUpdateMessage(jaikuUsername, jaikuPersonalKey, country, city, location, presence));
-      xtmu_.addMessage(new XurmoTwitterUpdateMessage(twitterUsername, twitterPassword, country, city, location, presence));
+      if (jaikuUsername != null && jaikuPersonalKey != null && !jaikuUsername.equals("") && !jaikuPersonalKey.equals("")) {
+        
+        xjmu_.addMessage(new XurmoJaikuUpdateMessage(jaikuUsername, jaikuPersonalKey, country, city, location, presence));
+      }
+      if (twitterUsername != null && twitterPassword != null && !twitterUsername.equals("") && !twitterPassword.equals("")) {
+        
+        xtmu_.addMessage(new XurmoTwitterUpdateMessage(twitterUsername, twitterPassword, country, city, location, presence));
+      }
     } catch(JMSException jex) {
       System.out.println("Error in OnMessage" + jex.getMessage());
       jex.printStackTrace();

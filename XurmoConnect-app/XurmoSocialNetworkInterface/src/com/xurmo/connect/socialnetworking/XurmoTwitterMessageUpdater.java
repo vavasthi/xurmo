@@ -65,8 +65,8 @@ public class XurmoTwitterMessageUpdater implements java.lang.Runnable {
       conn.setDoOutput(true);
       java.io.OutputStreamWriter wr = new java.io.OutputStreamWriter(conn.getOutputStream());
       String data = "status=" + tum.presence_ +
-          " @" + tum.location_ +
-          " in " + tum.country_;
+          "[" + tum.location_ +
+          " in " + tum.country_ + "]";
       System.out.println("Doing twitter post " + data);
       wr.write(data);
       wr.flush();
