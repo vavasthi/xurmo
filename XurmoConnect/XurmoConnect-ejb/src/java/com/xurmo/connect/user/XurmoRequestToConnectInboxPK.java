@@ -2,7 +2,7 @@
  * Copyright (c) 2007, Xurmo.com. All rights reserved.
  *
  * File name                : XurmoRequestToConnectInboxPK.java
- * Created on               : September 16, 2007, 3:24 PM
+ * Created on               : September 18, 2007, 10:52 PM
  * Created by               : xurmo
  *
  */

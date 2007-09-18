@@ -47,6 +47,7 @@ public class XurmoPersonalAddressBookManager {
         XurmoUser xu = (XurmoUser)(pabpnq.getSingleResult());
         pab.setXurmoMember(true);
         pab.setXurmoMemberUserId(xu.getUserid());
+        pab.setXurmoInvitationSent(true);
       } catch(javax.persistence.NoResultException nre) {
         
       }
@@ -154,5 +155,17 @@ public class XurmoPersonalAddressBookManager {
     }
     identifyAndUpdateAlreadyExistingMembers(xus.getUserid(), em);
     return new XurmoUserManagementStatus(XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, cookie, cellName);
+  }
+  public static void setInvitationSent(int userid, int uniqueId, javax.persistence.EntityManager em) {
+    javax.persistence.Query q = em.createNamedQuery("XurmoPersonalAddressBook.findByUseridAndUniqueId");
+    q.setParameter("userid", userid);
+    q.setParameter("uniqueId", uniqueId);
+    try {
+      XurmoPersonalAddressBook pab = (XurmoPersonalAddressBook)q.getSingleResult();
+      pab.setXurmoInvitationSent(true);
+    }
+    catch (javax.persistence.NoResultException nre) {
+      
+    }
   }
 }

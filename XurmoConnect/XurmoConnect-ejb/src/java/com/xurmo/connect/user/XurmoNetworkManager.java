@@ -51,4 +51,22 @@ public class XurmoNetworkManager {
         }
         return out;
     }
+    public static void convertRequestToJoinToRequestToConnect(int userid, javax.persistence.EntityManager em) {
+      
+        javax.persistence.Query q = em.createNamedQuery("XurmoRequestToJoinInbox.findByUserid");
+        q.setParameter("userid", userid);
+        java.util.List l = q.getResultList();
+        java.util.Iterator itr = l.iterator();
+        while (itr.hasNext()) {
+          
+          XurmoRequestToJoinInbox rtj = (XurmoRequestToJoinInbox)itr.next();
+          XurmoRequestToConnectInboxPK pk = new XurmoRequestToConnectInboxPK(userid, rtj.xurmoRequestToJoinInboxPK.getSource());
+          XurmoRequestToConnectInbox rtc = new XurmoRequestToConnectInbox(pk);
+          rtc.setLinkId(rtj.xurmoRequestToJoinInboxPK.getLinkId());
+          rtc.setMsg(rtj.getMsg());
+          em.persist(rtc);
+          em.remove(rtj);
+
+        }
+    }
 }

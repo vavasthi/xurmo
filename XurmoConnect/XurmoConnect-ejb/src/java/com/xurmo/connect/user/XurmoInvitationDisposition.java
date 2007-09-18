@@ -14,29 +14,31 @@ package com.xurmo.connect.user;
  * @author xurmo
  */
 public class XurmoInvitationDisposition implements java.io.Serializable {
+  
+  public String requestFromUser;
+  public String requestToUser;
+  public int linkId;
+  public String linkName;
+  public String message;
+  public int disposition;
+  /** Creates a new instance of XurmoInvitationDisposition */
+  public XurmoInvitationDisposition(String requestFromUser,
+      String requestToUser,
+      int linkId,
+      String linkName,
+      String message,
+      int disposition) {
     
-    /** Creates a new instance of XurmoInvitationDisposition */
-    public XurmoInvitationDisposition(String destination, int responseId, int linkId) {
-        destination_ = destination;
-        responseId_ = responseId;
-        linkId_ = linkId;
-    }
-    
-    public String getDestination() {
-        return destination_;
-    }
-    public int getResponseId() {
-        return responseId_;
-    }
-    public int getLinkId() {
-        return linkId_;
-    }
-    private String destination_;
-    private int linkId_;
-    private int responseId_;
-    
-    public static final int ACCEPT = 0x01;
-    public static final int DECLINE = 0x02;
-    public static final int DECLINE_SILENTLY = 0x03;
-    public static final int POSTPONE = 0x04;
+    this.requestFromUser = requestFromUser;
+    this.requestToUser = requestToUser;
+    this.linkId = linkId;
+    this.linkName = linkName;
+    this.message = message;
+    this.disposition = disposition;
+  }
+  
+  public static final int ACCEPT = 0x01;
+  public static final int DECLINE = 0x02;
+  public static final int DECLINE_SILENTLY = 0x03;
+  public static final int POSTPONE = 0x04;
 }

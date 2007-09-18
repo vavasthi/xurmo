@@ -2,7 +2,7 @@
  * Copyright (c) 2007, Xurmo.com. All rights reserved.
  *
  * File name                : XurmoRequestToConnectInbox.java
- * Created on               : September 16, 2007, 3:24 PM
+ * Created on               : September 18, 2007, 10:52 PM
  * Created by               : xurmo
  *
  */
@@ -32,7 +32,10 @@ import javax.persistence.Table;
     @NamedQuery(name = "XurmoRequestToConnectInbox.findByMsg", query = "SELECT x FROM XurmoRequestToConnectInbox x WHERE x.msg = :msg"),
     @NamedQuery(name = "XurmoRequestToConnectInbox.findByDisposed", query = "SELECT x FROM XurmoRequestToConnectInbox x WHERE x.disposed = :disposed"),
     @NamedQuery(name = "XurmoRequestToConnectInbox.findByResponseId", query = "SELECT x FROM XurmoRequestToConnectInbox x WHERE x.responseId = :responseId"),
-    @NamedQuery(name = "XurmoRequestToConnectInbox.findByResponseMessageId", query = "SELECT x FROM XurmoRequestToConnectInbox x WHERE x.responseMessageId = :responseMessageId")
+    @NamedQuery(name = "XurmoRequestToConnectInbox.findByResponseMessageId", query = "SELECT x FROM XurmoRequestToConnectInbox x WHERE x.responseMessageId = :responseMessageId"),
+    @NamedQuery(name = "XurmoRequestToConnectInbox.findByUniqueId", query = "SELECT x FROM XurmoRequestToConnectInbox x WHERE x.uniqueId = :uniqueId"),
+    @NamedQuery(name = "XurmoRequestToConnectInbox.findByRequestFromRequestToAndLinkId", query = "SELECT x FROM XurmoRequestToConnectInbox x WHERE x.xurmoRequestToConnectInboxPK.requestFrom = :requestFrom and x.xurmoRequestToConnectInboxPK.requestTo = :requestTo and x.linkId = :linkId"),
+    @NamedQuery(name = "XurmoRequestToConnectInbox.findByPendingRequestTo", query = "SELECT x FROM XurmoRequestToConnectInbox x WHERE x.xurmoRequestToConnectInboxPK.requestTo = :requestTo and x.disposed = false")
   })
 public class XurmoRequestToConnectInbox implements Serializable {
 
@@ -59,6 +62,9 @@ public class XurmoRequestToConnectInbox implements Serializable {
 
   @Column(name = "responseMessageId", nullable = false)
   private int responseMessageId;
+
+  @Column(name = "uniqueId", nullable = false)
+  private int uniqueId;
   
   /** Creates a new instance of XurmoRequestToConnectInbox */
   public XurmoRequestToConnectInbox() {
@@ -81,8 +87,9 @@ public class XurmoRequestToConnectInbox implements Serializable {
    * @param disposed the disposed of the XurmoRequestToConnectInbox
    * @param responseId the responseId of the XurmoRequestToConnectInbox
    * @param responseMessageId the responseMessageId of the XurmoRequestToConnectInbox
+   * @param uniqueId the uniqueId of the XurmoRequestToConnectInbox
    */
-  public XurmoRequestToConnectInbox(XurmoRequestToConnectInboxPK xurmoRequestToConnectInboxPK, int messageId, int linkId, String msg, boolean disposed, int responseId, int responseMessageId) {
+  public XurmoRequestToConnectInbox(XurmoRequestToConnectInboxPK xurmoRequestToConnectInboxPK, int messageId, int linkId, String msg, boolean disposed, int responseId, int responseMessageId, int uniqueId) {
     this.xurmoRequestToConnectInboxPK = xurmoRequestToConnectInboxPK;
     this.messageId = messageId;
     this.linkId = linkId;
@@ -90,6 +97,7 @@ public class XurmoRequestToConnectInbox implements Serializable {
     this.disposed = disposed;
     this.responseId = responseId;
     this.responseMessageId = responseMessageId;
+    this.uniqueId = uniqueId;
   }
 
   /**
@@ -211,6 +219,22 @@ public class XurmoRequestToConnectInbox implements Serializable {
    */
   public void setResponseMessageId(int responseMessageId) {
     this.responseMessageId = responseMessageId;
+  }
+
+  /**
+   * Gets the uniqueId of this XurmoRequestToConnectInbox.
+   * @return the uniqueId
+   */
+  public int getUniqueId() {
+    return this.uniqueId;
+  }
+
+  /**
+   * Sets the uniqueId of this XurmoRequestToConnectInbox to the specified value.
+   * @param uniqueId the new uniqueId
+   */
+  public void setUniqueId(int uniqueId) {
+    this.uniqueId = uniqueId;
   }
 
   /**

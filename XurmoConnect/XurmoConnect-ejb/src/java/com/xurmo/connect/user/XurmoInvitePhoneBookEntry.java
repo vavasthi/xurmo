@@ -15,15 +15,17 @@ package com.xurmo.connect.user;
  */
 public class XurmoInvitePhoneBookEntry {
   public int uniqueId;
-  public String fname;
-  public String lname;
+  public boolean member;
+  public int memberid;
+  public String contactName;
   public String mobileNumber;
   /** Creates a new instance of XurmoInvitePhoneBookEntry */
-  public XurmoInvitePhoneBookEntry(int uniqueId, String fname, String lname, String mobileNumber) {
+  public XurmoInvitePhoneBookEntry(int uniqueId, boolean member, int memberid, String contactName, String mobileNumber) {
     
     this.uniqueId = uniqueId;
-    this.fname = fname;
-    this.lname = lname;
+    this.member = member;
+    this.memberid = memberid;
+    this.contactName = contactName;
     this.mobileNumber = mobileNumber;
   }
 }

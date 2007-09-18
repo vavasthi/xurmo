@@ -23,9 +23,9 @@ public class XurmoNetworkManagementServiceBean {
      * Web service operation
      */
     @WebMethod
-    public XurmoInvitationSendStatus sendInvitation(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "invitationsForLink") XurmoInvitationForLink[] invitationsForLink, @WebParam(name = "msg") String msg, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "locationString") String locationString) {
+    public XurmoInvitationSendStatus sendInvitation(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "invitationsForLink") XurmoInvitationForLink[] invitationsForLink, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "locationString") String locationString) {
         // TODO implement operation 
-        return xurmoNetworkManagementBean.sendInvitations(username, cookie, invitationsForLink, msg, mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString);
+        return xurmoNetworkManagementBean.sendInvitations(username, cookie, invitationsForLink, mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString);
     }
 
     /**
@@ -50,9 +50,9 @@ public class XurmoNetworkManagementServiceBean {
      * Web service operation
      */
     @WebMethod
-    public XurmoInvitationDispositionStatus disposeInvitations(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "invitationDisposition") XurmoInvitationDisposition[] invitationDisposition, @WebParam(name = "msg") String msg) {
+    public XurmoInvitationDispositionStatus disposeInvitations(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "invitationDisposition") XurmoInvitationDisposition[] invitationDisposition, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode,@WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
         // TODO implement operation 
-        return xurmoNetworkManagementBean.disposeInvitations(username, cookie, invitationDisposition, msg);
+        return xurmoNetworkManagementBean.disposeInvitations(username, cookie, invitationDisposition, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
     }
 
     /**
@@ -62,5 +62,13 @@ public class XurmoNetworkManagementServiceBean {
     public XurmoNetworkSummaryStatus getNetworkSummary(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode,@WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
         // TODO implement operation 
         return xurmoNetworkManagementBean.getNetworkSummary(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod
+    public XurmoInvitationForLink[] getPendingInvitations(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode,@WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
+      return xurmoNetworkManagementBean.getPendingInvitations(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
     }
 }
