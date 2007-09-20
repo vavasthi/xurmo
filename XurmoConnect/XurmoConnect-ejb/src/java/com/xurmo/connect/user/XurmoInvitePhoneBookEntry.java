@@ -13,7 +13,7 @@ package com.xurmo.connect.user;
  *
  * @author xurmo
  */
-public class XurmoInvitePhoneBookEntry {
+public class XurmoInvitePhoneBookEntry implements java.io.Serializable {
   public int uniqueId;
   public boolean member;
   public int memberid;

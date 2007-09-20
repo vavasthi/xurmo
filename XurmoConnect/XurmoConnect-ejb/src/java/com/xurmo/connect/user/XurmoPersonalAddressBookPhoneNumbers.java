@@ -28,7 +28,7 @@ import javax.persistence.Table;
         @NamedQuery(name = "XurmoPersonalAddressBookPhoneNumbers.findByUserid", query = "SELECT x FROM XurmoPersonalAddressBookPhoneNumbers x WHERE x.xurmoPersonalAddressBookPhoneNumbersPK.userid = :userid"),
         @NamedQuery(name = "XurmoPersonalAddressBookPhoneNumbers.findByUniqueId", query = "SELECT x FROM XurmoPersonalAddressBookPhoneNumbers x WHERE x.xurmoPersonalAddressBookPhoneNumbersPK.uniqueId = :uniqueId"),
         @NamedQuery(name = "XurmoPersonalAddressBookPhoneNumbers.findByAttributeId", query = "SELECT x FROM XurmoPersonalAddressBookPhoneNumbers x WHERE x.xurmoPersonalAddressBookPhoneNumbersPK.attributeId = :attributeId"),
-        @NamedQuery(name = "XurmoPersonalAddressBookPhoneNumbers.findByUseridAndAttributeId", query = "SELECT x FROM XurmoPersonalAddressBookPhoneNumbers x WHERE x.xurmoPersonalAddressBookPhoneNumbersPK.userid = :userid and x.xurmoPersonalAddressBookPhoneNumbersPK.attributeId = :attributeId"),
+        @NamedQuery(name = "XurmoPersonalAddressBookPhoneNumbers.findByUseridUniqueIdAndAttributeId", query = "SELECT x FROM XurmoPersonalAddressBookPhoneNumbers x WHERE x.xurmoPersonalAddressBookPhoneNumbersPK.userid = :userid and x.xurmoPersonalAddressBookPhoneNumbersPK.attributeId = :attributeId and x.xurmoPersonalAddressBookPhoneNumbersPK.uniqueId = :uniqueId"),
         @NamedQuery(name = "XurmoPersonalAddressBookPhoneNumbers.findByEntry", query = "SELECT x FROM XurmoPersonalAddressBookPhoneNumbers x WHERE x.xurmoPersonalAddressBookPhoneNumbersPK.entry = :entry"),
         @NamedQuery(name = "XurmoPersonalAddressBookPhoneNumbers.findByPhoneNumber", query = "SELECT x FROM XurmoPersonalAddressBookPhoneNumbers x WHERE x.phoneNumber = :phoneNumber")
     })
