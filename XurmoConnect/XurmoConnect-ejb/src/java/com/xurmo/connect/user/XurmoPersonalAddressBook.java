@@ -2,7 +2,7 @@
  * Copyright (c) 2007, Xurmo.com. All rights reserved.
  *
  * File name                : XurmoPersonalAddressBook.java
- * Created on               : September 18, 2007, 10:05 PM
+ * Created on               : September 21, 2007, 1:03 AM
  * Created by               : xurmo
  *
  */
@@ -35,11 +35,12 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "XurmoPersonalAddressBook.findByBirthday", query = "SELECT x FROM XurmoPersonalAddressBook x WHERE x.birthday = :birthday"),
     @NamedQuery(name = "XurmoPersonalAddressBook.findByXurmoMember", query = "SELECT x FROM XurmoPersonalAddressBook x WHERE x.xurmoMember = :xurmoMember"),
     @NamedQuery(name = "XurmoPersonalAddressBook.findByXurmoMemberUserId", query = "SELECT x FROM XurmoPersonalAddressBook x WHERE x.xurmoMemberUserId = :xurmoMemberUserId"),
+    @NamedQuery(name = "XurmoPersonalAddressBook.findByXurmoInvitationSent", query = "SELECT x FROM XurmoPersonalAddressBook x WHERE x.xurmoInvitationSent = :xurmoInvitationSent"),
     @NamedQuery(name = "XurmoPersonalAddressBook.findByUseridAndUniqueId", query = "SELECT x FROM XurmoPersonalAddressBook x WHERE x.xurmoPersonalAddressBookPK.userid = :userid and x.xurmoPersonalAddressBookPK.uniqueId = :uniqueId"),
     @NamedQuery(name = "XurmoPersonalAddressBook.findByXurmoInvitationSent", query = "SELECT x FROM XurmoPersonalAddressBook x WHERE x.xurmoInvitationSent = :xurmoInvitationSent"),
     @NamedQuery(name = "XurmoPersonalAddressBook.findByInviteToConnectEntries", query = "SELECT x FROM XurmoPersonalAddressBook x WHERE x.xurmoInvitationSent = false and x.xurmoMember = true and x.xurmoPersonalAddressBookPK.userid = :userid"),
     @NamedQuery(name = "XurmoPersonalAddressBook.findByInviteToJoinEntries", query = "SELECT x FROM XurmoPersonalAddressBook x WHERE x.xurmoInvitationSent = false and x.xurmoMember = false and x.xurmoPersonalAddressBookPK.userid = :userid")
-  })
+ })
 public class XurmoPersonalAddressBook implements Serializable {
 
   /**
@@ -64,8 +65,8 @@ public class XurmoPersonalAddressBook implements Serializable {
   @Column(name = "xurmoMemberUserId")
   private Integer xurmoMemberUserId;
 
-  @Column(name = "xurmoInvitationSent")
-  private Boolean xurmoInvitationSent;
+  @Column(name = "xurmoInvitationSent", nullable = false)
+  private boolean xurmoInvitationSent;
   
   /** Creates a new instance of XurmoPersonalAddressBook */
   public XurmoPersonalAddressBook() {
@@ -84,11 +85,13 @@ public class XurmoPersonalAddressBook implements Serializable {
    * @param xurmoPersonalAddressBookPK the xurmoPersonalAddressBookPK of the XurmoPersonalAddressBook
    * @param contactName the contactName of the XurmoPersonalAddressBook
    * @param xurmoMember the xurmoMember of the XurmoPersonalAddressBook
+   * @param xurmoInvitationSent the xurmoInvitationSent of the XurmoPersonalAddressBook
    */
-  public XurmoPersonalAddressBook(XurmoPersonalAddressBookPK xurmoPersonalAddressBookPK, String contactName, boolean xurmoMember) {
+  public XurmoPersonalAddressBook(XurmoPersonalAddressBookPK xurmoPersonalAddressBookPK, String contactName, boolean xurmoMember, boolean xurmoInvitationSent) {
     this.xurmoPersonalAddressBookPK = xurmoPersonalAddressBookPK;
     this.contactName = contactName;
     this.xurmoMember = xurmoMember;
+    this.xurmoInvitationSent = xurmoInvitationSent;
   }
 
   /**
@@ -200,7 +203,7 @@ public class XurmoPersonalAddressBook implements Serializable {
    * Gets the xurmoInvitationSent of this XurmoPersonalAddressBook.
    * @return the xurmoInvitationSent
    */
-  public Boolean getXurmoInvitationSent() {
+  public boolean getXurmoInvitationSent() {
     return this.xurmoInvitationSent;
   }
 
@@ -208,7 +211,7 @@ public class XurmoPersonalAddressBook implements Serializable {
    * Sets the xurmoInvitationSent of this XurmoPersonalAddressBook to the specified value.
    * @param xurmoInvitationSent the new xurmoInvitationSent
    */
-  public void setXurmoInvitationSent(Boolean xurmoInvitationSent) {
+  public void setXurmoInvitationSent(boolean xurmoInvitationSent) {
     this.xurmoInvitationSent = xurmoInvitationSent;
   }
 

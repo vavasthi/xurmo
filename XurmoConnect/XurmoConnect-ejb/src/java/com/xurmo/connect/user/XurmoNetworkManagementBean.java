@@ -15,7 +15,9 @@ import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Vector;
 import javax.persistence.Query;
+import org.hibernate.reflection.java.JavaXFactory;
 
 /**
  *
@@ -80,12 +82,12 @@ public class XurmoNetworkManagementBean implements XurmoNetworkManagementRemote,
     
     if (xus != null && cookie.equals(xus.getCookie())) {
       XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
-      javax.persistence.Query tuq = em_.createNamedQuery("XurmoUser.findByUsername");
+      Query tuq = em_.createNamedQuery("XurmoUser.findByUsername");
       tuq.setParameter("username", username);
       XurmoUser tu = (XurmoUser)(tuq.getSingleResult());
       for (int i = 0; i < invitationDisposition.length; ++i) {
 
-      javax.persistence.Query fuq = em_.createNamedQuery("XurmoUser.findByUsername");
+      Query fuq = em_.createNamedQuery("XurmoUser.findByUsername");
       fuq.setParameter("username", invitationDisposition[i].requestFromUser);
       XurmoUser fu = (XurmoUser)(fuq.getSingleResult());
 
@@ -130,23 +132,23 @@ public class XurmoNetworkManagementBean implements XurmoNetworkManagementRemote,
     
     XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
     if (xus != null && cookie.equals(xus.getCookie())) {
-      javax.persistence.Query uq = em_.createNamedQuery("XurmoUser.findByUsername");
+      Query uq = em_.createNamedQuery("XurmoUser.findByUsername");
       uq.setParameter("username", username);
       XurmoUser xu = (XurmoUser)uq.getSingleResult();
       XurmoCellLocationMap xclm
           = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
-      javax.persistence.Query rtcq = em_.createNativeQuery("XurmoRequestToConnectInbox.findPendingByRequestTo");
+      Query rtcq = em_.createNativeQuery("XurmoRequestToConnectInbox.findPendingByRequestTo");
       rtcq.setParameter("requestTo", xu.getUserid());
-      java.util.List l = rtcq.getResultList();
+      List l = rtcq.getResultList();
       XurmoInvitationForLink[] retValue = new XurmoInvitationForLink[l.size()];
-      java.util.Iterator itr = l.iterator();
+      Iterator itr = l.iterator();
       int k = 0;
       while (itr.hasNext()) {
         XurmoRequestToConnectInbox rtci = (XurmoRequestToConnectInbox)itr.next();
-        javax.persistence.Query xnltq = em_.createNamedQuery("XurmoNetworkLinkType.findByLinkId");
+        Query xnltq = em_.createNamedQuery("XurmoNetworkLinkType.findByLinkId");
         xnltq.setParameter("linkId", rtci.getLinkId());        
         XurmoNetworkLinkType xnlt = (XurmoNetworkLinkType)xnltq.getSingleResult();
-        javax.persistence.Query rfuq = em_.createNamedQuery("XurmoUser.findByUserid");
+        Query rfuq = em_.createNamedQuery("XurmoUser.findByUserid");
         rfuq.setParameter("userid", rtci.xurmoRequestToConnectInboxPK.getRequestFrom());
         XurmoUser rfu = (XurmoUser)rfuq.getSingleResult();
         retValue[k] = new XurmoInvitationForLink(rfu.getUsername(),
@@ -166,7 +168,7 @@ public class XurmoNetworkManagementBean implements XurmoNetworkManagementRemote,
     
     XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
     if (xus != null && cookie.equals(xus.getCookie())) {
-      javax.persistence.Query uq = em_.createNamedQuery("XurmoUser.findByUsername");
+      Query uq = em_.createNamedQuery("XurmoUser.findByUsername");
       uq.setParameter("username", username);
       XurmoUser xu = (XurmoUser)uq.getSingleResult();
       XurmoCellLocationMap xclm
@@ -179,5 +181,18 @@ public class XurmoNetworkManagementBean implements XurmoNetworkManagementRemote,
     //TODO implement getNetworkSummary
     return new XurmoNetworkSummaryStatus(XurmoNetworkInteractionStatus.NETWORKINTERACTION_COULD_NOT_GET_SUMMARY, cookie, cellName);
   }
-  
+
+  public XurmoInviteSummaryStatus getInvitablePhoneBookEntries(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
+    XurmoInvitePhoneBookEntry[] connectableEntries 
+        = XurmoPersonalAddressBookManager.getConnectablePhoneBookEntries(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
+    XurmoInvitePhoneBookEntry[] joinableEntries 
+        = XurmoPersonalAddressBookManager.getJoinablePhoneBookEntries(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
+    if (connectableEntries == null || joinableEntries == null) {
+      return new XurmoInviteSummaryStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_RETRIEVE_INVITABLE_ENTRIES, cookie ,cellName);
+    }
+    else {
+      
+      return new XurmoInviteSummaryStatus(cookie ,cellName, connectableEntries, joinableEntries);
+    }
+  }  
 }

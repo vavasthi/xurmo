@@ -65,7 +65,7 @@ public class XurmoPersonalAddressBookManager {
       em.persist(xpab);
     }
   }
-  public static XurmoUserManagementStatus uploadPhoneBook(XurmoUser xus, String cookie, XurmoPhoneAddressBookSync addressBook, String cellName, javax.persistence.EntityManager em) {
+  public static XurmoUserHomeScreenData uploadPhoneBook(XurmoUser xus, String cookie, XurmoPhoneAddressBookSync addressBook, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String cellName, javax.persistence.EntityManager em) {
     
     boolean alreadyPopulated = false;
     try {
@@ -154,7 +154,7 @@ public class XurmoPersonalAddressBookManager {
       }
     }
     identifyAndUpdateAlreadyExistingMembers(xus.getUserid(), em);
-    return new XurmoUserManagementStatus(XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, cookie, cellName);
+    return XurmoUserManager.getHomeScreenData(xus.getUsername(), cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em);
   }
   public static void setInvitationSent(int userid, int uniqueId, javax.persistence.EntityManager em) {
     javax.persistence.Query q = em.createNamedQuery("XurmoPersonalAddressBook.findByUseridAndUniqueId");
@@ -168,4 +168,50 @@ public class XurmoPersonalAddressBookManager {
       
     }
   }
+  public static XurmoInvitePhoneBookEntry[] getConnectablePhoneBookEntries(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName, javax.persistence.EntityManager em) {
+
+    return getPhoneBookEntries("XurmoPersonalAddressBook.findByInviteToConnectEntries", username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em);
+  }  
+  public static XurmoInvitePhoneBookEntry[] getJoinablePhoneBookEntries(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName, javax.persistence.EntityManager em) {
+
+    return getPhoneBookEntries("XurmoPersonalAddressBook.findByInviteToJoinEntries", username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em);
+  }  
+  public static XurmoInvitePhoneBookEntry[] getPhoneBookEntries(String queryName, String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName, javax.persistence.EntityManager em) {
+    //TODO implement getInvitablePhoneBookEntries
+    XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em);
+    if (xus != null && cookie.equals(xus.getCookie())) {
+      javax.persistence.Query uq = em.createNamedQuery("XurmoUser.findByUsername");
+      uq.setParameter("username", username);
+      XurmoUser xu = (XurmoUser)uq.getSingleResult();
+      XurmoCellLocationMap xclm
+          = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em);
+      javax.persistence.Query pbq = em.createNamedQuery(queryName);
+      pbq.setParameter("userid", xu.getUserid());
+      java.util.List l = pbq.getResultList();
+      java.util.Vector<XurmoInvitePhoneBookEntry> retValue = new java.util.Vector<XurmoInvitePhoneBookEntry>();
+      java.util.Iterator i = l.iterator();
+      while (i.hasNext()) {
+        XurmoPersonalAddressBook pab = (XurmoPersonalAddressBook)(i.next());
+        javax.persistence.Query pabpnq = em.createNamedQuery("XurmoPersonalAddressBookPhoneNumbers.findByUseridAndAttributeId");
+        pabpnq.setParameter("userid", xu.getUserid());
+        pabpnq.setParameter("attributeId", 16);
+        try {
+          
+        XurmoPersonalAddressBookPhoneNumbers pabpn = (XurmoPersonalAddressBookPhoneNumbers)pabpnq.getSingleResult();
+        retValue.add(new XurmoInvitePhoneBookEntry(pab.xurmoPersonalAddressBookPK.getUniqueId(),
+            pab.getXurmoMember(),
+            pab.getXurmoMemberUserId(),
+            pab.getContactName(),
+            pabpn.getPhoneNumber()));
+        }
+        catch(javax.persistence.NoResultException nre) {
+          
+        }
+      }
+      XurmoInvitePhoneBookEntry[] retArray = new XurmoInvitePhoneBookEntry[retValue.size()];
+      return retValue.toArray(retArray);
+    }
+    //TODO implement getNetworkSummary
+    return null;
+  }  
 }

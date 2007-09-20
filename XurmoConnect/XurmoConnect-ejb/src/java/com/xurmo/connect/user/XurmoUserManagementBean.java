@@ -180,31 +180,13 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
   }
   public XurmoUserHomeScreenData getHomeScreenData(String username, String cookie, String imei, String presence, String twitterUsername, String twitterPassword, String jaikuUsername, String jaikuPersonalKey, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
     
-    XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
-    if (xus != null && cookie.equals(xus.getCookie())) {
-      
-      XurmoCellLocationMap xclm
-          = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
-      XurmoUser xu = (XurmoUser) (em_.createNamedQuery("XurmoUser.findByUsername").setParameter("username", username).getSingleResult());
-      boolean updatedPresence = false;
-      if (!xu.getPresence().equals(presence)) {
-        updatedPresence = true;
-      }
-      if (presence != null && !presence.equals("") && !presence.equals("Unknown") && updatedPresence) {
-        xu.setPresence(presence);
-        em_.persist(xu);
-      }
-      if (updatedPresence) {
-        
-        XurmoMessageQueueToPresence.updatePresencePortals(presence, twitterUsername, twitterPassword, jaikuUsername, jaikuPersonalKey, mobileCountryCode, mobileNetworkCode,  siteId, cellId, cellName, em_);
-      }
-      return new XurmoUserHomeScreenData(xu.getUsername(), xus.getCookie(), XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, xclm.getLocation(), xu.getFname(), xu.getLname(), xu.getSalutation(), xu.getPresence());
-    } else {
-      return new XurmoUserHomeScreenData("", xus.getCookie(), XurmoUserInteractionStatus.INTERACTIONFAILED_USER_NOT_LOGGED_IN, "Unknown", "", "", "", "");
-    }
+    XurmoUserHomeScreenData homeData 
+        = XurmoUserManager.getHomeScreenData(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
+    XurmoUserManager.updatePresence(username, cookie, imei, presence, twitterUsername, twitterPassword, jaikuUsername, jaikuPersonalKey, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
+    return homeData;
   }
   
-  public XurmoUserManagementStatus uploadPhoneBook(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName, XurmoPhoneAddressBookSync addressBook) {
+  public XurmoUserHomeScreenData uploadPhoneBook(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName, XurmoPhoneAddressBookSync addressBook) {
     XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
     if (xus != null && cookie.equals(xus.getCookie())) {
       
@@ -212,9 +194,9 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
           = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
       XurmoUser xu = (XurmoUser) (em_.createNamedQuery("XurmoUser.findByUsername").setParameter("username", username).getSingleResult());
       
-      return XurmoPersonalAddressBookManager.uploadPhoneBook(xu, cookie, addressBook, cellName, em_);
+      return XurmoPersonalAddressBookManager.uploadPhoneBook(xu, cookie, addressBook, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
     } else {
-      return new XurmoUserManagementStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_UPLOAD_ADDRESSBOOK_FAILED, "", cellName);
+      return new XurmoUserHomeScreenData("", xus.getCookie(), XurmoUserInteractionStatus.INTERACTIONFAILED_UPLOAD_ADDRESSBOOK_FAILED, "Unknown", "", "", "", "");
     }
   }
   

@@ -100,6 +100,7 @@ create table XurmoPersonalAddressBook
   birthday datetime,
   xurmoMember boolean not null default false,
   xurmoMemberUserId integer,
+  xurmoInvitationSent boolean not null default false,
   primary key(userid, uniqueId)
 ) default character set utf8;
 
@@ -169,6 +170,7 @@ create table XurmoRequestToJoinInbox
   linkId integer not null,
   phoneNumber char(128),
   msg varchar(1024) not null,
+  uniqueId integer not null default -1,
   primary key(source, linkId, phoneNumber)
 ) default character set utf8;
 
@@ -184,6 +186,7 @@ create table XurmoRequestToConnectInbox
   disposed boolean not null,
   responseId integer not null,
   responseMessageId integer not null,
+  uniqueId integer not null default -1,
   primary key(requestFrom, requestTo)
 ) default character set utf8;
 
