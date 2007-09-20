@@ -42,7 +42,7 @@ public class XurmoMyNetworksScreen extends XurmoCanvas {
     summary_.selected(true);
     currentPanel_ = 0;
     
-    contacts_ = new XurmoMePanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "My Contacts");
+    contacts_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "My Contacts");
 
     otherSocialNetworks_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.friendsSmallImage_, "Other Social Networks");
     invite_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.friendsSmallImage_, "Invite");
@@ -101,7 +101,7 @@ public class XurmoMyNetworksScreen extends XurmoCanvas {
       midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoMySocialNetworksScreen(midlet_), XurmoSliderCanvas.RIGHT));      
     }
     else if (panels_[currentPanel_] == invite_) {
-      midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoInviteScreen(midlet_), XurmoSliderCanvas.RIGHT));      
+      midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoMyInvitationsScreen(midlet_), XurmoSliderCanvas.RIGHT));      
     }
   }
   public void leftKey() {

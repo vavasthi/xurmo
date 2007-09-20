@@ -35,25 +35,17 @@ public class XurmoHomeScreen extends XurmoScrollableScreen {
    * Creates a new instance of XurmoHomeScreen
    */
   public XurmoHomeScreen(Xurmo midlet) {
-    super(midlet, new XurmoCollapsablePanel[6]);
+    super(midlet, new XurmoCollapsablePanel[3]);
     XurmoThemeManager.init(midlet);
     XurmoTheme ct = XurmoThemeManager.instance().getCurrentTheme();
     me_ = new XurmoMePanel(midlet_, getWidth(), getHeight(), ct.meIconImage_, "Me");
     me_.selected(true);
-    mydoodles_ = new XurmoMyDoodlePanel(midlet_, getWidth(), getHeight(), ct.myplaceIconImage_, "My Doodles");
-    
-    interactions_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.interactionIconImage_, "Interactions");
-    
-    friends_ = new XurmoFriendsPanel(midlet_, getWidth(), getHeight(), ct.friendsSmallImage_, "Friends");
-    communities_ = new XurmoCommunitiesPanel(midlet_, getWidth(), getHeight(), ct.friendsSmallImage_, "Communities");
+    network_ = new XurmoFriendsPanel(midlet_, getWidth(), getHeight(), ct.friendsSmallImage_, "Network");
     exit_ = new XurmoCollapsablePanel(midlet_, getWidth(), getHeight(), ct.friendsSmallImage_, "Exit");
     
     panels_[0] = me_;
-    panels_[1] = mydoodles_;
-    panels_[2] = interactions_;
-    panels_[3] = friends_;
-    panels_[4] = communities_;
-    panels_[5] = exit_;
+    panels_[1] = network_;
+    panels_[2] = exit_;
     repaint();
   }
   public void fireKey() {
@@ -68,17 +60,11 @@ public class XurmoHomeScreen extends XurmoScrollableScreen {
     if (panels_[currentPanel_] == this.me_) {
       midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoMeScreen(midlet_), XurmoSliderCanvas.RIGHT));
     }
-    else if (panels_[currentPanel_] == this.interactions_) {
-      midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoInteractionsScreen(midlet_), XurmoSliderCanvas.RIGHT));
-    }
-    else if (panels_[currentPanel_] == this.communities_) {
+    else if (panels_[currentPanel_] == this.network_) {
       midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, this, new XurmoMyNetworksScreen(midlet_), XurmoSliderCanvas.RIGHT));
     }
   }
   XurmoCollapsablePanel me_;
-  XurmoCollapsablePanel mydoodles_;
-  XurmoCollapsablePanel interactions_;
-  XurmoCollapsablePanel friends_;
-  XurmoCollapsablePanel communities_;
+  XurmoCollapsablePanel network_;
   XurmoCollapsablePanel exit_;
 }

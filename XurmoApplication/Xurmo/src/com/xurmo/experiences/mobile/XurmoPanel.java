@@ -42,11 +42,11 @@ abstract public class XurmoPanel {
     screenWidth_ = screenWidth;
     screenHeight_ = screenHeight;
     midlet_ = midlet;
-    selected_ = false;    
+    selected_ = false;
     menu_ = null;
   }
   abstract protected void adjustHeights();
-  abstract public void draw(Graphics g, int x, int y);  
+  abstract public void draw(Graphics g, int x, int y);
   abstract public int h();
   public void drawMenuIfActive(Graphics g, int x, int y) {
     if (isMenuActive()) {
@@ -80,10 +80,15 @@ abstract public class XurmoPanel {
     return menu_ != null && menu_.visible_;
   }
   public void activateMenu() {
-   menu_.show(); 
+    if (menu_ != null) {
+      menu_.show();
+    }
   }
   public void deactivateMenu() {
-   menu_.hide(); 
+    if (menu_ != null) {
+      
+      menu_.hide();
+    }
   }
   public XurmoPopupMenu menu() {
     return menu_;

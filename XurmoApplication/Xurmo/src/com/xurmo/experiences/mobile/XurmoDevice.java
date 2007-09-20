@@ -128,8 +128,8 @@ public class XurmoDevice {
       c.setTime(dt);
       String out = new String("") 
       + getYearInFourDigits(c.get(Calendar.YEAR)) + "-" 
-      + getFixedWidthStringValue(c.get(Calendar.MONTH),2) + "-" 
-      + getFixedWidthStringValue(c.get(Calendar.DAY_OF_MONTH) + 1,2) 
+      + getFixedWidthStringValue(c.get(Calendar.MONTH) + 1,2) + "-" 
+      + getFixedWidthStringValue(c.get(Calendar.DAY_OF_MONTH),2) 
       + "T" + getFixedWidthStringValue(c.get(Calendar.HOUR_OF_DAY),2) 
       + ":" + getFixedWidthStringValue(c.get(Calendar.MINUTE),2) 
       + ":" + getFixedWidthStringValue(c.get(Calendar.SECOND),2) 

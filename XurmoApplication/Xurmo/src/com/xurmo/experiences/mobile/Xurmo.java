@@ -447,6 +447,11 @@ public class Xurmo extends MIDlet {
     
     homeData_ = XurmoUserAuthenticationAndSessionWSInterface.uploadPhoneBook(currentUser_.username_, currentUser_.cookie_);
   }
+  public XurmoInviteSummary getInvitablePhoneBookEntries() {
+    XurmoInviteSummary invSummary 
+        = XurmoNetworkManagementWSInterface.getInvitablePhoneBookEntries(currentUser_.username_, currentUser_.cookie_);
+    return invSummary;
+  }
   public void doLogout() {
     this.logoutUser();
   }
@@ -461,4 +466,5 @@ public class Xurmo extends MIDlet {
     destroyApp(true);
     notifyDestroyed();
   }
+  
 }

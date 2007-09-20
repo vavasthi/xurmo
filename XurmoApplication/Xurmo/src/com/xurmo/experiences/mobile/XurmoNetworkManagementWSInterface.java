@@ -93,6 +93,23 @@ public class XurmoNetworkManagementWSInterface {
     }
     return new XurmoNetworkSummaryStatus();
   }
+  public static XurmoInviteSummary getInvitablePhoneBookEntries(String username, String cookie) {
+    String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+        "<env:Header/>\n" +
+        "<env:Body>\n" +
+        "<ns0:getInvitablePhoneBookEntries>\n" +
+        "<ns0:username>" + username + "</ns0:username>\n" +
+        "<ns0:cookie>" + cookie + "</ns0:cookie>\n" +
+        XurmoDevice.getLocationParameters() +
+        "</ns0:getInvitablePhoneBookEntries>\n</env:Body>\n</env:Envelope>\n");
+    try {
+      String resp = sendRequest(soapRequest);
+      return parseInviteSummaryStatus(resp);
+    } catch(IOException ioex) {
+      ioex.printStackTrace();
+    }
+    return new XurmoInviteSummary();
+  }
   public static boolean isInteractionSuccessful(int status) {
     return status == NETWORK_INTERACTION_SUCCESS;
   }
@@ -198,6 +215,119 @@ public class XurmoNetworkManagementWSInterface {
     } catch(IOException e){
     }
     return new XurmoNetworkSummaryStatus();
+  }
+  public static XurmoInviteSummary parseInviteSummaryStatus(String resp) {
+    
+    try {
+      String cookie = null;
+      String errorCode = null;
+      String cellName = null;
+      String contactName = null;
+      String member = null;
+      String memberid = null;
+      String mobileNumber = null;
+      String uniqueId = null;
+      System.out.println("Response " + resp);
+      InputStream is = new java.io.ByteArrayInputStream(resp.getBytes());
+      InputStreamReader in = new InputStreamReader( is );
+      java.util.Vector connectableEntries = new java.util.Vector();
+      java.util.Vector joinableEntries = new java.util.Vector();
+      //Initilialize XML parser
+      KXmlParser parser = new KXmlParser();
+      parser.setInput(in);
+      while(true){
+        int evt = parser.nextTag();
+        switch(evt){
+          case org.xmlpull.v1.XmlPullParser.START_TAG:
+          {
+            String tag = parser.getName();
+            System.out.println(tag);
+            if (tag.equalsIgnoreCase("ns1:errorcode")) {
+              errorCode = new String(parser.nextText());
+            } else if (tag.equalsIgnoreCase("ns1:cookie")) {
+              cookie = new String(parser.nextText());
+            } else if (tag.equalsIgnoreCase("ns1:cellname")) {
+              cellName = new String(parser.nextText());
+            } else if (tag.equalsIgnoreCase("ns1:connectableentries")) {
+                contactName = null;
+                member = null;
+                memberid = null;
+                mobileNumber = null;
+                uniqueId = null;
+
+            } else if (tag.equalsIgnoreCase("ns1:joinableentries")) {
+                contactName = null;
+                member = null;
+                memberid = null;
+                mobileNumber = null;
+                uniqueId = null;
+
+            } else if (tag.equalsIgnoreCase("ns1:contactName")) {
+
+                contactName = new String(parser.nextText());
+            } else if (tag.equalsIgnoreCase("ns1:member")) {
+
+                member = new String(parser.nextText());
+            } else if (tag.equalsIgnoreCase("ns1:memberid")) {
+
+                memberid = new String(parser.nextText());
+            } else if (tag.equalsIgnoreCase("ns1:mobileNumber")) {
+
+                mobileNumber = new String(parser.nextText());
+            } else if (tag.equalsIgnoreCase("ns1:uniqueId")) {
+
+                uniqueId = new String(parser.nextText());
+            }
+         }
+          break;
+          case org.xmlpull.v1.XmlPullParser.END_TAG:
+          {
+            String tag = parser.getName();
+            if (tag.equalsIgnoreCase("ns1:connectableentries")) {
+              if (contactName != null && member != null && memberid != null && mobileNumber != null && uniqueId != null) {
+                XurmoInvitePhoneBookEntry xipbe 
+                  = new XurmoInvitePhoneBookEntry(contactName, member, memberid, mobileNumber, uniqueId);
+                contactName = null;
+                member = null;
+                memberid = null;
+                mobileNumber = null;
+                uniqueId = null;
+                connectableEntries.addElement(xipbe);
+              }
+            }
+            else if (tag.equalsIgnoreCase("ns1:joinableentries")) {
+              if (contactName != null && member != null && memberid != null && mobileNumber != null && uniqueId != null) {
+                XurmoInvitePhoneBookEntry xipbe 
+                  = new XurmoInvitePhoneBookEntry(contactName, member, memberid, mobileNumber, uniqueId);
+                contactName = null;
+                member = null;
+                memberid = null;
+                mobileNumber = null;
+                uniqueId = null;
+                joinableEntries.addElement(xipbe);
+              }
+            } else if (tag.equalsIgnoreCase("env:envelope")) {
+              if (cellName != null && cookie != null && errorCode != null ) {
+                System.out.println("Envelope close tag cellName =" + cellName + " cookie " + cookie + " errorCode " + errorCode);
+                return new XurmoInviteSummary(Integer.parseInt(errorCode), cookie, cellName, connectableEntries, joinableEntries);
+              } else {
+                
+                return new XurmoInviteSummary();
+              }
+            }
+            
+          }
+          break;
+        }
+      }
+    } catch (org.xmlpull.v1.XmlPullParserException ppex) {
+      
+      ppex.printStackTrace();
+      System.out.println("" +ppex.getLineNumber() + ":" + " Column " + ppex.getColumnNumber() + " " + ppex.getDetail());
+      
+    } catch(IOException e){
+    }
+    return new XurmoInviteSummary();
   }
   static public final int NETWORK_INTERACTION_SUCCESS = 0;
   static public final int NETWORK_INTERACTION_STATUS_SUCCESS_MOBILE_NOT_VALIDATED = 1;
