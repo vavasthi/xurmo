@@ -18,12 +18,13 @@ import bsh.This;
 public class XurmoInvitationForLink implements java.io.Serializable {
     
     /** Creates a new instance of XurmoInvitationForLink */
-    public XurmoInvitationForLink(String requestFromUser,
-        String phoneNumberToUser,
-        int uniqueId,
+    public XurmoInvitationForLink(
         int linkId,
         String linkName,
-        String message) {
+        String message,
+        String phoneNumberToUser,
+        String requestFromUser,
+        int uniqueId) {
       
         this.requestFromUser = requestFromUser;
         this.phoneNumberToUser = phoneNumberToUser;
@@ -31,6 +32,9 @@ public class XurmoInvitationForLink implements java.io.Serializable {
         this.linkId = linkId;
         this.linkName = linkName;
         this.message = message;
+    }
+    public XurmoInvitationForLink() {
+      
     }
     public String requestFromUser;
     public String phoneNumberToUser;

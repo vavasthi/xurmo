@@ -39,7 +39,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "XurmoPersonalAddressBook.findByUseridAndUniqueId", query = "SELECT x FROM XurmoPersonalAddressBook x WHERE x.xurmoPersonalAddressBookPK.userid = :userid and x.xurmoPersonalAddressBookPK.uniqueId = :uniqueId"),
     @NamedQuery(name = "XurmoPersonalAddressBook.findByXurmoInvitationSent", query = "SELECT x FROM XurmoPersonalAddressBook x WHERE x.xurmoInvitationSent = :xurmoInvitationSent"),
     @NamedQuery(name = "XurmoPersonalAddressBook.findByInviteToConnectEntries", query = "SELECT x FROM XurmoPersonalAddressBook x WHERE x.xurmoInvitationSent = false and x.xurmoMember = true and x.xurmoPersonalAddressBookPK.userid = :userid"),
-    @NamedQuery(name = "XurmoPersonalAddressBook.findByInviteToJoinEntries", query = "SELECT x FROM XurmoPersonalAddressBook x WHERE x.xurmoInvitationSent = false and x.xurmoMember = false and x.xurmoPersonalAddressBookPK.userid = :userid")
+    @NamedQuery(name = "XurmoPersonalAddressBook.findByInviteToJoinEntries", query = "SELECT x FROM XurmoPersonalAddressBook x WHERE x.xurmoInvitationSent = false and x.xurmoMember = false and x.xurmoPersonalAddressBookPK.userid = :userid"),
+    @NamedQuery(name = "XurmoPersonalAddressBook.findByPhoneNumber", query = "select x from XurmoPersonalAddressBook x, XurmoPersonalAddressBookPhoneNumbers pn where pn.xurmoPersonalAddressBookPhoneNumbersPK.userid = x.xurmoPersonalAddressBookPK.userid and pn.phoneNumber = :phoneNumber and x.xurmoPersonalAddressBookPK.uniqueId = pn.xurmoPersonalAddressBookPhoneNumbersPK.uniqueId")
  })
 public class XurmoPersonalAddressBook implements Serializable {
 

@@ -15,15 +15,15 @@ package com.xurmo.connect.user;
  */
 public class XurmoInvitationDisposition implements java.io.Serializable {
   
-  public String requestFromUser;
-  public String requestToUser;
+  public int requestFromUser;
+  public int requestToUser;
   public int linkId;
   public String linkName;
   public String message;
   public int disposition;
   /** Creates a new instance of XurmoInvitationDisposition */
-  public XurmoInvitationDisposition(String requestFromUser,
-      String requestToUser,
+  public XurmoInvitationDisposition(int requestFromUser,
+      int requestToUser,
       int linkId,
       String linkName,
       String message,

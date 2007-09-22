@@ -30,7 +30,7 @@ import javax.persistence.Table;
         @NamedQuery(name = "XurmoPersonalAddressBookAddress.findByAttributeId", query = "SELECT x FROM XurmoPersonalAddressBookAddress x WHERE x.xurmoPersonalAddressBookAddressPK.attributeId = :attributeId"),
         @NamedQuery(name = "XurmoPersonalAddressBookAddress.findByEntry", query = "SELECT x FROM XurmoPersonalAddressBookAddress x WHERE x.xurmoPersonalAddressBookAddressPK.entry = :entry"),
         @NamedQuery(name = "XurmoPersonalAddressBookAddress.findByAddress", query = "SELECT x FROM XurmoPersonalAddressBookAddress x WHERE x.address = :address")
-    })
+})
 public class XurmoPersonalAddressBookAddress implements Serializable {
 
     /**

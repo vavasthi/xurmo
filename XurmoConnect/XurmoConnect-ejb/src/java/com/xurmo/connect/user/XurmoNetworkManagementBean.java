@@ -32,31 +32,22 @@ public class XurmoNetworkManagementBean implements XurmoNetworkManagementRemote,
   /** Creates a new instance of XurmoNetworkManagementBean */
   public XurmoNetworkManagementBean() {
   }
-  public XurmoInvitationSendStatus sendInvitations(String username, String cookie, XurmoInvitationForLink[] invitations, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString) {
+  public XurmoNetworkSummaryStatus sendInvitations(String username, String cookie, XurmoInvitationForLink[] invitations, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String cellName) {
     XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
     if (xus != null && cookie.equals(xus.getCookie())) {
-      XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString, em_);
-      return new XurmoInvitationSendStatus(XurmoUserInvitationManager.instance().sendInvitation(username, invitations, em_), cookie);
-    } else {
-      return new XurmoInvitationSendStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_SEND_INVITATION, cookie);
-    }
-  }
-  public XurmoNetworkLinkType[] getNetworkTypes(String username, String cookie, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString) throws XurmoCouldNotRetrieveNetworkLinkTypeException {
-    XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
-    System.out.println("New Cookie :" + cookie + " old cookie :" + xus.getCookie());
-    if (xus != null && cookie.equals(xus.getCookie())) {
-      
-      XurmoLocationManager.updateLocation(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString, em_);
-      List res = em_.createNamedQuery("XurmoNetworkLinkType.findAll").getResultList();
-      XurmoNetworkLinkType[] out = new XurmoNetworkLinkType[res.size()];
-      int i = 0;
-      for(Iterator itr = res.iterator(); itr.hasNext(); ) {
-        out[i] = (XurmoNetworkLinkType)(itr.next());
-        ++i;
+      int status 
+          = XurmoUserInvitationManager.instance().sendInvitation(username, invitations, em_);
+      if (status == XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR) {
+        return XurmoNetworkManager.getNetworkSummary(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
       }
-      return out;
+      else {
+        
+      return new XurmoNetworkSummaryStatus(status, cookie, cellName);
+      }
+    } else {
+      //TODO implement getNetworkSummary
+      return new XurmoNetworkSummaryStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_SEND_INVITATION, cookie, cellName);
     }
-    throw new XurmoCouldNotRetrieveNetworkLinkTypeException();
   }
   public XurmoRequestToConnectResponseType[] getRequestToConnectResponseTypes(String username, String cookie, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String locationString) throws XurmoCouldNotRetrieveRequestToConnectResponseTypesException {
     XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
@@ -151,12 +142,13 @@ public class XurmoNetworkManagementBean implements XurmoNetworkManagementRemote,
         Query rfuq = em_.createNamedQuery("XurmoUser.findByUserid");
         rfuq.setParameter("userid", rtci.xurmoRequestToConnectInboxPK.getRequestFrom());
         XurmoUser rfu = (XurmoUser)rfuq.getSingleResult();
-        retValue[k] = new XurmoInvitationForLink(rfu.getUsername(),
-            "",
-            rtci.getLinkId(),
-            rtci.getUniqueId(),
+        retValue[k] = new XurmoInvitationForLink(rtci.getLinkId(),
             xnlt.getLinkName(),
-            rtci.getMsg());
+            rtci.getMsg(),
+            xu.getPrimaryMobile(),
+            rfu.getUsername(),
+            rtci.getUniqueId());
+        
         ++k;
       }
       return retValue;
@@ -168,15 +160,7 @@ public class XurmoNetworkManagementBean implements XurmoNetworkManagementRemote,
     
     XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
     if (xus != null && cookie.equals(xus.getCookie())) {
-      Query uq = em_.createNamedQuery("XurmoUser.findByUsername");
-      uq.setParameter("username", username);
-      XurmoUser xu = (XurmoUser)uq.getSingleResult();
-      XurmoCellLocationMap xclm
-          = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
-      String[] memberOfNetworks = XurmoNetworkManager.memberOfNetworks(xu.getUserid(), em_);
-      int numberOfContacts = XurmoNetworkManager.numberOfContacts(xu.getUserid(), em_);
-      XurmoUserGlobalData[] contactsAlreadyUser = XurmoNetworkManager.contactsAlreadyUser(username, em_);
-      return new XurmoNetworkSummaryStatus(cookie, xclm.getLocation(), memberOfNetworks, numberOfContacts, contactsAlreadyUser);
+      return XurmoNetworkManager.getNetworkSummary(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
     }
     //TODO implement getNetworkSummary
     return new XurmoNetworkSummaryStatus(XurmoNetworkInteractionStatus.NETWORKINTERACTION_COULD_NOT_GET_SUMMARY, cookie, cellName);
@@ -187,12 +171,17 @@ public class XurmoNetworkManagementBean implements XurmoNetworkManagementRemote,
         = XurmoPersonalAddressBookManager.getConnectablePhoneBookEntries(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
     XurmoInvitePhoneBookEntry[] joinableEntries 
         = XurmoPersonalAddressBookManager.getJoinablePhoneBookEntries(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
+    XurmoNetworkLinkType[] linkTypes 
+        = XurmoNetworkManager.getNetworkLinkTypes(em_);
     if (connectableEntries == null || joinableEntries == null) {
       return new XurmoInviteSummaryStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_COULD_NOT_RETRIEVE_INVITABLE_ENTRIES, cookie ,cellName);
     }
     else {
       
-      return new XurmoInviteSummaryStatus(cookie ,cellName, connectableEntries, joinableEntries);
+      return new XurmoInviteSummaryStatus(cookie ,cellName, connectableEntries, joinableEntries, linkTypes);
     }
   }  
+  public XurmoNetworkMessages getNetworkMessages(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
+    return XurmoNetworkManager.getNetworkMessages(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
+  }
 }

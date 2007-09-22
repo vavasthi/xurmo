@@ -213,7 +213,9 @@ insert into XurmoNetworkLinkType values(1, "Family");
 insert into XurmoNetworkLinkType values(2, "Friends");
 insert into XurmoNetworkLinkType values(3, "Professional");
 insert into XurmoNetworkLinkType values(4, "Alumni");
-insert into XurmoNetworkLinkType values(5, "Casual");
+insert into XurmoNetworkLinkType values(5, "Sports");
+insert into XurmoNetworkLinkType values(6, "Romantic");
+insert into XurmoNetworkLinkType values(7, "Casual");
 
 drop table XurmoRequestToConnectResponseType;
 create table XurmoRequestToConnectResponseType

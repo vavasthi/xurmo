@@ -23,19 +23,11 @@ public class XurmoNetworkManagementServiceBean {
      * Web service operation
      */
     @WebMethod
-    public XurmoInvitationSendStatus sendInvitation(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "invitationsForLink") XurmoInvitationForLink[] invitationsForLink, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "locationString") String locationString) {
+    public XurmoNetworkSummaryStatus sendInvitation(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "invitationsForLink") XurmoInvitationForLink[] invitationsForLink, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
         // TODO implement operation 
-        return xurmoNetworkManagementBean.sendInvitations(username, cookie, invitationsForLink, mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString);
+        return xurmoNetworkManagementBean.sendInvitations(username, cookie, invitationsForLink, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
     }
 
-    /**
-     * Web service operation
-     */
-    @WebMethod
-    public XurmoNetworkLinkType[] getNetworkLinkTypes(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "locationString") String locationString) throws XurmoCouldNotRetrieveNetworkLinkTypeException {
-        // TODO implement operation 
-        return xurmoNetworkManagementBean.getNetworkTypes(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, locationString);
-    }
 
      /**
      * Web service operation
@@ -62,6 +54,14 @@ public class XurmoNetworkManagementServiceBean {
     public XurmoNetworkSummaryStatus getNetworkSummary(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode,@WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
         // TODO implement operation 
         return xurmoNetworkManagementBean.getNetworkSummary(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
+    }
+    /**
+     * Web service operation
+     */
+    @WebMethod
+    public XurmoNetworkMessages getNetworkMessages(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode,@WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
+        // TODO implement operation 
+        return xurmoNetworkManagementBean.getNetworkMessages(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
     }
 
     /**

@@ -45,6 +45,7 @@ public class XurmoUserInvitationManager {
           rtc.setDisposed(false);
           rtc.setLinkId(invitations[i].linkId);
           rtc.setMsg(invitations[i].message);
+          rtc.setUniqueId(invitations[i].uniqueId);
           em.persist(rtc);
         }
         catch (javax.persistence.NoResultException nre) {
@@ -52,6 +53,7 @@ public class XurmoUserInvitationManager {
           XurmoRequestToJoinInbox rtjm 
               = new XurmoRequestToJoinInbox(invitations[i].phoneNumberToUser, invitations[i].linkId, fu.getUserid());
           rtjm.setMsg(invitations[i].message);
+          rtjm.setUniqueId(invitations[i].uniqueId);
           em.persist(rtjm);
           XurmoShortMessageServiceInterface.sendSMS(rtjm);
         }        
