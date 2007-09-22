@@ -34,7 +34,7 @@ public class Xurmo extends MIDlet {
   XurmoCanvas home_;
   XurmoUserHomeScreenData homeData_;
   Vector otherSocialNetworks_;
-  
+  XurmoNetworkSummaryStatus networkSummary_; 
   private final String userAuthenticationRecordName_ = new String("XurmoUserAuthenticationRecords");;
   private final String otherSocialNetworksRecordName_ = new String("XurmoMyOtherSocialNetworkRecords");;
   private XurmoBluetoothServiceListener localBtListener_;
@@ -54,6 +54,7 @@ public class Xurmo extends MIDlet {
     currentUser_ = new XurmoCurrentUser();
     XurmoThemeManager.init(this);
     homeData_ = null;
+    networkSummary_ = null;
     otherSocialNetworks_ = new Vector();
     try {
       
@@ -329,6 +330,7 @@ public class Xurmo extends MIDlet {
     System.out.println("Setting presence and status");
     currentUser_.presence_ = homeData_.presence;
     XurmoUserAuthenticationReturnStatus status = homeData_.status;
+    System.out.println("Home data received for user " + currentUser_.username_ + " with status " + homeData_.status.errorCode_);
     if (status != null &&
         XurmoUserAuthenticationAndSessionWSInterface.isAuthenticationStatusSuccessful(status.errorCode_)) {
       currentUser_.loggedIn(currentUser_.username_, currentUser_.password_, status.cookie_, status.cellName_, homeData_.presence);
@@ -451,6 +453,23 @@ public class Xurmo extends MIDlet {
     XurmoInviteSummary invSummary 
         = XurmoNetworkManagementWSInterface.getInvitablePhoneBookEntries(currentUser_.username_, currentUser_.cookie_);
     return invSummary;
+  }
+
+  public XurmoNetworkSummaryStatus getNetworkSummaryStatus() {
+    if (networkSummary_ == null) {
+      
+    networkSummary_ 
+        = XurmoNetworkManagementWSInterface.getNetworkSummary(currentUser_.username_, currentUser_.cookie_);
+    }
+    return networkSummary_;
+  }
+  public XurmoNetworkMessagesStatus getNetworkMessages() {
+    XurmoNetworkMessagesStatus status 
+        = XurmoNetworkManagementWSInterface.getNetworkMessages(currentUser_.username_, currentUser_.cookie_);
+    return status;
+  }
+  public void setNetworkSummaryStatus(XurmoNetworkSummaryStatus networkSummary) {
+    networkSummary_ = networkSummary;
   }
   public void doLogout() {
     this.logoutUser();

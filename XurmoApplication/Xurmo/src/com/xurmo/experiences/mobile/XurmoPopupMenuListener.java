@@ -15,5 +15,5 @@ package com.xurmo.experiences.mobile;
  */
 public interface XurmoPopupMenuListener {
   
-  public void menuAction(XurmoPopupMenuItem item);
+  public void menuAction(int index, XurmoPopupMenuItem item);
 }

@@ -46,7 +46,7 @@ public class XurmoRegisterUserListener implements CommandListener {
     }
     private XurmoUserAuthenticationReturnStatus registerAndLoginUser() {
         
-        XurmoUserAuthenticationReturnStatus status
+        int rstatus
                 = XurmoUserAuthenticationAndSessionWSInterface.registerUser(registerForm_.getUsername(),
                 registerForm_.getPassword(),
                 registerForm_.getSalutation(),
@@ -56,12 +56,12 @@ public class XurmoRegisterUserListener implements CommandListener {
                 registerForm_.getEmail(),
                 registerForm_.getGender(),
                 registerForm_.getDob());
-        
-        if (status != null && XurmoUserAuthenticationAndSessionWSInterface.isAuthenticationStatusSuccessful(status.errorCode_)) {
+        System.out.println("Authentication status is " + rstatus);
+        if (XurmoUserAuthenticationAndSessionWSInterface.isAuthenticationStatusSuccessful(rstatus)) {
             midlet_.currentUser_.setUsernameAndPassword(registerForm_.getUsername(), registerForm_.getPassword());
             return midlet_.performLogin();
         }
-        return status;
+        return new XurmoUserAuthenticationReturnStatus("",rstatus,"");
     }
     public void commandAction(Command cmd, Displayable c) {
         

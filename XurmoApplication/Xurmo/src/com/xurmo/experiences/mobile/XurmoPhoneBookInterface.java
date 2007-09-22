@@ -282,12 +282,19 @@ public class XurmoPhoneBookInterface {
         case Contact.NAME:
         {
           String[] nma = c.getStringArray(currentField, 0);
-          String name = nma[0];
-          for (int j = 1; j < nma.length; ++j) {
+          String name = new String("");
+          for (int j = 0; j < nma.length; ++j) {
             
-            if (nma[j] != null) {
+            if (nma[j] != null && !nma[j].equalsIgnoreCase("null") && !nma[j].equals("")) {
               
-              name += " " + nma[j];
+              if (name.equals("")) {
+                
+                name += nma[j];
+              }
+              else {
+                
+                name += " " + nma[j];
+              }
             }
           }
           contactName = "<ns0:contactName>" + name + "</ns0:contactName>\n";

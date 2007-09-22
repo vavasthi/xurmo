@@ -24,7 +24,7 @@ public class XurmoMePanelPopupMenuListener implements XurmoPopupMenuListener {
       new XurmoPopupMenuItem("Profile Details")
     };
   }
-  public void menuAction(XurmoPopupMenuItem item) {
+  public void menuAction(int index, XurmoPopupMenuItem item) {
     
   }
   public XurmoPopupMenuItem[] items() {

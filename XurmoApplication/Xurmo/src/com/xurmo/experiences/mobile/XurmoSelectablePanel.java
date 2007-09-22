@@ -56,6 +56,7 @@ public class XurmoSelectablePanel extends XurmoPanel {
     Font sf = Font.getFont(Font.FACE_PROPORTIONAL, Font.STYLE_PLAIN, Font.SIZE_SMALL);
     int origY = y;
     XurmoTheme ct = XurmoThemeManager.instance().getCurrentTheme();
+    String s = additionalText();
     if (selected()) {
       g.setColor(ct.collapsablePanelSelectedTitleBackgroundValue_);
       g.drawRect(x, y, screenWidth_, h_);
@@ -65,6 +66,9 @@ public class XurmoSelectablePanel extends XurmoPanel {
       y += lf.getHeight();
       g.setFont(sf);
       g.drawString(line2_, 0 , y, g.LEFT | g.TOP);    
+      if(s != null) {
+        g.drawString(s, screenWidth_, y, g.RIGHT | g.TOP);
+      }
     }
     else {
       g.setColor(ct.collapsablePanelUnselectedBackgroundColorValue_);
@@ -75,6 +79,9 @@ public class XurmoSelectablePanel extends XurmoPanel {
       y += lf.getHeight();
       g.setFont(sf);
       g.drawString(line2_, 0 , y, g.LEFT | g.TOP);    
+      if(s != null) {
+        g.drawString(s, screenWidth_, y, g.RIGHT | g.TOP);
+      }
     }
     if (ticked_) {
       g.drawImage(ct.checkmarkImage_, 0, y, Graphics.LEFT | Graphics.BOTTOM);
@@ -99,6 +106,12 @@ public class XurmoSelectablePanel extends XurmoPanel {
   }
   public int screenHeight() {
     return screenHeight_;
+  }
+  public String additionalText() {
+    return null;
+  }
+  public void clear() {
+    
   }
   private int h_;
   protected boolean ticked_;

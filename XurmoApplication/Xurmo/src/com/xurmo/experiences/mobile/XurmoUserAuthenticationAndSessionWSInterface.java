@@ -76,7 +76,7 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
     conn.close();
     return resp;
   }
-  public static XurmoUserAuthenticationReturnStatus registerUser(String username, String password, String salutation, String firstName, String lastName, String mobile, String email, String gender, String dob) {
+  public static int registerUser(String username, String password, String salutation, String firstName, String lastName, String mobile, String email, String gender, String dob) {
     String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
         "<env:Header/>\n" +
         "<env:Body>\n" +
@@ -96,11 +96,11 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
         "</ns0:createUser>\n</env:Body>\n</env:Envelope>\n");
     try {
       String resp = sendRequest(soapRequest);
-      return parseStatus(resp);
+      return parseRegistrationStatus(resp);
     } catch(IOException ioex) {
       ioex.printStackTrace();
     }
-    return new XurmoUserAuthenticationReturnStatus();
+    return USER_AUTHENTICATION_STATUS_FAILURE_ACCOUNT_CREATION_ERROR;
   }
   public static XurmoUserHomeScreenData loginUser(String username, String password) {
     String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
@@ -259,6 +259,49 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
     } catch(IOException e){
     }
     return new XurmoUserAuthenticationReturnStatus();
+  }
+  public static int parseRegistrationStatus(String resp) {
+    
+    try {
+      String result = null;
+      InputStream is = new java.io.ByteArrayInputStream(resp.getBytes());
+      InputStreamReader in = new InputStreamReader( is );
+      //Initilialize XML parser
+      KXmlParser parser = new KXmlParser();
+      parser.setInput(in);
+      while(true){
+        int evt = parser.nextTag();
+        switch(evt){
+          case org.xmlpull.v1.XmlPullParser.START_TAG:
+          {
+            String tag = parser.getName();
+            if (tag.equalsIgnoreCase("ns1:result")) {
+              result = new String(parser.nextText());
+            } 
+          }
+          break;
+          case org.xmlpull.v1.XmlPullParser.END_TAG:
+          {
+            String tag = parser.getName();
+            if (tag.equalsIgnoreCase("env:envelope")) {
+              if (result != null) {
+                
+                return Integer.parseInt(result);
+              } else {
+                
+                return USER_AUTHENTICATION_STATUS_FAILURE_ACCOUNT_CREATION_ERROR;
+              }
+            }
+            
+          }
+          break;
+        }
+      }
+    } catch (org.xmlpull.v1.XmlPullParserException ppex) {
+      
+    } catch(IOException e){
+    }
+    return USER_AUTHENTICATION_STATUS_FAILURE_ACCOUNT_CREATION_ERROR;
   }
   public static XurmoUserHomeScreenData parseHomeScreenData(String resp) {
     

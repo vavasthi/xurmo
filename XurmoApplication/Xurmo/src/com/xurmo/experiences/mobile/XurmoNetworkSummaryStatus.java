@@ -39,7 +39,7 @@ public class XurmoNetworkSummaryStatus {
   }
   public XurmoNetworkSummaryStatus() {
     
-    status_ = new XurmoNetworkInteractionStatus(XurmoNetworkManagementWSInterface.NETWORK_INTERACTION_STATUS_SERVER_UNAVAILABLE, null, null);
+    status_ = new XurmoNetworkInteractionStatus(XurmoNetworkManagementWSInterface.NETWORK_INTERACTION_SERVER_NOT_AVAILABLE, null, null);
     memberOfNetworks_ = new String[0];
     contactsAlreadyUser_ = new XurmoUserGlobalData[0];
     numberOfContacts_ = 0;

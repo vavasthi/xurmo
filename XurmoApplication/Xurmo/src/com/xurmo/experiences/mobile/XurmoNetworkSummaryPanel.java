@@ -20,27 +20,26 @@ import javax.microedition.lcdui.Font;
  */
 public class XurmoNetworkSummaryPanel extends XurmoCollapsablePanel {
   
-  XurmoNetworkSummaryStatus networkSummary_;
   /**
    * Creates a new instance of XurmoNetworkSummaryPanel
    */
   public XurmoNetworkSummaryPanel(Xurmo midlet, int screenWidth, int screenHeight, Image icon, String title) {
     
     super(midlet, screenWidth, screenHeight, icon, title);
-    networkSummary_ = XurmoNetworkManagementWSInterface.getNetworkSummary(midlet_.currentUser_.username_, midlet_.currentUser_.cookie_);
   }
   public void draw(Graphics g, int x, int y) {
     Font of = g.getFont();
     int oc = g.getColor();
     int origY = y;
     drawBoundingBox(g, x, y);
+    XurmoNetworkSummaryStatus networkSummary = midlet_.getNetworkSummaryStatus();
     if (selected()) {
-      if (networkSummary_.status_.errorCode_ == XurmoNetworkManagementWSInterface.NETWORK_INTERACTION_SUCCESS) {
+      if (networkSummary.status_.errorCode_ == XurmoNetworkManagementWSInterface.NETWORK_INTERACTION_NO_ERROR) {
         
       y = th_ + origY;
-      g.drawString("Total " + networkSummary_.numberOfContacts_ + " contacts of which " + networkSummary_.contactsAlreadyUser_.length + " are already members of Xurmo", 0, y, g.LEFT | g.TOP);
+      g.drawString("Total " + networkSummary.numberOfContacts_ + " contacts of which " + networkSummary.contactsAlreadyUser_.length + " are already members of Xurmo", 0, y, g.LEFT | g.TOP);
       y += g.getFont().getHeight();
-      g.drawString("Member of  " + networkSummary_.memberOfNetworks_.length + " networks of Xurmo", 0, y, g.LEFT | g.TOP);
+      g.drawString("Member of  " + networkSummary.memberOfNetworks_.length + " networks of Xurmo", 0, y, g.LEFT | g.TOP);
       }
       else {
         

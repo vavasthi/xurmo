@@ -109,7 +109,7 @@ public class XurmoPopupMenu {
   public void fireKey() {
     if (listener_ != null) {
       
-      listener_.menuAction(items_[currentItem_]);
+      listener_.menuAction(currentItem_, items_[currentItem_]);
       hide();
     }
   }
