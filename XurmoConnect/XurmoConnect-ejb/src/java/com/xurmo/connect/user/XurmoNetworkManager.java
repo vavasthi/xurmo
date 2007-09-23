@@ -100,7 +100,7 @@ public class XurmoNetworkManager {
     XurmoCellLocationMap xclm
         = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em);
     
-    javax.persistence.Query rtcq = em.createNamedQuery("XurmoRequestToConnectInbox.findByRequestTo");
+    javax.persistence.Query rtcq = em.createNamedQuery("XurmoRequestToConnectInbox.findByPendingRequestTo");
     rtcq.setParameter("requestTo", xu.getUserid());
     java.util.List rtcl = rtcq.getResultList();
     XurmoNetworkRequestToConnectMessage[] rtcm = new XurmoNetworkRequestToConnectMessage[rtcl.size()];

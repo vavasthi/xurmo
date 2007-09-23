@@ -36,6 +36,11 @@ public class XurmoInvitationDisposition implements java.io.Serializable {
     this.message = message;
     this.disposition = disposition;
   }
+  /** Creates a new instance of XurmoInvitationDisposition */
+  public XurmoInvitationDisposition() {
+    
+  }
+  
   
   public static final int ACCEPT = 0x01;
   public static final int DECLINE = 0x02;

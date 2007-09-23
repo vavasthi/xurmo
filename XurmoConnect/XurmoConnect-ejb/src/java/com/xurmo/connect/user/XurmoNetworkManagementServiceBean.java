@@ -42,7 +42,7 @@ public class XurmoNetworkManagementServiceBean {
      * Web service operation
      */
     @WebMethod
-    public XurmoInvitationDispositionStatus disposeInvitations(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "invitationDisposition") XurmoInvitationDisposition[] invitationDisposition, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode,@WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
+    public XurmoNetworkSummaryStatus disposeInvitations(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "invitationDisposition") XurmoInvitationDisposition[] invitationDisposition, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode,@WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
         // TODO implement operation 
         return xurmoNetworkManagementBean.disposeInvitations(username, cookie, invitationDisposition, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
     }

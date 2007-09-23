@@ -100,11 +100,6 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
         "Unknown",
         btAddress);
     em_.persist(xu);
-    em_.refresh(xu);
-    // If this new user is in the address book of existing users, please update their
-    // address books with the reference to this user.
-    XurmoPersonalAddressBookManager.identifyAndUpdateExistingPhoneBookEntries(xu, em_); 
-    XurmoNetworkManager.convertRequestToJoinToRequestToConnect(xu.getUserid(), mobile, em_);
     return XurmoUserRegistrationStatus.USER_REGISTRATION_NO_ERROR;
   }
   private boolean validUsername(String username) {
@@ -156,6 +151,10 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
     try {
       
       xu = (XurmoUser) (em_.createNamedQuery("XurmoUser.findByUsername").setParameter("username", username).getSingleResult());
+      // If this new user is in the address book of existing users, please update their
+      // address books with the reference to this user.
+      XurmoPersonalAddressBookManager.identifyAndUpdateExistingPhoneBookEntries(xu, em_);
+      XurmoNetworkManager.convertRequestToJoinToRequestToConnect(xu.getUserid(), xu.getPrimaryMobile(), em_);
       if (XurmoUserEncryption.instance().validateEncryptedPassword(password, xu.getPassword())) {
         XurmoUserSession xus = XurmoUserSessionManager.instance().createSession(xu.getUsername(), XurmoUserEncryption.instance().getRandomCookie(mobileCountryCode + "-" + mobileNetworkCode + "-" + username), xclm.getLocationId(), em_);
         cookie = xus.getCookie();
@@ -181,7 +180,7 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
   }
   public XurmoUserHomeScreenData getHomeScreenData(String username, String cookie, String imei, String presence, String twitterUsername, String twitterPassword, String jaikuUsername, String jaikuPersonalKey, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName) {
     
-    XurmoUserHomeScreenData homeData 
+    XurmoUserHomeScreenData homeData
         = XurmoUserManager.getHomeScreenData(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
     XurmoUserManager.updatePresence(username, cookie, imei, presence, twitterUsername, twitterPassword, jaikuUsername, jaikuPersonalKey, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
     return homeData;
