@@ -90,7 +90,20 @@ public class XurmoNetworkManager {
     String[] memberOfNetworks = XurmoNetworkManager.memberOfNetworks(xu.getUserid(), em);
     int numberOfContacts = XurmoNetworkManager.numberOfContacts(xu.getUserid(), em);
     XurmoUserGlobalData[] contactsAlreadyUser = XurmoNetworkManager.contactsAlreadyUser(username, em);
-    return new XurmoNetworkSummaryStatus(cookie, xclm.getLocation(), memberOfNetworks, numberOfContacts, contactsAlreadyUser);
+    String[] availableNetwork = XurmoNetworkManager.getAvailableNetworks(em);
+    return new XurmoNetworkSummaryStatus(cookie, xclm.getLocation(), memberOfNetworks, numberOfContacts, contactsAlreadyUser, availableNetwork);
+  }
+  private static String[] getAvailableNetworks(javax.persistence.EntityManager em) {
+    javax.persistence.Query q = em.createNamedQuery("XurmoNetworkLinkType.findAll");
+    java.util.List l = q.getResultList();
+    String[] out = new String[l.size()];
+    java.util.Iterator i = l.iterator();
+    int k = 0;
+    while (i.hasNext()) {
+      out[k] = ((XurmoNetworkLinkType)(i.next())).getLinkName();
+      ++k;
+    }
+    return out;
   }
   public static XurmoNetworkMessages getNetworkMessages(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName, javax.persistence.EntityManager em) {
     

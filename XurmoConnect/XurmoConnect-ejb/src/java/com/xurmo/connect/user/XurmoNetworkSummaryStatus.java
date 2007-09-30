@@ -18,17 +18,20 @@ public class XurmoNetworkSummaryStatus implements java.io.Serializable {
     public String[] memberOfNetworks;
     public int numberOfContacts;
     public XurmoUserGlobalData[] contactsAlreadyUser;
+    public String[] availableNetwork;
     /** Creates a new instance of XurmoNetworkSummaryStatus */
-    public XurmoNetworkSummaryStatus(String cookie, String cellName, String[] memberOfNetworks, int numberOfContacts, XurmoUserGlobalData[] contactsAlreadyUser) {
+    public XurmoNetworkSummaryStatus(String cookie, String cellName, String[] memberOfNetworks, int numberOfContacts, XurmoUserGlobalData[] contactsAlreadyUser, String[] availableNetwork) {
         this.status = new XurmoNetworkInteractionStatus(cookie, cellName);
         this.memberOfNetworks = memberOfNetworks;
         this.numberOfContacts = numberOfContacts;
         this.contactsAlreadyUser = contactsAlreadyUser;
+        this.availableNetwork = availableNetwork;
     }    
     public XurmoNetworkSummaryStatus(int error, String cookie, String cellName) {
         this.status = new XurmoNetworkInteractionStatus(error, cookie, cellName);
         this.memberOfNetworks = new String[0];
         this.numberOfContacts = 0;
         this.contactsAlreadyUser = new XurmoUserGlobalData[0];
+        this.availableNetwork = new String[0];
     }    
 }
