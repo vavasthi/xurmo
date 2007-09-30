@@ -19,17 +19,18 @@ import javax.microedition.lcdui.Font;
  * @author Vinay
  */
 public class XurmoMePanel extends XurmoCollapsablePanel {
-  
+  XurmoHomeScreen screen_;
   /**
    * Creates a new instance of XurmoMePanel
    */
-  public XurmoMePanel(Xurmo midlet, int screenWidth, int screenHeight, Image icon, String title) {
+  public XurmoMePanel(Xurmo midlet, XurmoHomeScreen screen, int screenWidth, int screenHeight, Image icon, String title) {
     
     super(midlet, screenWidth, screenHeight, icon, title);
+    screen_ = screen;
     createMenu();
   }
   void createMenu() {
-    XurmoMePanelPopupMenuListener listener = new XurmoMePanelPopupMenuListener();
+    XurmoMePanelPopupMenuListener listener = new XurmoMePanelPopupMenuListener(midlet_, screen_);
     XurmoPopupMenu xpm = new XurmoPopupMenu(midlet_,
         this.screenWidth_,
         this.screenHeight_,
@@ -47,7 +48,7 @@ public class XurmoMePanel extends XurmoCollapsablePanel {
       y = th_ + origY;
       g.drawString(midlet_.getHomeScreenData().fname + " " + midlet_.getHomeScreenData().lname, 0, y, g.LEFT | g.TOP);
       y += g.getFont().getHeight();
-      g.drawString(midlet_.getHomeScreenData().status.cellName_, 0, y, g.LEFT | g.TOP);
+      g.drawString("@" + midlet_.getHomeScreenData().status.cellName_ + " " + midlet_.getHomeScreenData().presence, 0, y, g.LEFT | g.TOP);
     }
     g.setColor(oc);
     g.setFont(of);

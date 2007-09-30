@@ -26,9 +26,9 @@ public class XurmoCommunitiesPanel extends XurmoCollapsablePanel {
   public XurmoCommunitiesPanel(Xurmo midlet, int screenWidth, int screenHeight, Image icon, String title) {
     
     super(midlet, screenWidth, screenHeight, icon, title);
-    createMenu();
+ //   createMenu();
   }
-  void createMenu() {
+/*  void createMenu() {
     XurmoMePanelPopupMenuListener listener = new XurmoMePanelPopupMenuListener();
     XurmoPopupMenu xpm = new XurmoPopupMenu(midlet_,
         this.screenWidth_,
@@ -36,7 +36,7 @@ public class XurmoCommunitiesPanel extends XurmoCollapsablePanel {
         listener.items(),
         listener);
     this.setMenu(xpm);
-  }
+  }*/
   public void draw(Graphics g, int x, int y) {
     Font of = g.getFont();
     int oc = g.getColor();

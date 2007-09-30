@@ -42,7 +42,7 @@ public class XurmoNumberSliderPanel extends XurmoPanel {
     line1_ = line1;
     line2_ = line2;
     value_ = value;
-    lowerLimit_ = lowerLimit_;
+    lowerLimit_ = lowerLimit;
     upperLimit_ = upperLimit;
     selected(false);
   }
@@ -91,6 +91,12 @@ public class XurmoNumberSliderPanel extends XurmoPanel {
     if (value_ > lowerLimit_) {
       --value_;
     }
+  }
+  public void leftKey() {
+    decrement();
+  }
+  public void rightKey() {
+    increment();
   }
   public int value() {
     return value_;

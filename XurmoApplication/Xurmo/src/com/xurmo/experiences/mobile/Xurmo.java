@@ -457,11 +457,14 @@ public class Xurmo extends MIDlet {
 
   public XurmoNetworkSummaryStatus getNetworkSummaryStatus() {
     if (networkSummary_ == null) {
-      
-    networkSummary_ 
-        = XurmoNetworkManagementWSInterface.getNetworkSummary(currentUser_.username_, currentUser_.cookie_);
+
+      this.updateNetworkSummaryStatus();
     }
     return networkSummary_;
+  }
+  public void updateNetworkSummaryStatus() {
+    networkSummary_ 
+        = XurmoNetworkManagementWSInterface.getNetworkSummary(currentUser_.username_, currentUser_.cookie_);
   }
   public XurmoNetworkMessagesStatus getNetworkMessages() {
     XurmoNetworkMessagesStatus status 

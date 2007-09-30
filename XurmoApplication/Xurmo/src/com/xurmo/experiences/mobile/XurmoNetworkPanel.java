@@ -18,18 +18,19 @@ import javax.microedition.lcdui.Font;
  *
  * @author Vinay
  */
-public class XurmoFriendsPanel extends XurmoCollapsablePanel {
+public class XurmoNetworkPanel extends XurmoCollapsablePanel {
   
   /**
    * Creates a new instance of XurmoMePanel
    */
-  public XurmoFriendsPanel(Xurmo midlet, int screenWidth, int screenHeight, Image icon, String title) {
-    
+  public XurmoNetworkPanel(Xurmo midlet, XurmoHomeScreen screen, int screenWidth, int screenHeight, Image icon, String title) {
+  
     super(midlet, screenWidth, screenHeight, icon, title);
+    screen_ = screen;
     createMenu();
   }
   void createMenu() {
-    XurmoMePanelPopupMenuListener listener = new XurmoMePanelPopupMenuListener();
+    XurmoNetworkPanelPopupMenuListener listener = new XurmoNetworkPanelPopupMenuListener(midlet_, screen_);
     XurmoPopupMenu xpm = new XurmoPopupMenu(midlet_,
         this.screenWidth_,
         this.screenHeight_,
@@ -52,4 +53,5 @@ public class XurmoFriendsPanel extends XurmoCollapsablePanel {
     g.setColor(oc);
     g.setFont(of);
   }
+  XurmoHomeScreen screen_;
 }

@@ -52,6 +52,8 @@ public class XurmoSliderWithOneAction extends XurmoCanvas implements XurmoAnimat
     dstRect_ = new XurmoRectangle(0, tbHeight_, getWidth(), getHeight() - tbHeight_);
     dir_ = dir;
     xDelta_ = 0;
+    line1_ = line1;
+    line2_ = line2;
     this.setFullScreenMode(true);
     confirmed_ = false;
   }
@@ -83,6 +85,7 @@ public class XurmoSliderWithOneAction extends XurmoCanvas implements XurmoAnimat
     g.fillRoundRect(sx - 2, sy - 2, dialogWidth + 4, dialogHeight + 4, 20, 20);
     g.setColor(ct.collapsablePanelSelectedTitleBackgroundValue_);
     g.fillRoundRect(sx - 2, sy - 2, dialogWidth + 4, dialogHeight + 4, 20, 20);
+    g.setColor(ct.collapsablePanelUnselectedForegroundColorValue_);
     g.drawString(line1_, sx + 1, sy + 1, g.LEFT | g.TOP);
     g.drawString(line2_, sx + 1, sy + 1 + f.getHeight(), g.LEFT | g.TOP);
   }

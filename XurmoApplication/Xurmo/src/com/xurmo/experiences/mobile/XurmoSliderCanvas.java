@@ -29,7 +29,7 @@ public class XurmoSliderCanvas extends XurmoCanvas implements XurmoAnimatedCanva
   private XurmoRectangle srcRect_;
   private XurmoRectangle dstRect_;
   private Timer t_;
-  private static final int pixelsPerStep_ = 5;
+  private static final int pixelsPerStep_ = 10;
   /**
    * Creates a new instance of XurmoSliderCanvas
    */

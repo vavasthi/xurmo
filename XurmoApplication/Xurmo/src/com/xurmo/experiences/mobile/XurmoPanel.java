@@ -93,6 +93,29 @@ abstract public class XurmoPanel {
   public XurmoPopupMenu menu() {
     return menu_;
   }
+  public void fireKey() {
+    
+    if (isMenuAvailable()) {
+      if (isMenuActive()) {
+        menu().fireKey();
+      } else {
+        
+        activateMenu();
+      }
+    } else {
+      // Some other default action.
+      panelFireAction();
+    }
+  }
+  public void panelFireAction() {
+    
+  }
+  public void leftKey() {
+    
+  }
+  public void rightKey() {
+    
+  }
   private boolean selected_;
   protected int w_;
   protected int screenWidth_;

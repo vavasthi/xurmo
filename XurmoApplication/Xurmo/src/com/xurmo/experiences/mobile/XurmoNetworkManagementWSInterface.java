@@ -149,12 +149,12 @@ public class XurmoNetworkManagementWSInterface {
     String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
         "<env:Header/>\n" +
         "<env:Body>\n" +
-        "<ns0:sendInvitation>\n" +
+        "<ns0:disposeInvitations>\n" +
         "<ns0:username>" + username + "</ns0:username>\n" +
         "<ns0:cookie>" + cookie + "</ns0:cookie>\n" +
         invitationDisposition +
         XurmoDevice.getLocationParameters() +
-        "</ns0:sendInvitation>\n</env:Body>\n</env:Envelope>\n");
+        "</ns0:disposeInvitations>\n</env:Body>\n</env:Envelope>\n");
     try {
       String resp = sendRequest(soapRequest);
       return parseStatus(resp);
@@ -182,6 +182,7 @@ public class XurmoNetworkManagementWSInterface {
       InputStreamReader in = new InputStreamReader( is );
       java.util.Vector contactsAlreadyUser = new java.util.Vector();
       java.util.Vector memberOfNetworks = new java.util.Vector();
+      java.util.Vector availableNetworks = new java.util.Vector();
       //Initilialize XML parser
       KXmlParser parser = new KXmlParser();
       parser.setInput(in);
@@ -208,6 +209,11 @@ public class XurmoNetworkManagementWSInterface {
               
               String nw = new String(parser.nextText());
               memberOfNetworks.addElement(nw);
+              doingContacts = false;
+            } else if (tag.equalsIgnoreCase("ns1:availablenetwork")) {
+              
+              String an = new String(parser.nextText());
+              availableNetworks.addElement(an);
               doingContacts = false;
             } else if (tag.equalsIgnoreCase("ns1:fname")) {
               
@@ -248,7 +254,7 @@ public class XurmoNetworkManagementWSInterface {
             } else if (tag.equalsIgnoreCase("env:envelope")) {
               if (cellName != null && cookie != null && errorCode != null && numberOfContacts != null) {
                 System.out.println("Envelope close tag cellName =" + cellName + " cookie " + cookie + " errorCode " + errorCode + " number of contacts " + numberOfContacts);
-                return new XurmoNetworkSummaryStatus(Integer.parseInt(errorCode), cookie, cellName, memberOfNetworks, contactsAlreadyUser, Integer.parseInt(numberOfContacts));
+                return new XurmoNetworkSummaryStatus(Integer.parseInt(errorCode), cookie, cellName, memberOfNetworks, contactsAlreadyUser, Integer.parseInt(numberOfContacts), availableNetworks);
               } else {
                 
                 return new XurmoNetworkSummaryStatus();

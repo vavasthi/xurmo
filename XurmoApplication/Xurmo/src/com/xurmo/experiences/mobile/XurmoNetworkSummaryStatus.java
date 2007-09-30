@@ -18,13 +18,15 @@ public class XurmoNetworkSummaryStatus {
   String[] memberOfNetworks_;
   XurmoUserGlobalData[] contactsAlreadyUser_;
   int numberOfContacts_;
+  String[] availableNetworks_;
   /** Creates a new instance of XurmoNetworkSummaryStatus */
   public XurmoNetworkSummaryStatus(int errorCode, 
       String cookie, 
       String cellName, 
       java.util.Vector memberOfNetworks,
       java.util.Vector contactsAlreadyUser,
-      int numberOfContacts) {
+      int numberOfContacts,
+      java.util.Vector availableNetworks) {
     
     status_ = new XurmoNetworkInteractionStatus(errorCode, cookie, cellName);
     memberOfNetworks_ = new String[memberOfNetworks.size()];
@@ -36,6 +38,10 @@ public class XurmoNetworkSummaryStatus {
       contactsAlreadyUser_[i] = (XurmoUserGlobalData)(contactsAlreadyUser.elementAt(i));
     }
     numberOfContacts_ = numberOfContacts;
+    availableNetworks_ = new String[availableNetworks.size()];
+    for (int i = 0; i < availableNetworks.size(); ++i) {
+      availableNetworks_[i] = (String)(availableNetworks.elementAt(i));
+    }
   }
   public XurmoNetworkSummaryStatus() {
     

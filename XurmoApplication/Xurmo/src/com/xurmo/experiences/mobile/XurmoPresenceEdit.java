@@ -16,14 +16,13 @@ import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
 public class XurmoPresenceEdit extends javax.microedition.lcdui.TextBox implements javax.microedition.lcdui.CommandListener {
   
-  private XurmoMeScreen screen_;
+  private XurmoHomeScreen screen_;
   private Command done;
   private Command cancel;
-  private XurmoMeScreen display;
   /**
    * Creates a new instance of XurmoPresenceEdit
    */
-  public XurmoPresenceEdit(XurmoMeScreen screen, String title, String text) {
+  public XurmoPresenceEdit(XurmoHomeScreen screen, String title, String text) {
     super(title, text, 160, javax.microedition.lcdui.TextField.ANY);
     screen_ = screen;
     done = new Command("Done", Command.ITEM, 1);

@@ -128,9 +128,8 @@ abstract public class XurmoScrollableScreen extends XurmoCanvas {
   }
   public void defaultFireKey() {
     // If menu exists then menu should be activated.
-    if (panels_[currentPanel_].isMenuAvailable()) {
-      panels_[currentPanel_].activateMenu();
-    }
+    XurmoPanel cp = panels_[currentPanel_];
+    cp.fireKey();
   }
   public void deactivateMenu() {
     panels_[currentPanel_].deactivateMenu();

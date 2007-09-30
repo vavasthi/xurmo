@@ -75,7 +75,17 @@ public class XurmoNetworkMessagesScreen extends XurmoScrollableScreen {
     }
   }
   public void leftKey() {
-    midlet_.transitionToHomeScreen();
+    if (panels_[currentPanel_] instanceof XurmoSelectablePanel) {
+      
+      XurmoSelectablePanel xsp = (XurmoSelectablePanel)(panels_[currentPanel_]);
+      if (xsp.isMenuActive()) {
+        xsp.deactivateMenu();
+      }
+      else {
+        
+        midlet_.transitionToHomeScreen();
+      }
+    }
   }
   public void rightKey() {
     System.out.println("Right key called with currentPanel =" + currentPanel_);
@@ -96,6 +106,7 @@ public class XurmoNetworkMessagesScreen extends XurmoScrollableScreen {
           out += "<ns0:linkId>" + rtcm.linkId + "</ns0:linkId>\n";
           out += "<ns0:linkName>" + rtcm.linkName + "</ns0:linkName>\n";
         }
+        out += "<ns0:message>Invitation disposed.</ns0:message>\n";
         out += "<ns0:requestFromUser>" + rtcm.requestFrom + "</ns0:requestFromUser>\n";
         out += "<ns0:requestToUser>" + rtcm.requestTo+ "</ns0:requestToUser>\n";
         out += "</ns0:invitationDisposition>\n";
