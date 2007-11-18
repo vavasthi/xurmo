@@ -85,9 +85,8 @@ public class XurmoUserPreferenceManager {
   }
   private static XurmoUserPreferences getUserPreferences(int userid, int linkId, javax.persistence.EntityManager em) throws XurmoUserPreferenceRetrievalException{
     
-    javax.persistence.Query q = em.createNamedQuery("XurmoUserPreferences.findByUseridAndLinkId");
+    javax.persistence.Query q = em.createNamedQuery("XurmoUserPreferences.findByUserid");
     q.setParameter("userid", userid);
-    q.setParameter("linkId", linkId);
     try {
       
       XurmoUserPreferences xup = (XurmoUserPreferences)q.getSingleResult();
@@ -101,7 +100,7 @@ public class XurmoUserPreferenceManager {
   }
   private static XurmoUserNetworkSpecificPreferences getNetworkSpecificPreferences(int userid, int linkId, javax.persistence.EntityManager em) throws XurmoUserPreferenceRetrievalException{
     
-    javax.persistence.Query q = em.createNamedQuery("XurmoUserPreferences.findByUseridAndLinkId");
+    javax.persistence.Query q = em.createNamedQuery("XurmoUserNetworkSpecificPreferences.findByUseridAndLinkId");
     q.setParameter("userid", userid);
     q.setParameter("linkId", linkId);
     try {
@@ -352,8 +351,12 @@ public class XurmoUserPreferenceManager {
     k = 0;
     while (itr.hasNext()) {
       XurmoUserNetworkSpecificPreferences xunsp = (XurmoUserNetworkSpecificPreferences)(itr.next());
+      javax.persistence.Query nltq = em.createNamedQuery("XurmoNetworkLinkType.findByLinkId");
+      nltq.setParameter("linkId", xunsp.xurmoUserNetworkSpecificPreferencesPK.getLinkId());
+      XurmoNetworkLinkType xnlt = (XurmoNetworkLinkType)(nltq.getSingleResult());
       xunspd[k]
           = new XurmoUserNetworkSpecificPreferenceDetails(xunsp.xurmoUserNetworkSpecificPreferencesPK.getLinkId(),
+          xnlt.getLinkName(),
           xunsp.getReceiveDefaultMessagesDegrees(),
           xunsp.getAllowSearchIntoYourNetwork(),
           xunsp.getForwardMessagesOnDestinationPreferences(),
@@ -423,7 +426,10 @@ public class XurmoUserPreferenceManager {
           whiteArray[i] = w.elementAt(i).intValue();
         }
       }
-      networkSpecificUserLists[j] = new XurmoUserNetworkSpecificUserLists(k, blackArray, whiteArray);
+      javax.persistence.Query nltq = em.createNamedQuery("XurmoNetworkLinkType.findByLinkId");
+      nltq.setParameter("linkId", k);
+      XurmoNetworkLinkType xnlt = (XurmoNetworkLinkType)(nltq.getSingleResult());
+      networkSpecificUserLists[j] = new XurmoUserNetworkSpecificUserLists(k, xnlt.getLinkName(), blackArray, whiteArray);
     }
     
     return new XurmoUserPreferenceDetails(xup.getUserid(),
@@ -522,5 +528,37 @@ public class XurmoUserPreferenceManager {
         em.persist(xunwl);
       }
     }
+  }
+  public static boolean willReceiveMessages(int sourceUserId, int destinationUserId, int dos, int linkId, javax.persistence.EntityManager em) {
+    boolean ret = false;
+    try {
+      
+      // Check black list
+      if (isInBlackList(destinationUserId, sourceUserId, linkId, em)) {
+        return false;
+      }
+      // Check white list
+      if (isInWhiteList(destinationUserId, sourceUserId, linkId, em)) {
+        return true;
+      }
+      // Check network specific preferences
+      XurmoUserNetworkSpecificPreferences xunsp = getNetworkSpecificPreferences(destinationUserId, linkId, em);
+      int destinationReceiveDegrees = 0;
+      if (xunsp != null) {
+        return xunsp.getReceiveDefaultMessagesDegrees() >= dos;
+      } else {
+        
+        XurmoUserPreferences xup = getUserPreferences(destinationUserId, linkId, em);
+        if (xup != null) {
+          return xup.getReceiveDefaultMessagesDegrees() >= dos;
+        }
+        else {
+          return true;
+        }
+      }
+      // Check global preferences
+    } catch(XurmoUserPreferenceRetrievalException xupre ) {
+    }
+    return false;
   }
 }

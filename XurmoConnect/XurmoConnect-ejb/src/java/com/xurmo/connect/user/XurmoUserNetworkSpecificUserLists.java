@@ -15,12 +15,14 @@ package com.xurmo.connect.user;
  */
 public class XurmoUserNetworkSpecificUserLists implements java.io.Serializable {
   public int linkId;
+  public String linkName;
   public int[] black;
   public int[] white;
   /** Creates a new instance of XurmoUserNetworkSpecificUserLists */
-  public XurmoUserNetworkSpecificUserLists(int linkId, int[] black, int[] white) {
+  public XurmoUserNetworkSpecificUserLists(int linkId, String linkName, int[] black, int[] white) {
     
     this.linkId = linkId;
+    this.linkName = linkName;
     this.black = black;
     this.white = white;
   }

@@ -15,13 +15,15 @@ package com.xurmo.connect.user;
  */
 public class XurmoUserNetworkSpecificPreferenceDetails implements java.io.Serializable {
   public int linkId;
+  public String linkName;
   public int receiveDefaultMessagesDegrees;
   public boolean allowSearchIntoYourNetwork;
   public boolean forwardMessagesOnDestinationPreferences;
   public boolean forwardMessagesToExternalNetworks;
   public boolean receivePersonalEventReminders;
   public boolean receiveInviteFromEverybody;
-  public XurmoUserNetworkSpecificPreferenceDetails(int linkId, 
+  public XurmoUserNetworkSpecificPreferenceDetails(int linkId,
+      String linkName,
       int receiveDefaultMessagesDegrees,
       boolean allowSearchIntoYourNetwork,
       boolean forwardMessagesOnDestinationPreferences,
@@ -29,11 +31,12 @@ public class XurmoUserNetworkSpecificPreferenceDetails implements java.io.Serial
       boolean receivePersonalEventReminders,
       boolean receiveInviteFromEverybody) {
     this.linkId = linkId;
+    this.linkName = linkName;
     this.receiveDefaultMessagesDegrees = receiveDefaultMessagesDegrees;
     this.allowSearchIntoYourNetwork = allowSearchIntoYourNetwork;
     this.forwardMessagesOnDestinationPreferences = forwardMessagesOnDestinationPreferences;
     this.forwardMessagesToExternalNetworks = forwardMessagesToExternalNetworks;
     this.receivePersonalEventReminders = receivePersonalEventReminders;
-    this.receiveInviteFromEverybody= receiveInviteFromEverybody;
+    this.receiveInviteFromEverybody = receiveInviteFromEverybody;
   }  
 }

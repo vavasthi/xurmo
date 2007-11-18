@@ -33,6 +33,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "XurmoNetworkLink.findByUserid", query = "SELECT x FROM XurmoNetworkLink x WHERE x.xurmoNetworkLinkPK.userid1 = :userid or x.xurmoNetworkLinkPK.userid2 = :userid"),
     @NamedQuery(name = "XurmoNetworkLink.findByUserid1AndUserid2", query = "SELECT x FROM XurmoNetworkLink x WHERE (x.xurmoNetworkLinkPK.userid1 = :userid1 and x.xurmoNetworkLinkPK.userid2 = :userid2) or (x.xurmoNetworkLinkPK.userid1 = :userid2 and x.xurmoNetworkLinkPK.userid2 = :userid1)"),
     @NamedQuery(name = "XurmoNetworkLink.findByLinkId", query = "SELECT x FROM XurmoNetworkLink x WHERE x.xurmoNetworkLinkPK.linkId = :linkId"),
+    @NamedQuery(name = "XurmoNetworkLink.findByUseridAndLinkId", query = "SELECT x FROM XurmoNetworkLink x WHERE ((x.xurmoNetworkLinkPK.userid1 = :userid or x.xurmoNetworkLinkPK.userid2 = :userid)) and (x.xurmoNetworkLinkPK.linkId = :linkId))"),
     @NamedQuery(name = "XurmoNetworkLink.findByCreationDate", query = "SELECT x FROM XurmoNetworkLink x WHERE x.creationDate = :creationDate")
   })
 public class XurmoNetworkLink implements Serializable {

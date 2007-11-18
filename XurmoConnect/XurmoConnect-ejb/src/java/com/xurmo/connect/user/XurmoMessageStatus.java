@@ -18,16 +18,12 @@ public class XurmoMessageStatus implements java.io.Serializable {
     /**
      * Creates a new instance of XurmoMessageStatus
      */
-    public XurmoMessageStatus(int error, String cookie) {
-        error_ = error;
-        cookie_ = cookie;
+    public XurmoMessageStatus(int error, String cookie, String cellName) {
+        this.error = error;
+        this.cookie = cookie;
+        this.cellName = cellName;
     }
-    public int getError() {
-        return error_;
-    }
-    public String getCookie() {
-        return cookie_;
-    }
-    private int error_;
-    private String cookie_;
+    public int error;
+    public String cookie;
+    public String cellName;
 }

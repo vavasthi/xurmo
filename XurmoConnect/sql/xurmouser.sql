@@ -256,6 +256,35 @@ create table XurmoMessageForALocation
   msg varchar(1024)
 ) default character set utf8;
 
+drop table XurmoMessageForNetwork;
+create table XurmoMessageForNetwork
+(
+  messageId char(64) not null,
+  linkId int not null,
+  userId int not null,
+  degreesOfSeparation int not null default 4,
+  content blob not null,
+  status char not null,
+  primary key(messageId, linkId)
+) default character set utf8;
+
+drop table XurmoUserMessageThroughNetwork;
+create table XurmoUserMessageThroughNetwork
+(
+
+  messageId char(64) not null,
+  userid int not null,
+  status char not null default 'N',
+  primary key(messageId, userid)
+) default character set utf8;
+
+drop table XurmoCounters;
+create table XurmoCounters
+(
+  id int not null primary key,
+  val int(10) default 0 not null
+) default character set utf8;
+
 drop table XurmoErrors;
 create table XurmoErrors
 (
