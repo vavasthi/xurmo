@@ -31,8 +31,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "XurmoMessageForNetwork.findByUserId", query = "SELECT x FROM XurmoMessageForNetwork x WHERE x.userId = :userId"),
     @NamedQuery(name = "XurmoMessageForNetwork.findByDegreesOfSeparation", query = "SELECT x FROM XurmoMessageForNetwork x WHERE x.degreesOfSeparation = :degreesOfSeparation"),
     @NamedQuery(name = "XurmoMessageForNetwork.findByStatus", query = "SELECT x FROM XurmoMessageForNetwork x WHERE x.status = :status"),
-    @NamedQuery(name = "XurmoMessageForNetwork.findByDestinationUserid", query = "SELECT x FROM XurmoMessageForNetwork x and XurmoUserMessageThroughNetwork mtn WHERE mtn.xurmoUserMessageThroughNetworkPK.messageId =  x.xurmoMessageForNetworkPK.messageId and mtn.xurmoUserMessageThroughNetworkPK.userid = :userid"),
-    @NamedQuery(name = "XurmoMessageForNetwork.findByDestinationUseridAndStatus", query = "SELECT x FROM XurmoMessageForNetwork x and XurmoUserMessageThroughNetwork mtn WHERE mtn.xurmoUserMessageThroughNetworkPK.messageId =  x.xurmoMessageForNetworkPK.messageId and mtn.xurmoUserMessageThroughNetworkPK.userid = :userid and mtn.status = :status")
+    @NamedQuery(name = "XurmoMessageForNetwork.findByDestinationUserid", query = "SELECT x FROM XurmoMessageForNetwork x, XurmoUserMessageThroughNetwork mtn WHERE mtn.xurmoUserMessageThroughNetworkPK.messageId =  x.xurmoMessageForNetworkPK.messageId and mtn.xurmoUserMessageThroughNetworkPK.userid = :userid"),
+    @NamedQuery(name = "XurmoMessageForNetwork.findByDestinationUseridAndStatus", query = "SELECT x FROM XurmoMessageForNetwork x, XurmoUserMessageThroughNetwork mtn WHERE mtn.xurmoUserMessageThroughNetworkPK.messageId =  x.xurmoMessageForNetworkPK.messageId and mtn.xurmoUserMessageThroughNetworkPK.userid = :userid and mtn.status = :status")
   })
 public class XurmoMessageForNetwork implements Serializable {
 

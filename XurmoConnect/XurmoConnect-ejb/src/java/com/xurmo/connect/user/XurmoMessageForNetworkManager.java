@@ -31,6 +31,7 @@ public class XurmoMessageForNetworkManager {
       java.util.Vector<XurmoUser> xuv
           = getMatchingUsers(xmfn.getUserId(), xmfn.getDegreesOfSeparation(), xmfn.xurmoMessageForNetworkPK.getLinkId(), em);
       for (int i = 0; i < xuv.size(); ++i) {
+        
         XurmoUser xu = xuv.elementAt(i);
         XurmoUserMessageThroughNetwork xumtn
             = new XurmoUserMessageThroughNetwork(new XurmoUserMessageThroughNetworkPK(xu.getUserid(), xmfn.xurmoMessageForNetworkPK.getMessageId()),
@@ -50,6 +51,8 @@ public class XurmoMessageForNetworkManager {
   static private void getMatchingUsersForLevel(int sUserId, int cUserId, int dos, int linkId, java.util.Vector<XurmoUser> xuv, javax.persistence.EntityManager em) {
     
     if (dos == 0) {
+
+      System.out.println("Returning from matching users since dos = 0");
       return;
     } else {
       
@@ -64,6 +67,10 @@ public class XurmoMessageForNetworkManager {
         if (otherUserId != -1) { // If -1, then either the user did not receive or was not willing to forward
           
           getMatchingUsersForLevel(sUserId, otherUserId, dos - 1, linkId, xuv, em);
+          System.out.println("Recursing with dos = " + (dos - 1) + " sUserId =" + sUserId + " otherUserId =" + otherUserId);
+        }
+        else {
+          System.out.println("addIfNotAlreadySeen returned -1");
         }
       }
     }
