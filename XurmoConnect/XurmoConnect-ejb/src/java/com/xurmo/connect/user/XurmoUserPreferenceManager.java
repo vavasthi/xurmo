@@ -23,7 +23,7 @@ public class XurmoUserPreferenceManager {
   }
   private static boolean isInWhiteList(int userid, int fromUserid, int linkId, javax.persistence.EntityManager em) throws XurmoUserPreferenceRetrievalException{
     
-    javax.persistence.Query lq = em.createNamedQuery("XurmoUserNetworkAndUserWhiteList.findByUseridLinkIdAndOtherUserId");
+    javax.persistence.Query lq = em.createNamedQuery("XurmoUserNetworkAndUserWhiteList.findByUseridLinkIdAndOtherUserid");
     lq.setParameter("userid", userid);
     lq.setParameter("linkId", linkId);
     lq.setParameter("otherUserid", fromUserid);
@@ -37,7 +37,7 @@ public class XurmoUserPreferenceManager {
       throw new XurmoUserPreferenceRetrievalException(ex);
     }
     
-    javax.persistence.Query q = em.createNamedQuery("XurmoUserPreferenceWhiteList.findByUseridAndOtherUserId");
+    javax.persistence.Query q = em.createNamedQuery("XurmoUserPreferenceWhiteList.findByUseridAndOtherUserid");
     q.setParameter("userid", userid);
     q.setParameter("otherUserid", fromUserid);
     try {
@@ -54,7 +54,7 @@ public class XurmoUserPreferenceManager {
   }
   private static boolean isInBlackList(int userid, int fromUserid, int linkId, javax.persistence.EntityManager em) throws XurmoUserPreferenceRetrievalException{
     
-    javax.persistence.Query lq = em.createNamedQuery("XurmoUserNetworkAndUserBlackList.findByUseridLinkIdAndOtherUserId");
+    javax.persistence.Query lq = em.createNamedQuery("XurmoUserNetworkAndUserBlackList.findByUseridLinkIdAndOtherUserid");
     lq.setParameter("userid", userid);
     lq.setParameter("linkId", linkId);
     lq.setParameter("otherUserid", fromUserid);
@@ -68,7 +68,7 @@ public class XurmoUserPreferenceManager {
       
       throw new XurmoUserPreferenceRetrievalException(ex);
     }
-    javax.persistence.Query q = em.createNamedQuery("XurmoUserPreferenceBlackList.findByUseridAndOtherUserId");
+    javax.persistence.Query q = em.createNamedQuery("XurmoUserPreferenceBlackList.findByUseridAndOtherUserid");
     q.setParameter("userid", userid);
     q.setParameter("otherUserid", fromUserid);
     try {
@@ -328,7 +328,7 @@ public class XurmoUserPreferenceManager {
     int k = 0;
     while (itr.hasNext()) {
       
-      white[k] = ((XurmoUserPreferenceWhiteList)(itr.next())).xurmoUserPreferenceWhiteListPK.getOtherUserId();
+      white[k] = ((XurmoUserPreferenceWhiteList)(itr.next())).xurmoUserPreferenceWhiteListPK.getOtherUserid();
       ++k;
     }
     
@@ -339,7 +339,7 @@ public class XurmoUserPreferenceManager {
     itr = l.iterator();
     k = 0;
     while (itr.hasNext()) {
-      black[k] = ((XurmoUserPreferenceBlackList)(itr.next())).xurmoUserPreferenceBlackListPK.getOtherUserId();
+      black[k] = ((XurmoUserPreferenceBlackList)(itr.next())).xurmoUserPreferenceBlackListPK.getOtherUserid();
       ++k;
     }
     

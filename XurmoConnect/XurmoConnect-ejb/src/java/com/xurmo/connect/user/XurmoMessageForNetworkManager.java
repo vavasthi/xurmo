@@ -26,6 +26,7 @@ public class XurmoMessageForNetworkManager {
     q.setParameter("status", 'N');
     java.util.List rl = q.getResultList();
     java.util.Iterator ri = rl.iterator();
+    System.out.println("Messages to be Delivered.." + rl.size());
     while (ri.hasNext()) {
       XurmoMessageForNetwork xmfn = (XurmoMessageForNetwork)(ri.next());
       java.util.Vector<XurmoUser> xuv
@@ -51,11 +52,12 @@ public class XurmoMessageForNetworkManager {
   static private void getMatchingUsersForLevel(int sUserId, int cUserId, int dos, int linkId, java.util.Vector<XurmoUser> xuv, javax.persistence.EntityManager em) {
     
     if (dos == 0) {
-
+      
       System.out.println("Returning from matching users since dos = 0");
       return;
     } else {
       
+      System.out.println("Continuing from matching users since dos = " + dos);
       javax.persistence.Query q = em.createNamedQuery("XurmoNetworkLink.findByUseridAndLinkId");
       q.setParameter("userid", cUserId);
       q.setParameter("linkId", linkId);
@@ -68,8 +70,7 @@ public class XurmoMessageForNetworkManager {
           
           getMatchingUsersForLevel(sUserId, otherUserId, dos - 1, linkId, xuv, em);
           System.out.println("Recursing with dos = " + (dos - 1) + " sUserId =" + sUserId + " otherUserId =" + otherUserId);
-        }
-        else {
+        } else {
           System.out.println("addIfNotAlreadySeen returned -1");
         }
       }
@@ -87,17 +88,23 @@ public class XurmoMessageForNetworkManager {
     if (otherUserid == userid) {
       otherUserid = xnl.xurmoNetworkLinkPK.getUserid2();
     }
-    XurmoUser xu = (XurmoUser)(em.createNamedQuery("XurmoUser.findByUserid").setParameter("userid", userid).getSingleResult());
-    if (XurmoUserPreferenceManager.shouldForwardMessagesOnDestinationPreferences(userid, sUserId, xnl.xurmoNetworkLinkPK.getLinkId(), em)) {
+    if (otherUserid != sUserId) {
       
-      XurmoUser ou = (XurmoUser)(em.createNamedQuery("XurmoUser.findByUserid").setParameter("userid", otherUserid).getSingleResult());
-      if (XurmoUserPreferenceManager.willReceiveMessages(sUserId, userid, dos, xnl.xurmoNetworkLinkPK.getLinkId(), em)) {
-        if (!alreadyExists(xuv, ou)) {
-          xuv.add(ou);
+      XurmoUser xu = (XurmoUser)(em.createNamedQuery("XurmoUser.findByUserid").setParameter("userid", userid).getSingleResult());
+      if (XurmoUserPreferenceManager.shouldForwardMessagesOnDestinationPreferences(userid, sUserId, xnl.xurmoNetworkLinkPK.getLinkId(), em)) {
+        
+        XurmoUser ou = (XurmoUser)(em.createNamedQuery("XurmoUser.findByUserid").setParameter("userid", otherUserid).getSingleResult());
+        if (XurmoUserPreferenceManager.willReceiveMessages(sUserId, userid, dos, xnl.xurmoNetworkLinkPK.getLinkId(), em)) {
+          if (!alreadyExists(xuv, ou)) {
+            xuv.add(ou);
+          }
         }
+      } else {
+        // If the user is not willing to forward, stop the forward and do not traverse this node.
+        otherUserid = -1;
       }
-    } else {
-      // If the user is not willing to forward, stop the forward and do not traverse this node.
+    }
+    else {
       otherUserid = -1;
     }
     return otherUserid;
@@ -123,7 +130,8 @@ public class XurmoMessageForNetworkManager {
     java.util.Iterator mi = ml.iterator();
     while (mi.hasNext()) {
       XurmoMessageForNetwork xmfn = (XurmoMessageForNetwork)(mi.next());
-      messages.add(XurmoMessage.create(xmfn, xu));
+      XurmoNetworkLinkType xnlt = (XurmoNetworkLinkType)(em.createNamedQuery("XurmoNetworkLinkType.findByLinkId").setParameter("linkId", xmfn.xurmoMessageForNetworkPK.getLinkId()).getSingleResult());
+      messages.add(XurmoMessage.create(xmfn, xnlt, xu));
     }
   }
 }

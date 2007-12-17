@@ -15,14 +15,16 @@ import javax.annotation.Resource;
 
 @Stateless
 @WebService
-public class XurmoMessageManagementServiceBean implements javax.ejb.TimedObject {
+public class XurmoMessageManagementServiceBean {
     
     // Add business logic below. (Right-click in editor and choose
     // "EJB Methods > Add Business Method" or "Web Service > Add Operation")
     @EJB
     private XurmoMessageManagementRemote xurmoMessageManagementBean;
     
-    private @Resource TimerService ts_;
+    @Resource
+    private SessionContext ctx_;
+
     static private final Integer messageFlusher_ = 0x01;
     
     /**
@@ -34,20 +36,25 @@ public class XurmoMessageManagementServiceBean implements javax.ejb.TimedObject 
     }
 
     @WebMethod
-    public XurmoMessageStatus sendMessageToNetwork(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "linkId") int linkId[], @WebParam(name = "degreesOfSeparation") int degreesOfSeparation, @WebParam(name = "content") String content, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
-      XurmoMessageStatus status = xurmoMessageManagementBean.sendMessageToNetwork(username, cookie, linkId, degreesOfSeparation, content, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
-      ts_.createTimer(100, messageFlusher_);
+    public XurmoMessageStatus sendMessageToNetwork(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "linkNames") String[] linkNames, @WebParam(name = "degreesOfSeparation") int degreesOfSeparation, @WebParam(name = "content") String content, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
+      XurmoMessageStatus status = xurmoMessageManagementBean.sendMessageToNetwork(username, cookie, linkNames, degreesOfSeparation, content, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
+/*      if (ctx_.getTimerService().createTimer(1000, 1000, messageFlusher_) == null) {
+        
+        ctx_.getTimerService().createTimer(1000, 1000, messageFlusher_);
+      }*/
       return status;
     }
     @WebMethod
     public XurmoMessages getUserMessages(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
       return xurmoMessageManagementBean.getUserMessages(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
     }
-    public void ejbTimeout(Timer t) {
+    
+/*    @Timeout
+    public void handleTimeout(Timer t) {
     
      int tid = (Integer)(t.getInfo());
      if (tid == messageFlusher_.intValue()) {
       xurmoMessageManagementBean.flushNetworkMessages();
      }
-  }
+  }*/
 }

@@ -24,8 +24,8 @@ public class XurmoUserPreferenceBlackListPK implements Serializable {
   @Column(name = "userid", nullable = false)
   private int userid;
 
-  @Column(name = "otherUserId", nullable = false)
-  private int otherUserId;
+  @Column(name = "otherUserid", nullable = false)
+  private int otherUserid;
   
   /** Creates a new instance of XurmoUserPreferenceBlackListPK */
   public XurmoUserPreferenceBlackListPK() {
@@ -33,11 +33,11 @@ public class XurmoUserPreferenceBlackListPK implements Serializable {
 
   /**
    * Creates a new instance of XurmoUserPreferenceBlackListPK with the specified values.
-   * @param otherUserId the otherUserId of the XurmoUserPreferenceBlackListPK
+   * @param otherUserid the otherUserid of the XurmoUserPreferenceBlackListPK
    * @param userid the userid of the XurmoUserPreferenceBlackListPK
    */
-  public XurmoUserPreferenceBlackListPK(int otherUserId, int userid) {
-    this.otherUserId = otherUserId;
+  public XurmoUserPreferenceBlackListPK(int otherUserid, int userid) {
+    this.otherUserid = otherUserid;
     this.userid = userid;
   }
 
@@ -58,19 +58,19 @@ public class XurmoUserPreferenceBlackListPK implements Serializable {
   }
 
   /**
-   * Gets the otherUserId of this XurmoUserPreferenceBlackListPK.
-   * @return the otherUserId
+   * Gets the otherUserid of this XurmoUserPreferenceBlackListPK.
+   * @return the otherUserid
    */
-  public int getOtherUserId() {
-    return this.otherUserId;
+  public int getOtherUserid() {
+    return this.otherUserid;
   }
 
   /**
-   * Sets the otherUserId of this XurmoUserPreferenceBlackListPK to the specified value.
-   * @param otherUserId the new otherUserId
+   * Sets the otherUserid of this XurmoUserPreferenceBlackListPK to the specified value.
+   * @param otherUserid the new otherUserid
    */
-  public void setOtherUserId(int otherUserId) {
-    this.otherUserId = otherUserId;
+  public void setOtherUserid(int otherUserid) {
+    this.otherUserid = otherUserid;
   }
 
   /**
@@ -81,7 +81,7 @@ public class XurmoUserPreferenceBlackListPK implements Serializable {
   @Override
   public int hashCode() {
     int hash = 0;
-    hash += (int)otherUserId;
+    hash += (int)otherUserid;
     hash += (int)userid;
     return hash;
   }
@@ -101,7 +101,7 @@ public class XurmoUserPreferenceBlackListPK implements Serializable {
       return false;
     }
     XurmoUserPreferenceBlackListPK other = (XurmoUserPreferenceBlackListPK)object;
-    if (this.otherUserId != other.otherUserId) return false;
+    if (this.otherUserid != other.otherUserid) return false;
     if (this.userid != other.userid) return false;
     return true;
   }
@@ -113,7 +113,7 @@ public class XurmoUserPreferenceBlackListPK implements Serializable {
    */
   @Override
   public String toString() {
-    return "com.xurmo.connect.user.XurmoUserPreferenceBlackListPK[otherUserId=" + otherUserId + ", userid=" + userid + "]";
+    return "com.xurmo.connect.user.XurmoUserPreferenceBlackListPK[otherUserid=" + otherUserid + ", userid=" + userid + "]";
   }
   
 }

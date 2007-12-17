@@ -44,7 +44,7 @@ public class XurmoMessageManagementBean implements XurmoMessageManagementRemote,
     return new XurmoMessageStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_USER_NOT_LOGGED_IN, "", "");
   }
   
-  public XurmoMessageStatus sendMessageToNetwork(String username, String cookie, int[] linkId, int degreesOfSeparation, String content, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String cellName) {
+  public XurmoMessageStatus sendMessageToNetwork(String username, String cookie, String[] linkNames, int degreesOfSeparation, String content, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String cellName) {
     try {
       XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
       if (xus != null && cookie.equals(xus.getCookie())) {
@@ -53,16 +53,21 @@ public class XurmoMessageManagementBean implements XurmoMessageManagementRemote,
             = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
         XurmoUser xu = (XurmoUser) (em_.createNamedQuery("XurmoUser.findByUsername").setParameter("username", username).getSingleResult());
         int userId = xu.getUserid();
-        String nmi = "Msg-" + userId + "-" + linkId + "-" + XurmoCounterManager.getNextMessageId(em_);
-        for (int i = 0; i < linkId.length; ++i) {
+        String nmi = "Msg-" + userId + "-" + XurmoCounterManager.getNextMessageId(em_);
+        for (int i = 0; i < linkNames.length; ++i) {
           
-          XurmoMessageForNetworkPK mnpk = new XurmoMessageForNetworkPK(linkId[i], nmi);
+          int linkId = XurmoNetworkManager.getLinkId(em_, linkNames[i]);
+          XurmoMessageForNetworkPK mnpk = new XurmoMessageForNetworkPK(linkId, nmi + "-" + linkNames[i]);
           XurmoMessageForNetwork xmn = new XurmoMessageForNetwork(mnpk, userId, degreesOfSeparation, content.getBytes(), 'N');
           em_.persist(xmn);
+          XurmoMessageForNetworkManager.flushNetworkMessages(em_);
         }
         return new XurmoMessageStatus(XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, xus.getCookie(), xclm.getLocation());
       }
     } catch(Exception ex) {
+      
+      System.out.println("Send Message To Network Exception " + ex);
+      ex.printStackTrace();
     }
     return new XurmoMessageStatus(XurmoUserInteractionStatus.INTERACTIONFAILED_USER_NOT_LOGGED_IN, "", "");
   }

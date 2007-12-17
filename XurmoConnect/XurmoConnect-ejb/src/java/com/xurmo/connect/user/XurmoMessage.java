@@ -19,7 +19,8 @@ public class XurmoMessage implements java.io.Serializable {
   
   /** Creates a new instance of XurmoMessage */
   private XurmoMessage(String messageId, 
-      int linkId, 
+      int linkId,
+      String linkName,
       int senderid,
       String senderUsername,
       String senderFname,
@@ -30,6 +31,7 @@ public class XurmoMessage implements java.io.Serializable {
     
     this.messageId = messageId;
     this.linkId = linkId;
+    this.linkName = linkName;
     this.senderid = senderid;
     this.senderUsername = senderUsername;
     this.senderFname = senderFname;
@@ -38,10 +40,11 @@ public class XurmoMessage implements java.io.Serializable {
     this.degreesOfSeparation = degreesOfSeparation;
     this.content = content;
   }
-  public static XurmoMessage create(XurmoMessageForNetwork xmfn, XurmoUser sender) {
+  public static XurmoMessage create(XurmoMessageForNetwork xmfn, XurmoNetworkLinkType xnlt, XurmoUser sender) {
 
     return new XurmoMessage(xmfn.xurmoMessageForNetworkPK.getMessageId(),
         xmfn.xurmoMessageForNetworkPK.getLinkId(),
+        xnlt.getLinkName(),
         xmfn.getUserId(),
         sender.getUsername(),
         sender.getFname(),
@@ -52,6 +55,7 @@ public class XurmoMessage implements java.io.Serializable {
   }
   public String messageId;
   public int linkId;
+  public String linkName;
   public int senderid;
   public String senderUsername;
   public String senderFname;

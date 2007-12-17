@@ -28,9 +28,12 @@ public class XurmoCounterManager {
       xc = (XurmoCounters)em.createNamedQuery("XurmoCounters.findById").setParameter("id", messageIdCounter_).getSingleResult();
       nv = xc.getVal() + 1;
       xc.setVal(nv);
-      em.persist(xc.getVal());
+      em.persist(xc);
     }
     catch(Exception ex) {
+      System.out.println("XurmoCounters Exception " + ex);
+      ex.printStackTrace();
+      
       nv = 1;
       xc = new XurmoCounters(messageIdCounter_, nv);
       em.persist(xc);

@@ -25,8 +25,8 @@ import javax.persistence.Table;
 @Table(name = "XurmoUserPreferenceBlackList")
 @NamedQueries( {
     @NamedQuery(name = "XurmoUserPreferenceBlackList.findByUserid", query = "SELECT x FROM XurmoUserPreferenceBlackList x WHERE x.xurmoUserPreferenceBlackListPK.userid = :userid"),
-    @NamedQuery(name = "XurmoUserPreferenceBlackList.findByUseridAandOtherUserId", query = "SELECT x FROM XurmoUserPreferenceBlackList x WHERE x.xurmoUserPreferenceBlackListPK.userid = :userid and x.xurmoUserPreferenceBlackListPK.otherUserId = :otherUserId"),
-    @NamedQuery(name = "XurmoUserPreferenceBlackList.findByOtherUserId", query = "SELECT x FROM XurmoUserPreferenceBlackList x WHERE x.xurmoUserPreferenceBlackListPK.otherUserId = :otherUserId")
+    @NamedQuery(name = "XurmoUserPreferenceBlackList.findByUseridAndOtherUserid", query = "SELECT x FROM XurmoUserPreferenceBlackList x WHERE x.xurmoUserPreferenceBlackListPK.userid = :userid and x.xurmoUserPreferenceBlackListPK.otherUserid = :otherUserid"),
+    @NamedQuery(name = "XurmoUserPreferenceBlackList.findByOtherUserid", query = "SELECT x FROM XurmoUserPreferenceBlackList x WHERE x.xurmoUserPreferenceBlackListPK.otherUserid = :otherUserid")
   })
 public class XurmoUserPreferenceBlackList implements Serializable {
 

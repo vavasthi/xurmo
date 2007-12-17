@@ -18,8 +18,8 @@ public class XurmoMessages implements java.io.Serializable {
     /**
      * Creates a new instance of XurmoMessageStatus
      */
-    public XurmoMessages(int error, String cookie, String cellName, java.util.Vector<XurmoMessage> message) {
-        this.error = error;
+    public XurmoMessages(int errorCode, String cookie, String cellName, java.util.Vector<XurmoMessage> message) {
+        this.errorCode = errorCode;
         this.cookie = cookie;
         this.cellName = cellName;
         this.message = new XurmoMessage[message.size()];
@@ -29,12 +29,12 @@ public class XurmoMessages implements java.io.Serializable {
      * Creates a new instance of XurmoMessageStatus
      */
     public XurmoMessages(int error, String cookie, String cellName) {
-        this.error = error;
+        this.errorCode = errorCode;
         this.cookie = cookie;
         this.cellName = cellName;
         this.message = new XurmoMessage[0];
     }
-    public int error;
+    public int errorCode;
     public String cookie;
     public String cellName;
     public XurmoMessage[] message;

@@ -24,8 +24,8 @@ public class XurmoUserPreferenceWhiteListPK implements Serializable {
   @Column(name = "userid", nullable = false)
   private int userid;
 
-  @Column(name = "otherUserId", nullable = false)
-  private int otherUserId;
+  @Column(name = "otherUserid", nullable = false)
+  private int otherUserid;
   
   /** Creates a new instance of XurmoUserPreferenceWhiteListPK */
   public XurmoUserPreferenceWhiteListPK() {
@@ -33,11 +33,11 @@ public class XurmoUserPreferenceWhiteListPK implements Serializable {
 
   /**
    * Creates a new instance of XurmoUserPreferenceWhiteListPK with the specified values.
-   * @param otherUserId the otherUserId of the XurmoUserPreferenceWhiteListPK
+   * @param otherUserid the otherUserid of the XurmoUserPreferenceWhiteListPK
    * @param userid the userid of the XurmoUserPreferenceWhiteListPK
    */
-  public XurmoUserPreferenceWhiteListPK(int otherUserId, int userid) {
-    this.otherUserId = otherUserId;
+  public XurmoUserPreferenceWhiteListPK(int otherUserid, int userid) {
+    this.otherUserid = otherUserid;
     this.userid = userid;
   }
 
@@ -58,19 +58,19 @@ public class XurmoUserPreferenceWhiteListPK implements Serializable {
   }
 
   /**
-   * Gets the otherUserId of this XurmoUserPreferenceWhiteListPK.
-   * @return the otherUserId
+   * Gets the otherUserid of this XurmoUserPreferenceWhiteListPK.
+   * @return the otherUserid
    */
-  public int getOtherUserId() {
-    return this.otherUserId;
+  public int getOtherUserid() {
+    return this.otherUserid;
   }
 
   /**
-   * Sets the otherUserId of this XurmoUserPreferenceWhiteListPK to the specified value.
-   * @param otherUserId the new otherUserId
+   * Sets the otherUserid of this XurmoUserPreferenceWhiteListPK to the specified value.
+   * @param otherUserid the new otherUserid
    */
-  public void setOtherUserId(int otherUserId) {
-    this.otherUserId = otherUserId;
+  public void setOtherUserid(int otherUserid) {
+    this.otherUserid = otherUserid;
   }
 
   /**
@@ -81,7 +81,7 @@ public class XurmoUserPreferenceWhiteListPK implements Serializable {
   @Override
   public int hashCode() {
     int hash = 0;
-    hash += (int)otherUserId;
+    hash += (int)otherUserid;
     hash += (int)userid;
     return hash;
   }
@@ -101,7 +101,7 @@ public class XurmoUserPreferenceWhiteListPK implements Serializable {
       return false;
     }
     XurmoUserPreferenceWhiteListPK other = (XurmoUserPreferenceWhiteListPK)object;
-    if (this.otherUserId != other.otherUserId) return false;
+    if (this.otherUserid != other.otherUserid) return false;
     if (this.userid != other.userid) return false;
     return true;
   }
@@ -113,7 +113,7 @@ public class XurmoUserPreferenceWhiteListPK implements Serializable {
    */
   @Override
   public String toString() {
-    return "com.xurmo.connect.user.XurmoUserPreferenceWhiteListPK[otherUserId=" + otherUserId + ", userid=" + userid + "]";
+    return "com.xurmo.connect.user.XurmoUserPreferenceWhiteListPK[otherUserid=" + otherUserid + ", userid=" + userid + "]";
   }
   
 }

@@ -71,6 +71,7 @@ public class XurmoPersonalAddressBook implements Serializable {
   
   /** Creates a new instance of XurmoPersonalAddressBook */
   public XurmoPersonalAddressBook() {
+    this.xurmoInvitationSent = false;
   }
 
   /**
@@ -79,6 +80,7 @@ public class XurmoPersonalAddressBook implements Serializable {
    */
   public XurmoPersonalAddressBook(XurmoPersonalAddressBookPK xurmoPersonalAddressBookPK) {
     this.xurmoPersonalAddressBookPK = xurmoPersonalAddressBookPK;
+    this.xurmoInvitationSent = false;
   }
 
   /**
@@ -102,6 +104,7 @@ public class XurmoPersonalAddressBook implements Serializable {
    */
   public XurmoPersonalAddressBook(int uniqueId, int userid) {
     this.xurmoPersonalAddressBookPK = new XurmoPersonalAddressBookPK(uniqueId, userid);
+    this.xurmoInvitationSent = false;
   }
 
   /**

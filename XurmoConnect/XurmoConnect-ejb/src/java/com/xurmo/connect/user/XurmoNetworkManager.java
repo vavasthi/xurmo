@@ -80,6 +80,22 @@ public class XurmoNetworkManager {
     }
     return out;
   }
+  public static int getLinkId(javax.persistence.EntityManager em, String linkName) {
+    
+    try {
+      
+    return ((XurmoNetworkLinkType)(em.createNamedQuery("XurmoNetworkLinkType.findByLinkName").
+        setParameter("linkName", linkName).
+        getSingleResult())).getLinkId().intValue();
+    }
+    catch (javax.persistence.NoResultException nre) {
+      
+    }
+    catch (javax.persistence.NonUniqueResultException nre) {
+      
+    }
+    return 0;
+  }
   public static XurmoNetworkSummaryStatus getNetworkSummary(String username, String cookie, String mobileCountryCode, String mobileNetworkCode,  String siteId, String cellId, String cellName, javax.persistence.EntityManager em) {
     
     javax.persistence.Query uq = em.createNamedQuery("XurmoUser.findByUsername");
