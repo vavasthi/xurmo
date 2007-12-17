@@ -38,6 +38,7 @@ abstract public class XurmoInviteScreen extends XurmoScrollableScreen {
   public XurmoInviteScreen(Xurmo midlet, java.util.Vector invitableEntries, java.util.Vector linkTypes) {
     super(midlet);
     invitableEntries_ = invitableEntries;
+    System.out.println("Creating Invite Screen.. Invitable Entries = " + invitableEntries_.size());
     XurmoTheme ct = XurmoThemeManager.instance().getCurrentTheme();
     XurmoPanel[] panels = new XurmoPanel[invitableEntries_.size()];
     currentPanel_ = 0;

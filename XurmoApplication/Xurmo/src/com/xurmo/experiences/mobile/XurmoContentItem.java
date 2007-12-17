@@ -20,6 +20,10 @@ public class XurmoContentItem {
   public static final int AUDIO = 0x02;
   
   
+  public static final int INITIALIZED = 0x01;
+  public static final int IN_PROGRESS = 0x02;
+  public static final int DONE = 0x03;
+  
   public static final String[] mimeType = new String[] {
     new String("text/plain"),
     new String("image/jpeg"),
@@ -31,20 +35,18 @@ public class XurmoContentItem {
     new String("Image"),
     new String("Audio")
   };
-  public static final int INITIALIZED = 0x01;
-  public static final int IN_PROGRESS = 0x02;
-  public static final int DONE = 0x03;
   
   /** Creates a new instance of XurmoContentItem */
   public XurmoContentItem(int contentType) {
     contentType_ = contentType;
-    state_ = INITIALIZED;
-  }
-  public void fireKey() {
-    state_ = DONE;
   }
   public void draw(Graphics g, int x, int y) {
     
+  }
+  public void fireKey() {
+  }
+  
+  public void streamOut(java.io.DataOutputStream dos) throws java.io.IOException {
   }
   int contentType_;
   int state_;

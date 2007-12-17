@@ -34,6 +34,12 @@ public class XurmoStringItem extends XurmoContentItem {
     content_ = msg;
     state_ = DONE;
   }
+  public void streamOut(java.io.DataOutputStream dos) throws java.io.IOException {
+    dos.writeInt(XurmoContentItem.STRING);
+    byte[] b = content_.getBytes();
+    dos.writeInt(b.length);
+    dos.write(b, 0, b.length);
+  }
   private XurmoMessageComposeScreen screen_;
   private String content_;
 }

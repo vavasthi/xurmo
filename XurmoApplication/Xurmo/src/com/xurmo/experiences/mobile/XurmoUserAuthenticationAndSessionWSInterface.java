@@ -95,6 +95,7 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
         XurmoDevice.getLocationParameters() +
         "</ns0:createUser>\n</env:Body>\n</env:Envelope>\n");
     try {
+      System.out.println(soapRequest);
       String resp = sendRequest(soapRequest);
       return parseRegistrationStatus(resp);
     } catch(IOException ioex) {
@@ -119,6 +120,23 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
       ioex.printStackTrace();
     }
     return new XurmoUserHomeScreenData();
+  }
+  public static XurmoUserPreference getUserPreferences(String username, String cookie) {
+    String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
+        "<env:Header/>\n" +
+        "<env:Body>\n" +
+        "<ns0:getUserPreferences>\n" +
+        "<ns0:username>" + username + "</ns0:username>\n" +
+        "<ns0:cookie>" + cookie + "</ns0:cookie>\n" +
+        XurmoDevice.getLocationParameters() +
+        "</ns0:getUserPreferences>\n</env:Body>\n</env:Envelope>\n");
+    try {
+      String resp = sendRequest(soapRequest);
+      return parseUserPreference(resp);
+    } catch(IOException ioex) {
+      ioex.printStackTrace();
+    }
+    return new XurmoUserPreference();
   }
   public static XurmoUserHomeScreenData uploadPhoneBook(String username, String cookie) {
     String soapRequest = new String("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<env:Envelope xmlns:env=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:enc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:ns0=\"http://user.connect.xurmo.com/jaws\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n" +
@@ -277,7 +295,7 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
             String tag = parser.getName();
             if (tag.equalsIgnoreCase("ns1:result")) {
               result = new String(parser.nextText());
-            } 
+            }
           }
           break;
           case org.xmlpull.v1.XmlPullParser.END_TAG:
@@ -351,11 +369,10 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
             if (tag.equalsIgnoreCase("env:envelope")) {
               if (fname != null && lname != null && errorCode != null && cookie != null && cellName != null && presence != null) {
                 
-              return new XurmoUserHomeScreenData(username, cookie, Integer.parseInt(errorCode), cellName, fname, lname, salutation, presence);
-              }
-              else {
+                return new XurmoUserHomeScreenData(username, cookie, Integer.parseInt(errorCode), cellName, fname, lname, salutation, presence);
+              } else {
                 
-              return new XurmoUserHomeScreenData();
+                return new XurmoUserHomeScreenData();
               }
             }
             
@@ -368,6 +385,231 @@ public class XurmoUserAuthenticationAndSessionWSInterface {
     } catch(IOException e){
     }
     return new XurmoUserHomeScreenData();
+  }
+  
+  public static XurmoUserPreference parseUserPreference(String resp) {
+    
+    try {
+      String allowSearchIntoYourNetwork = null;
+      String forwardMessagesOnDestinationPreferences = null;
+      String forwardMessagesToExternalNetworks = null;
+      String linkId = null;
+      String linkName = null;
+      String receiveDefaultMessagesDegrees = null;
+      String receiveInviteFromEverybody = null;
+      String receivePersonalEventReminders = null;
+      
+      String nsAllowSearchIntoYourNetwork = null;
+      String nsForwardMessagesOnDestinationPreferences = null;
+      String nsForwardMessagesToExternalNetworks = null;
+      String nsLinkId = null;
+      String nsLinkName = null;
+      String nsReceiveDefaultMessagesDegrees = null;
+      String nsReceiveInviteFromEverybody = null;
+      String nsReceivePersonalEventReminders = null;
+      
+      String cellName = null;
+      String cookie = null;
+      String errorCode = null;
+      XurmoUserAuthenticationReturnStatus status = null;
+      java.util.Vector black = new java.util.Vector();
+      java.util.Vector white = new java.util.Vector();
+      
+      java.util.Vector nsBlack = new java.util.Vector();
+      java.util.Vector nsWhite = new java.util.Vector();
+      boolean insideNetworkSpecificPreference = false;
+      boolean insideNetworkSpecificUserLists = false;
+      java.util.Vector networkSpecificPreference = new java.util.Vector();
+      java.util.Vector networkSpecificUserLists = new java.util.Vector();
+      InputStream is = new java.io.ByteArrayInputStream(resp.getBytes());
+      InputStreamReader in = new InputStreamReader( is );
+      //Initilialize XML parser
+      KXmlParser parser = new KXmlParser();
+      parser.setInput(in);
+      while(true){
+        int evt = parser.nextTag();
+        switch(evt){
+          case org.xmlpull.v1.XmlPullParser.START_TAG:
+          {
+            String tag = parser.getName();
+            if (tag.equalsIgnoreCase("ns1:allowSearchIntoYourNetwork")) {
+              if (insideNetworkSpecificPreference) {
+                
+                nsAllowSearchIntoYourNetwork = new String(parser.nextText());
+              } else {
+                
+                allowSearchIntoYourNetwork = new String(parser.nextText());
+              }
+            } else if (tag.equalsIgnoreCase("ns1:forwardMessagesOnDestinationPreferences")) {
+              if (insideNetworkSpecificPreference) {
+                
+                nsForwardMessagesOnDestinationPreferences = new String(parser.nextText());
+              } else {
+                
+                forwardMessagesOnDestinationPreferences = new String(parser.nextText());
+              }
+            } else if (tag.equalsIgnoreCase("ns1:forwardMessagesToExternalNetworks")) {
+              if (insideNetworkSpecificPreference) {
+                
+                nsForwardMessagesToExternalNetworks = new String(parser.nextText());
+              } else {
+                
+                forwardMessagesToExternalNetworks = new String(parser.nextText());
+              }
+            } else if (tag.equalsIgnoreCase("ns1:linkId")) {
+              if (insideNetworkSpecificPreference) {
+                
+                nsLinkId = new String(parser.nextText());
+              } else {
+                
+                linkId = new String(parser.nextText());
+              }
+            } else if(tag.equalsIgnoreCase("ns1:linkName")) {
+              if (insideNetworkSpecificPreference) {
+                
+                nsLinkName = new String(parser.nextText());
+              } else {
+                
+                linkName = new String(parser.nextText());
+              }
+            } else if(tag.equalsIgnoreCase("ns1:receiveDefaultMessagesDegrees")) {
+              if (insideNetworkSpecificPreference) {
+                
+                nsReceiveDefaultMessagesDegrees = new String(parser.nextText());
+              } else {
+                
+                receiveDefaultMessagesDegrees = new String(parser.nextText());
+              }
+            } else if(tag.equalsIgnoreCase("ns1:receiveInviteFromEverybody")) {
+              if (insideNetworkSpecificPreference) {
+                
+                nsReceiveInviteFromEverybody = new String(parser.nextText());
+              } else {
+                
+                receiveInviteFromEverybody = new String(parser.nextText());
+              }
+            } else if(tag.equalsIgnoreCase("ns1:receivePersonalEventReminders")) {
+              if (insideNetworkSpecificPreference) {
+                
+                nsReceivePersonalEventReminders = new String(parser.nextText());
+              } else {
+                
+                receivePersonalEventReminders = new String(parser.nextText());
+              }
+            } else if(tag.equalsIgnoreCase("ns1:black")) {
+              if (insideNetworkSpecificUserLists) {
+                
+                nsBlack.addElement(new Integer(Integer.parseInt(parser.nextText())));
+              } else {
+                
+                black.addElement(new Integer(Integer.parseInt(parser.nextText())));
+              }
+            } else if(tag.equalsIgnoreCase("ns1:white")) {
+              if (insideNetworkSpecificUserLists) {
+                
+                nsWhite.addElement(new Integer(Integer.parseInt(parser.nextText())));
+              } else {
+                
+                white.addElement(new Integer(Integer.parseInt(parser.nextText())));
+              }
+            } else if(tag.equalsIgnoreCase("ns1:cellName")) {
+              cellName = new String(parser.nextText());
+            } else if(tag.equalsIgnoreCase("ns1:cookie")) {
+              cookie = new String(parser.nextText());
+            } else if(tag.equalsIgnoreCase("ns1:errorCode")) {
+              errorCode = new String(parser.nextText());
+            } else if(tag.equalsIgnoreCase("ns1:networkSpecificPreference")) {
+              insideNetworkSpecificPreference = true;
+            } else if(tag.equalsIgnoreCase("ns1:networkSpecificUserLists")) {
+              insideNetworkSpecificUserLists = true;
+            }
+          }
+          break;
+          case org.xmlpull.v1.XmlPullParser.END_TAG:
+          {
+            String tag = parser.getName();
+            if (tag.equalsIgnoreCase("env:envelope")) {
+              if (allowSearchIntoYourNetwork != null &&
+                  forwardMessagesOnDestinationPreferences != null &&
+                  forwardMessagesToExternalNetworks != null &&
+                  receiveDefaultMessagesDegrees != null &&
+                  receiveInviteFromEverybody != null &&
+                  receivePersonalEventReminders != null &&
+                  cellName != null &&
+                  errorCode != null &&
+                  cookie != null) {
+                return new XurmoUserPreference(allowSearchIntoYourNetwork.equalsIgnoreCase("true"),
+                    forwardMessagesOnDestinationPreferences.equalsIgnoreCase("true"),
+                    forwardMessagesToExternalNetworks.equalsIgnoreCase("true"),
+                    Integer.parseInt(receiveDefaultMessagesDegrees),
+                    receiveInviteFromEverybody.equalsIgnoreCase("true"),
+                    receivePersonalEventReminders.equalsIgnoreCase("true"),
+                    black,
+                    white,
+                    networkSpecificPreference,
+                    networkSpecificUserLists,
+                    errorCode,
+                    cookie,
+                    cellName);
+              } else {
+                
+                return new XurmoUserPreference();
+              }
+            } else if(tag.equalsIgnoreCase("ns1:networkSpecificPreference")) {
+              if (nsAllowSearchIntoYourNetwork != null &&
+                  nsForwardMessagesOnDestinationPreferences != null &&
+                  nsForwardMessagesToExternalNetworks != null &&
+                  nsLinkId != null &&
+                  nsLinkName != null &&
+                  nsReceiveDefaultMessagesDegrees != null &&
+                  nsReceiveInviteFromEverybody != null &&
+                  nsReceivePersonalEventReminders != null) {
+                networkSpecificPreference.addElement(
+                    new XurmoUserNetworkSpecificPreference(Integer.parseInt(nsLinkId),
+                    nsLinkName,
+                    nsAllowSearchIntoYourNetwork.equalsIgnoreCase("true"),
+                    nsForwardMessagesOnDestinationPreferences.equalsIgnoreCase("true"),
+                    nsForwardMessagesToExternalNetworks.equalsIgnoreCase("true"),
+                    Integer.parseInt(nsReceiveDefaultMessagesDegrees),
+                    nsReceiveInviteFromEverybody.equalsIgnoreCase("true"),
+                    nsReceivePersonalEventReminders.equalsIgnoreCase("true")));
+                nsAllowSearchIntoYourNetwork = null;
+                nsForwardMessagesOnDestinationPreferences = null;
+                nsForwardMessagesToExternalNetworks = null;
+                nsLinkId = null;
+                nsLinkName = null;
+                nsReceiveDefaultMessagesDegrees = null;
+                nsReceiveInviteFromEverybody = null;
+                nsReceivePersonalEventReminders = null;
+                insideNetworkSpecificPreference = false;
+              }
+            } else if(tag.equalsIgnoreCase("ns1:networkSpecificUserLists")) {
+              if (nsBlack != null &&
+                  nsLinkId != null &&
+                  nsLinkName != null &&
+                  nsWhite != null ) {
+                networkSpecificUserLists.addElement(
+                    new XurmoUserNetworkSpecificUserLists(Integer.parseInt(nsLinkId),
+                    nsLinkName,
+                    nsBlack,
+                    nsWhite));
+                nsLinkId = null;
+                nsLinkName = null;
+                nsBlack = null;
+                nsWhite = null;
+                insideNetworkSpecificUserLists = false;
+              }
+            }
+            
+          }
+          break;
+        }
+      }
+    } catch (org.xmlpull.v1.XmlPullParserException ppex) {
+      
+    } catch(IOException e){
+    }
+    return new XurmoUserPreference();
   }
   public XurmoDoodleSummary getDoodleSummary(String username, String cookie) {
     XurmoDoodleSummary mds = new XurmoDoodleSummary();

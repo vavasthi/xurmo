@@ -23,18 +23,22 @@ public class XurmoNetworkPanelPopupMenuListener implements XurmoPopupMenuListene
     midlet_ = midlet;
     screen_ = screen;
     items_ = new XurmoPopupMenuItem[] {
+      new XurmoPopupMenuItem("Upload My Phonebook"),
       new XurmoPopupMenuItem("Message my Network"),
-      new XurmoPopupMenuItem("Do some other thing"),
       new XurmoPopupMenuItem("Do some more things")
     };
   }
   public void menuAction(int index, XurmoPopupMenuItem item) {
    switch(index) {
      case 0:
-       midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, screen_, new XurmoMessageComposeScreen(midlet_), XurmoSliderCanvas.RIGHT));
+       midlet_.uploadPhonebook();
+       midlet_.transitionToHomeScreen();
        break;
      case 1:
+       midlet_.getDisplay().setCurrent(new XurmoSliderCanvas(midlet_, screen_, new XurmoMessageComposeScreen(midlet_), XurmoSliderCanvas.RIGHT));
+       break;
      case 2:
+     case 3:
      default:
    } 
   }

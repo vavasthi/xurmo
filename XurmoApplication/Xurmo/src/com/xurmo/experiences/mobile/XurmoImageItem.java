@@ -33,9 +33,15 @@ public class XurmoImageItem extends XurmoContentItem {
   public void draw(Graphics g, int x, int y) {
       
       if (state_ == DONE && raw_ != null) {
-        
-        Image img
-            = ScalableImage.createImage(raw_, 0, raw_.length, screen_.getWidth() / 3, screen_.getHeight() / 3, ScalableImage.PROPORTIONAL_SCALING_MODE_MINIMIZE).getImage();
+        Image img = null;
+        try {
+          
+        img
+            = ScalableImage.createImage(raw_, 0, raw_.length, screen_.getWidth() / 3, screen_.getHeight() / 3, ScalableImage.SCALING_MODE_PROPORTIONAL_FIT).getImage();
+        }
+        catch (IOException ioex) {
+          img = Image.createImage(screen_.getWidth() / 3, screen_.getHeight() / 3);
+        }
         g.drawImage(img, x, y, g.LEFT|g.TOP);
       }
   }
@@ -47,5 +53,11 @@ public class XurmoImageItem extends XurmoContentItem {
     raw_ = raw;
     state_ = DONE;
   }
+  public void streamOut(java.io.DataOutputStream dos) throws java.io.IOException {
+    dos.writeInt(XurmoContentItem.IMAGE);
+    dos.writeInt(raw_.length);
+    dos.write(raw_, 0, raw_.length);
+  }
   byte[] raw_;
+  
 }

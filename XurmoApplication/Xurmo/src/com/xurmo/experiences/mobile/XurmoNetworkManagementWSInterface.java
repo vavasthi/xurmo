@@ -38,7 +38,7 @@ public class XurmoNetworkManagementWSInterface {
 //  private static final String serverName_ = new String("mirl.miel.mot.com");
   private static final String serverName_ = new String("www.xurmoconnect.com");
   private static final String baseURL_ = new String("http://" + serverName_ + "/XurmoConnect-ejb/");
-  private static final String userAuthenticationAndSessionURL_ = baseURL_ + new String("XurmoNetworkManagementServiceBean");
+  private static final String soapURL_ = baseURL_ + new String("XurmoNetworkManagementServiceBean");
   private static final String userAgent_ = new String("XurmoUA Profile/MIDP-2.0 Configuration/CLDC-1.1");
   private static XurmoNetworkManagementWSInterface self_ = null;
   /**
@@ -54,10 +54,9 @@ public class XurmoNetworkManagementWSInterface {
     return self_;
   }
   public static String sendRequest(String request) throws IOException {
-    
-    
+
     javax.microedition.io.HttpConnection conn
-        = (javax.microedition.io.HttpConnection)javax.microedition.io.Connector.open(userAuthenticationAndSessionURL_);
+        = (javax.microedition.io.HttpConnection)javax.microedition.io.Connector.open(soapURL_);
     conn.setRequestMethod(conn.POST);
     conn.setRequestProperty("User-Agent", userAgent_);
     conn.setRequestProperty("Content-Length",String.valueOf(request.length()));

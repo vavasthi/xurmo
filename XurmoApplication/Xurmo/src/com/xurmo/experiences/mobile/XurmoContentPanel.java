@@ -61,34 +61,36 @@ public class XurmoContentPanel extends XurmoPanel {
   }
   private void createNewItem() {
     
-      if (currentItem_ != null && currentItem_.state_ == XurmoContentItem.DONE) {
+    if (currentItem_ != null) {
+      
+      if (currentItem_.state_ == XurmoContentItem.DONE) {
+        
         items_.addElement(currentItem_);
-        currentItem_ = null;
       }
+    }
+    currentItem_ = null;
       switch(currentItemType_) {
         case XurmoContentItem.STRING:
         {
-          if (currentItem_ == null || currentItem_.state_ == XurmoContentItem.DONE) {
-            
             currentItem_ = new XurmoStringItem(screen_);
             System.out.println("Creating a new string item");
-          }
         }
+        break;
         case XurmoContentItem.AUDIO:
         {
-          if (currentItem_ == null || currentItem_.state_ == XurmoContentItem.DONE) {
-            
             currentItem_ = new XurmoAudioItem(screen_);
-          }
+            System.out.println("Creating a new audio item");
         }
+        break;
         case XurmoContentItem.IMAGE:
         {
           
-          if (currentItem_ == null || currentItem_.state_ == XurmoContentItem.DONE) {
             currentItem_ = new XurmoImageItem(screen_);
-          }
+            System.out.println("Creating a new image item");
         }
+        break;
       }
+      System.out.println("Creating new item.. Done..");
   }
   protected void drawBoundingBox(Graphics g, int x, int y) {
     
@@ -129,6 +131,7 @@ public class XurmoContentPanel extends XurmoPanel {
   }
   public void panelFireAction() {
     if (currentItem_ != null) {
+      System.out.println("Calling fire action on " + currentItem_.contentType[currentItem_.contentType_]);
       currentItem_.fireKey();
     }
   }
@@ -171,6 +174,16 @@ public class XurmoContentPanel extends XurmoPanel {
   }
   public int screenHeight() {
     return screenHeight_;
+  }
+  public String getMessage() throws java.io.IOException {
+    java.io.ByteArrayOutputStream bos = new java.io.ByteArrayOutputStream();
+    java.io.DataOutputStream dos = new java.io.DataOutputStream(bos);
+    dos.writeInt(items_.size());
+    for (int i = 0; i < items_.size(); ++i) {
+      XurmoContentItem xci = (XurmoContentItem)(items_.elementAt(i));
+      xci.streamOut(dos);
+    }
+    return new String(XurmoBase64EncoderStream.encode(bos.toByteArray()));
   }
   private int th_;
   private int h_;

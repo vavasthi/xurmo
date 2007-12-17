@@ -474,6 +474,11 @@ public class Xurmo extends MIDlet {
   public void setNetworkSummaryStatus(XurmoNetworkSummaryStatus networkSummary) {
     networkSummary_ = networkSummary;
   }
+  public void sendMessage(int degreesOfSeparation, String[] linkNames, String msg) {
+   
+      XurmoMessageManagementWSInterface.sendMessageToNetwork(currentUser_.username_, currentUser_.cookie_, linkNames, degreesOfSeparation, msg);
+  }
+
   public void doLogout() {
     this.logoutUser();
   }

@@ -32,13 +32,18 @@ import javax.microedition.io.*;
 
 public class XurmoMessageComposeScreen extends XurmoScrollableScreen {
   XurmoRequestToConnectMessage[] requestToConnectList_;
+  XurmoNumberSliderPanel numberSliderPanel_;
+  XurmoSelectorListPanel selectorListPanel_;
+  XurmoContentPanel contentPanel_;
+  XurmoNavigationPanel sendMsg_;
+
   /**
    * Creates a new instance of XurmoHomeScreen
    */
   public XurmoMessageComposeScreen(Xurmo midlet) {
     super(midlet);
     XurmoTheme ct = XurmoThemeManager.instance().getCurrentTheme();
-    XurmoPanel[] panels = new XurmoPanel[4];
+    XurmoPanel[] panels = new XurmoPanel[5];
     currentPanel_ = 0;
     XurmoNetworkSummaryStatus status = midlet_.getNetworkSummaryStatus();
     String[] memberOfNetworks = status.memberOfNetworks_;
@@ -46,15 +51,29 @@ public class XurmoMessageComposeScreen extends XurmoScrollableScreen {
     for (int i = 0; i < memberOfNetworks.length; ++i) {
       items[i + 1] = memberOfNetworks[i];
     }
+    numberSliderPanel_ = new XurmoNumberSliderPanel(midlet, this.getWidth(), this.getHeight(), "Degrees", "Propagation Degrees of Separation", 4, 1, 6);
+    selectorListPanel_ = new XurmoSelectorListPanel(midlet, this.getWidth(), this.getHeight(), ct.writeNewInteractionImage_, "Networks", midlet_.getNetworkSummaryStatus().availableNetworks_);
+    contentPanel_ = new XurmoContentPanel(midlet, this, this.getWidth(), this.getHeight(), ct.writeNewInteractionImage_, "Content");
+    sendMsg_ = new XurmoNavigationPanel(midlet, this, midlet_.home_, this.getWidth(), this.getHeight());
+
     panels[0] = new XurmoNavigationPanel(midlet, this, midlet_.home_, this.getWidth(), this.getHeight());
-    panels[1] = new XurmoNumberSliderPanel(midlet, this.getWidth(), this.getHeight(), "Degrees", "Propagation Degrees of Separation", 4, 1, 6);
-    panels[2] = new XurmoSelectorListPanel(midlet, this.getWidth(), this.getHeight(), ct.writeNewInteractionImage_, "Networks", midlet_.getNetworkSummaryStatus().availableNetworks_);
-    panels[3] = new XurmoContentPanel(midlet, this, this.getWidth(), this.getHeight(), ct.writeNewInteractionImage_, "Content");
+    panels[1] = numberSliderPanel_;
+    panels[2] = selectorListPanel_;
+    panels[3] = contentPanel_;
+    panels[4] = sendMsg_;
     panels_ = panels;
     panels_[currentPanel_].selected(true);
   }
   public void rightKey() {
-    panels_[currentPanel_].rightKey();
+    if (panels_[currentPanel_] == sendMsg_) {
+      if (!sendMessage()) {
+        System.out.println("Error in sending message..");
+      }
+    }
+    else {
+      
+      panels_[currentPanel_].rightKey();
+    }
   }
   public void leftKey() {
     panels_[currentPanel_].leftKey();
@@ -82,5 +101,17 @@ public class XurmoMessageComposeScreen extends XurmoScrollableScreen {
     
     repaint();
     midlet_.getDisplay().setCurrent(this);
+  }
+  private boolean sendMessage() {
+    try {
+      
+      midlet_.sendMessage(numberSliderPanel_.value(), 
+          selectorListPanel_.getSelectedValues(), 
+          contentPanel_.getMessage());
+    }
+    catch(java.io.IOException ioex) {
+      return false;
+    }
+    return true;
   }
 }

@@ -73,6 +73,11 @@ public class XurmoAudioItem extends XurmoContentItem {
         break;
     }
   }
+  public void streamOut(java.io.DataOutputStream dos) throws java.io.IOException {
+    dos.writeInt(XurmoContentItem.AUDIO);
+    dos.writeInt(content_.length);
+    dos.write(content_, 0, content_.length);
+  }
   byte[] content_;
   String mimeType_;
   java.io.ByteArrayOutputStream bos_;
