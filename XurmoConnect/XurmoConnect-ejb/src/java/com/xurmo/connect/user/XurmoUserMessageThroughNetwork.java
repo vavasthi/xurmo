@@ -27,6 +27,7 @@ import javax.persistence.Table;
 @NamedQueries( {
     @NamedQuery(name = "XurmoUserMessageThroughNetwork.findByMessageId", query = "SELECT x FROM XurmoUserMessageThroughNetwork x WHERE x.xurmoUserMessageThroughNetworkPK.messageId = :messageId"),
     @NamedQuery(name = "XurmoUserMessageThroughNetwork.findByUserid", query = "SELECT x FROM XurmoUserMessageThroughNetwork x WHERE x.xurmoUserMessageThroughNetworkPK.userid = :userid"),
+    @NamedQuery(name = "XurmoUserMessageThroughNetwork.findByUseridAndMessageId", query = "SELECT x FROM XurmoUserMessageThroughNetwork x WHERE x.xurmoUserMessageThroughNetworkPK.userid = :userid and x.xurmoUserMessageThroughNetworkPK.messageId = :messageId"),
     @NamedQuery(name = "XurmoUserMessageThroughNetwork.findByUseridAndStatus", query = "SELECT x FROM XurmoUserMessageThroughNetwork x WHERE x.xurmoUserMessageThroughNetworkPK.userid = :userid and x.status = :status"),
     @NamedQuery(name = "XurmoUserMessageThroughNetwork.findByStatus", query = "SELECT x FROM XurmoUserMessageThroughNetwork x WHERE x.status = :status")
   })

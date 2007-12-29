@@ -47,7 +47,7 @@ public class XurmoPersonalAddressBookManager {
         XurmoUser xu = (XurmoUser)(pabpnq.getSingleResult());
         pab.setXurmoMember(true);
         pab.setXurmoMemberUserId(xu.getUserid());
-        pab.setXurmoInvitationSent(true);
+        pab.setXurmoInvitationSent(false);
       } catch(javax.persistence.NoResultException nre) {
         
       }

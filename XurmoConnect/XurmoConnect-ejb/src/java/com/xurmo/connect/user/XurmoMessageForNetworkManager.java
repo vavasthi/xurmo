@@ -103,8 +103,7 @@ public class XurmoMessageForNetworkManager {
         // If the user is not willing to forward, stop the forward and do not traverse this node.
         otherUserid = -1;
       }
-    }
-    else {
+    } else {
       otherUserid = -1;
     }
     return otherUserid;
@@ -132,6 +131,25 @@ public class XurmoMessageForNetworkManager {
       XurmoMessageForNetwork xmfn = (XurmoMessageForNetwork)(mi.next());
       XurmoNetworkLinkType xnlt = (XurmoNetworkLinkType)(em.createNamedQuery("XurmoNetworkLinkType.findByLinkId").setParameter("linkId", xmfn.xurmoMessageForNetworkPK.getLinkId()).getSingleResult());
       messages.add(XurmoMessage.create(xmfn, xnlt, xu));
+    }
+  }
+  static public void markMessagesRead(XurmoUser xu, String[] messageIds, javax.persistence.EntityManager em) {
+    
+    for (int i = 0; i < messageIds.length; ++i) {
+      
+      javax.persistence.Query q = em.createNamedQuery("XurmoUserMessageThroughNetwork.findByUseridAndMessageId");
+      q.setParameter("userid", xu.getUserid());
+      q.setParameter("messageId", messageIds[i]);
+      try {
+        
+        XurmoUserMessageThroughNetwork mtn = (XurmoUserMessageThroughNetwork)(q.getSingleResult());
+        mtn.setStatus('R');
+        em.persist(mtn);
+      } catch(javax.persistence.NonUniqueResultException nure) {
+        
+      } catch(javax.persistence.NoResultException nre) {
+        
+      }
     }
   }
 }

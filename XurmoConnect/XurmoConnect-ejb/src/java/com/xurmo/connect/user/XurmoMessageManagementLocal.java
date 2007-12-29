@@ -14,5 +14,7 @@ public interface XurmoMessageManagementLocal {
 
   XurmoMessageStatus sendMessageToNetwork(String username, String cookie, String[] linkNames, int degreesOfSeparation, String content, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String cellName);
   XurmoMessages getUserMessages(String username, String cookie, String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String cellName);
+  void markMessagesRead(String username, String cookie, String messageIds[], String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String cellName);
+
   void flushNetworkMessages();
 }

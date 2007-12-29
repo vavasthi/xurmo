@@ -99,6 +99,7 @@ public class XurmoUserManagementBean implements XurmoUserManagementRemote, Xurmo
         imei,
         "Unknown",
         btAddress);
+    xu.setPrimaryMobileValidated(true);
     em_.persist(xu);
     return XurmoUserRegistrationStatus.USER_REGISTRATION_NO_ERROR;
   }

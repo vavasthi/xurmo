@@ -83,13 +83,33 @@ public class XurmoMessageManagementBean implements XurmoMessageManagementRemote,
         XurmoUser xu = (XurmoUser) (em_.createNamedQuery("XurmoUser.findByUsername").setParameter("username", username).getSingleResult());
         java.util.Vector<XurmoMessage> messages = new java.util.Vector<XurmoMessage>();
         XurmoMessageForNetworkManager.getUserMessages(xu, messages, true, em_);
+        String[] messageIds = new String[messages.size()];
+        for (int i = 0; i < messages.size(); ++i) {
+          messageIds[i] = messages.elementAt(i).messageId;
+        }
+        XurmoMessageForNetworkManager.markMessagesRead(xu, messageIds, em_);
         return new XurmoMessages(XurmoUserInteractionStatus.INTERACTIONSTATUS_NO_ERROR, xus.getCookie(), xclm.getLocation(), messages);
       }
     } catch(Exception ex) {
     }
     return new XurmoMessages(XurmoUserInteractionStatus.INTERACTIONFAILED_USER_NOT_LOGGED_IN, "", "");
   }
-
+  public void markMessagesRead(String username, String cookie, String messageIds[], String mobileCountryCode, String mobileNetworkCode, String siteId, String cellId, String cellName) {
+    
+    try {
+      XurmoUserSession xus = XurmoUserSessionManager.instance().getSession(username, em_);
+      if (xus != null && cookie.equals(xus.getCookie())) {
+        
+        XurmoCellLocationMap xclm
+            = XurmoLocationManager.updateLocationMap(mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName, em_);
+        XurmoUser xu = (XurmoUser) (em_.createNamedQuery("XurmoUser.findByUsername").setParameter("username", username).getSingleResult());
+        java.util.Vector<XurmoMessage> messages = new java.util.Vector<XurmoMessage>();
+        XurmoMessageForNetworkManager.markMessagesRead(xu, messageIds, em_);
+        return;
+      }
+    } catch(Exception ex) {
+    }
+  }
   public void flushNetworkMessages() {
     
     XurmoMessageForNetworkManager.flushNetworkMessages(em_);

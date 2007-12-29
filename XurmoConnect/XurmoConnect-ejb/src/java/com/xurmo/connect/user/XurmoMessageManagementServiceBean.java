@@ -48,6 +48,10 @@ public class XurmoMessageManagementServiceBean {
     public XurmoMessages getUserMessages(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
       return xurmoMessageManagementBean.getUserMessages(username, cookie, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
     }
+    @WebMethod
+    public void markMessagesRead(@WebParam(name = "username") String username, @WebParam(name = "cookie") String cookie, @WebParam(name = "messageId") String[] messageId, @WebParam(name = "mobileCountryCode") String mobileCountryCode, @WebParam(name = "mobileNetworkCode") String mobileNetworkCode, @WebParam(name = "siteId") String siteId, @WebParam(name = "cellId") String cellId, @WebParam(name = "cellName") String cellName) {
+      xurmoMessageManagementBean.markMessagesRead(username, cookie, messageId, mobileCountryCode, mobileNetworkCode, siteId, cellId, cellName);
+    }
     
 /*    @Timeout
     public void handleTimeout(Timer t) {
